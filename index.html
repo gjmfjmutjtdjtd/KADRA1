@@ -24,6 +24,47 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
+    /* ===== Баннер скидки с таймером ===== */
+    #discount-banner {
+      background: linear-gradient(135deg, #ff5252, #ff7b7b);
+      color: #fff;
+      padding: 20px 15px;
+      text-align: center;
+      font-family: 'Arial Black', Arial, sans-serif;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1100;
+      box-shadow: 0 3px 10px rgba(255, 82, 82, 0.7);
+      display: none; /* по умолчанию скрыт */
+    }
+    #discount-banner h2 {
+      font-size: 1.8rem;
+      margin: 0 0 6px;
+    }
+    #discount-banner p {
+      font-size: 1.3rem;
+      margin: 0 0 12px;
+    }
+    #discount-banner .btn {
+      background: white;
+      color: #ff5252;
+      font-weight: bold;
+      padding: 10px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(255, 82, 82, 0.6);
+      transition: background 0.3s, color 0.3s;
+      display: inline-block;
+    }
+    #discount-banner .btn:hover {
+      background: #ff3b3b;
+      color: white;
+      box-shadow: 0 6px 15px rgba(255, 59, 59, 0.8);
+    }
+
     /* ===== Фиксированная шапка ===== */
     header{
       position:fixed;
@@ -39,6 +80,8 @@
       background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
       backdrop-filter: blur(6px);
       border-bottom:1px solid rgba(255,255,255,0.03);
+      /* сдвигаем вниз на высоту баннера (пример 60px), чтобы не перекрывался */
+      top: 60px;
     }
     .logo{
       font-weight:700;
@@ -235,7 +278,7 @@
 
     /* ===== Адаптив ===== */
     @media (max-width: 720px) {
-      header{ padding:10px 5% }
+      header{ padding:10px 5%; top: 60px; }
       nav{ gap:12px; font-size:14px }
       .hero{ padding:32px 5% }
       .hero p{ font-size:15px }
@@ -265,6 +308,13 @@
   </style>
 </head>
 <body>
+
+  <!-- Баннер скидки с таймером -->
+  <section id="discount-banner" aria-live="polite" role="region">
+    <h2>Скидка 20% на готовую песню!</h2>
+    <p>Успей оформить заявку — осталось <span id="timer">30:00</span></p>
+    <a href="#contact" class="btn">Оформить заявку</a>
+  </section>
 
   <!-- фиксированная шапка с меню -->
   <header>
@@ -357,7 +407,54 @@
     </div>
   </footer>
 
+  <script>
+    (function(){
+      // Здесь нужно получить реальный userId из сессии или бэкенда
+      // Для демо — сгенерируем случайный userId и сохраним в localStorage (постоянно один и тот же)
+      let userId = localStorage.getItem('userId');
+      if(!userId){
+        userId = 'user_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('userId', userId);
+      }
+
+      const discountDurationMs = 30 * 60 * 1000; // 30 минут
+      const storageKey = `discountTimer_${userId}`;
+
+      let startTime = localStorage.getItem(storageKey);
+      if(!startTime){
+        startTime = Date.now();
+        localStorage.setItem(storageKey, startTime);
+      } else {
+        startTime = parseInt(startTime);
+      }
+
+      const banner = document.getElementById('discount-banner');
+      const timerElem = document.getElementById('timer');
+
+      function updateTimer(){
+        const now = Date.now();
+        const elapsed = now - startTime;
+        const remaining = discountDurationMs - elapsed;
+
+        if(remaining <= 0){
+          // Время вышло — скрываем баннер и удаляем таймер из хранилища
+          banner.style.display = 'none';
+          localStorage.removeItem(storageKey);
+          return;
+        }
+
+        banner.style.display = 'block';
+
+        const minutes = Math.floor(remaining / 60000);
+        const seconds = Math.floor((remaining % 60000) / 1000);
+
+        timerElem.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    })();
+  </script>
+
 </body>
 </html>
-
-
