@@ -59,30 +59,19 @@
     }
     nav a:hover{ opacity:1; transform:translateY(-2px); color:var(--accent) }
 
-    /* Кнопка Telegram в шапке */
-    .btn-telegram {
-      margin-left: 20px;
+    /* Кнопка «Мой чат» в меню */
+    nav .chat-btn {
       padding: 8px 18px;
       background: var(--accent);
       color: #fff;
-      font-weight: 600;
       border-radius: 6px;
+      font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 6px 16px rgba(255,82,82,0.6);
-      transition: background-color 0.3s ease, transform 0.15s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    .btn-telegram:hover {
+    nav .chat-btn:hover {
       background-color: #ff3333;
-      transform: translateY(-3px);
-    }
-    .btn-telegram svg {
-      fill: #fff;
-      width: 16px;
-      height: 16px;
+      transform: translateY(-2px);
     }
 
     /* ===== Герой (шапка-баннер) ===== */
@@ -285,13 +274,7 @@
       <a href="#about">О нас</a>
       <a href="#tracks">Работы</a>
       <a href="#contact">Контакты</a>
-      <a href="https://t.me/yourtelegram" class="btn-telegram" target="_blank" rel="noopener noreferrer" aria-label="Связаться в Telegram">
-        <!-- Иконка Telegram -->
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M22.46 2.66c-.77-.65-1.84-.56-2.56.18L3.67 16.66c-.32.29-.4.74-.21 1.11.19.37.6.58 1.01.5l4.83-1.01 2.29 3.52c.27.42.91.33 1.06-.14l1.58-5.75 5.48-4.99c.57-.53.33-1.51-.43-1.86z"/>
-        </svg>
-        Telegram
-      </a>
+      <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Мой чат</a>
     </nav>
   </header>
 
