@@ -54,7 +54,7 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 320px;
+      width: 340px;
       background: linear-gradient(135deg, var(--green-light), var(--green-dark));
       color: #fff;
       border-radius: 16px;
@@ -99,21 +99,6 @@
       letter-spacing: 0.06em;
       user-select: text;
     }
-    #discount-apply-btn {
-      background: #fff;
-      color: var(--green-dark);
-      border: none;
-      border-radius: 12px;
-      padding: 10px 0;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 6px 16px rgba(255,255,255,0.3);
-      user-select: none;
-    }
-    #discount-apply-btn:hover {
-      background: #e6f3e6;
-    }
     #discount-minimize-btn {
       position: absolute;
       top: 8px;
@@ -131,10 +116,36 @@
     #discount-minimize-btn:hover {
       color: #b6e0b6;
     }
-
-    /* Остальной стиль сайта сокращён для компактности (добавь свои стили ниже) */
-
-    /* Мобильная версия: уменьшаем шрифты в шапке */
+    #discount-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #discount-form input {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      user-select: text;
+    }
+    #discount-apply-btn {
+      background: #fff;
+      color: var(--green-dark);
+      border: none;
+      border-radius: 12px;
+      padding: 10px 0;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 16px rgba(255,255,255,0.3);
+      user-select: none;
+    }
+    #discount-apply-btn:hover {
+      background: #e6f3e6;
+    }
+    /* Мобильная версия */
     @media (max-width: 480px) {
       header {
         font-size: 16px;
@@ -164,35 +175,37 @@
 </head>
 <body>
 
-  <header>
-    <div class="logo">Kadra Records Studio</div>
-    <nav>
-      <a href="#services">Услуги</a>
-      <a href="#about">О нас</a>
-      <a href="#soundcloud-players">Готовые песни</a>
-      <a href="#contact">Контакты</a>
-      <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Telegram</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">Kadra Records Studio</div>
+  <nav>
+    <a href="#services">Услуги</a>
+    <a href="#about">О нас</a>
+    <a href="#soundcloud-players">Готовые песни</a>
+    <a href="#contact">Контакты</a>
+    <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Telegram</a>
+  </nav>
+</header>
 
-  <main style="padding-top: 72px;">
+<main style="padding-top: 72px;">
+  <!-- Основной контент -->
+  <section id="services"><h2>Услуги</h2></section>
+  <section id="about"><h2>О студии</h2></section>
+  <section id="soundcloud-players"><h2>Готовые песни</h2></section>
+  <section id="contact"><h2>Контакты</h2></section>
+</main>
 
-    <!-- Твой контент -->
-
-    <section id="services"><h2>Услуги</h2></section>
-    <section id="about"><h2>О студии</h2></section>
-    <section id="soundcloud-players"><h2>Готовые песни</h2></section>
-    <section id="contact"><h2>Контакты</h2></section>
-
-  </main>
-
-  <!-- Баннер скидки -->
-  <div id="discount-banner" role="dialog" aria-live="polite" aria-label="Скидка на первую песню">
-    <button id="discount-minimize-btn" aria-label="Свернуть баннер">×</button>
-    <p>Получи скидку на первую <a href="#soundcloud-players" id="discount-link">песню из каталога</a> 20%. Успей оформить заявку!</p>
-    <div id="discount-timer" aria-live="polite" aria-atomic="true">30:00</div>
-    <button id="discount-apply-btn">Оформить заявку</button>
-  </div>
+<!-- Баннер скидки -->
+<div id="discount-banner" role="dialog" aria-live="polite" aria-label="Скидка на первую песню">
+  <button id="discount-minimize-btn" aria-label="Свернуть баннер">×</button>
+  <p>Получи скидку на первую <a href="#soundcloud-players" id="discount-link">песню из каталога</a> 20%. Успей оформить заявку!</p>
+  <div id="discount-timer" aria-live="polite" aria-atomic="true">30:00</div>
+  
+  <form id="discount-form" novalidate>
+    <input type="text" id="name" name="name" placeholder="Ваше имя" required autocomplete="name" />
+    <input type="email" id="email" name="email" placeholder="Email" required autocomplete="email" />
+    <button id="discount-apply-btn" type="submit">Оформить заявку</button>
+  </form>
+</div>
 
 <script>
   const DISCOUNT_DURATION = 30 * 60; // 30 минут в секундах
@@ -203,17 +216,24 @@
 
   const banner = document.getElementById('discount-banner');
   const timerElem = document.getElementById('discount-timer');
-  const applyBtn = document.getElementById('discount-apply-btn');
   const minimizeBtn = document.getElementById('discount-minimize-btn');
+  const discountForm = document.getElementById('discount-form');
+
+  // Google Forms URL (замени на свой)
+  const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/ВАШ_ФОРМ_ID/formResponse';
+
+  // Замени entry.xxxxx на свои ID полей Google Forms
+  const GOOGLE_FORM_FIELDS = {
+    name: 'entry.1234567890',
+    email: 'entry.0987654321',
+  };
 
   function showBanner() {
     banner.classList.add('show');
   }
-
   function hideBanner() {
     banner.classList.remove('show');
   }
-
   function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
@@ -246,15 +266,44 @@
     }
   });
 
-  applyBtn.addEventListener('click', () => {
-    localStorage.setItem('discountApplied', 'true');
-    clearInterval(countdownInterval);
-    hideBanner();
-    alert('Спасибо! Заявка принята, мы свяжемся с вами для подтверждения скидки.');
-  });
-
   minimizeBtn.addEventListener('click', () => {
     hideBanner();
+  });
+
+  discountForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = discountForm.name.value.trim();
+    const email = discountForm.email.value.trim();
+
+    if(!name || !email) {
+      alert('Пожалуйста, заполните имя и email.');
+      return;
+    }
+
+    if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      alert('Введите корректный email.');
+      return;
+    }
+
+    // Подготовка данных для Google Forms
+    const formData = new FormData();
+    formData.append(GOOGLE_FORM_FIELDS.name, name);
+    formData.append(GOOGLE_FORM_FIELDS.email, email);
+
+    fetch(GOOGLE_FORM_ACTION_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: formData
+    }).then(() => {
+      localStorage.setItem('discountApplied', 'true');
+      clearInterval(countdownInterval);
+      hideBanner();
+      alert('Спасибо! Заявка принята, мы свяжемся с вами для подтверждения скидки.');
+      discountForm.reset();
+    }).catch(() => {
+      alert('Ошибка отправки заявки, попробуйте позже.');
+    });
   });
 </script>
 
