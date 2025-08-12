@@ -70,18 +70,17 @@
       padding:48px 6%;
       text-align:center;
       color:var(--white);
-      background-color:#000;
-      background-image: url('img/studio-bg.jpg');
-      background-size:cover;
-      background-position:center center;
-      background-repeat:no-repeat;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
-      z-index:0;
+
+      /* Фон с картинкой и плавным тёмным оверлеем */
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.65), 
+          rgba(0,0,0,0.65)
+        ),
+        url('img/studio-bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
     .hero-inner{
       position:relative;
