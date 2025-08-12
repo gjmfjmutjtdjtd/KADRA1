@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -323,13 +323,13 @@
       box-shadow: 0 7px 22px rgba(74, 222, 128, 0.7);
       outline: none;
     }
-    #discount-banner .close-btn {
+    #discount-banner .minimize-btn {
       position: absolute;
       top: 8px;
       right: 12px;
       background: transparent;
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       line-height: 1;
       color: white;
       cursor: pointer;
@@ -337,9 +337,10 @@
       font-weight: 700;
       padding: 0;
       transition: color 0.2s ease;
+      user-select:none;
     }
-    #discount-banner .close-btn:hover,
-    #discount-banner .close-btn:focus {
+    #discount-banner .minimize-btn:hover,
+    #discount-banner .minimize-btn:focus {
       color: #bbf7d0;
       outline: none;
     }
@@ -470,91 +471,92 @@
         <form action="mailto:hello@KadraRecordsstudio.com" method="post" enctype="text/plain" style="display:flex;flex-direction:column;gap:10px;">
           <input name="name" placeholder="Ваше имя" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
           <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
-          <textarea name="message" rows="5" placeholder="Сообщение" style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;"></textarea>
-          <button type="submit" style="background:var(--accent);color:#fff;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:background 0.3s ease;">Отправить</button>
+          <textarea name="message" placeholder="Сообщение" rows="4" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;"></textarea>
+          <button type="submit" style="padding:12px; border:none; border-radius:8px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; font-size:16px;">Отправить</button>
         </form>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="copyright">&copy; 2025 Kadra Records Studio</div>
-    <div class="contacts">Email: hello@kadrarecordsstudio.com | Тел: +7 999 123 45 67</div>
-    <div class="admin-login">
-      <button>Войти</button>
-    </div>
+    <div class="copyright">© 2025 Kadra Records Studio</div>
+    <div class="contacts">Email: hello@KadraRecordsstudio.com<br>Телефон: +7 (495) 123-45-67</div>
+    <div class="admin-login"><button onclick="alert('Вход в админку пока не реализован')">Админка</button></div>
   </footer>
 
   <!-- Баннер скидки -->
-  <div id="discount-banner" role="dialog" aria-live="polite" aria-label="Скидка на первую песню">
-    <p>Получи скидку на первую <a href="#soundcloud-players" id="discount-link">песню из каталога</a> 20%. Успей оформить заявку!</p>
-    <div class="timer" id="discount-timer">10</div>
-    <button class="btn" id="discount-apply-btn">Оформить заявку</button>
-    <button class="close-btn" id="discount-minimize-btn" aria-label="Свернуть баннер">–</button>
-  </div>
+<div id="discount-banner" role="alert" aria-live="assertive" aria-atomic="true">
+  <button class="minimize-btn" aria-label="Закрыть баннер скидки">&times;</button>
+  <p><strong>Скидка 15% при записи трека!</strong></p>
+  <p>Успей оформить заявку — акция заканчивается через <span class="timer" aria-live="polite" aria-atomic="true">30:00</span> минут</p>
+  <a href="#soundcloud-players" class="btn" role="button" aria-label="Оформить заявку со скидкой">Оформить заявку</a>
+</div>
 
-  <script>
+<script>
+  (() => {
     const banner = document.getElementById('discount-banner');
-    const timerElem = document.getElementById('discount-timer');
-    const applyBtn = document.getElementById('discount-apply-btn');
-    const minimizeBtn = document.getElementById('discount-minimize-btn');
-    const discountLink = document.getElementById('discount-link');
+    const timerEl = banner.querySelector('.timer');
+    const btnClose = banner.querySelector('.minimize-btn');
+    const btnAction = banner.querySelector('.btn');
 
-    let countdown = 10;
+    let countdown = 1800; // 30 минут в секундах
     let countdownInterval;
-    let minimized = false;
-    let applied = false;
+    let discountApplied = false;
 
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    }
+
+    // Показываем баннер и запускаем таймер
     function showBanner() {
       banner.classList.add('show');
-      countdown = 10;
-      timerElem.textContent = countdown;
+      timerEl.textContent = formatTime(countdown);
 
       countdownInterval = setInterval(() => {
         countdown--;
-        if(countdown <= 0){
+        if (countdown < 0) {
           clearInterval(countdownInterval);
-          hideBanner();
-          localStorage.setItem('discountExpired', 'true');
-        } else {
-          timerElem.textContent = countdown;
+          banner.classList.remove('show');
+          return;
         }
+        timerEl.textContent = formatTime(countdown);
       }, 1000);
     }
 
-    function hideBanner() {
-      banner.classList.remove('show');
-    }
-
-    // Показывать баннер, если не прошло 10 секунд и не применили скидку
     window.addEventListener('load', () => {
-      if(!localStorage.getItem('discountApplied')){
-        setTimeout(() => {
-          if(!localStorage.getItem('discountExpired')){
-            showBanner();
-          }
-        }, 10000);
+      setTimeout(() => {
+        if (!localStorage.getItem('discountBannerClosed') && !discountApplied) {
+          showBanner();
+        }
+      }, 7000);
+    });
+
+    btnClose.addEventListener('click', () => {
+      banner.classList.remove('show');
+      clearInterval(countdownInterval);
+      localStorage.setItem('discountBannerClosed', 'true');
+    });
+
+    btnAction.addEventListener('click', (e) => {
+      e.preventDefault();
+      discountApplied = true;
+      banner.classList.remove('show');
+      clearInterval(countdownInterval);
+      localStorage.setItem('discountApplied', 'true');
+      const targetId = btnAction.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
       }
     });
 
-    applyBtn.addEventListener('click', () => {
-      applied = true;
-      localStorage.setItem('discountApplied', 'true');
-      hideBanner();
-      alert('Заявка на скидку принята! Мы свяжемся с вами.');
-    });
-
-    minimizeBtn.addEventListener('click', () => {
-      minimized = true;
-      hideBanner();
-      // Чтобы баннер показывался снова при следующей загрузке страницы, не ставим никаких флагов.
-    });
-
-    // Если пользователь кликает по ссылке скидки — тоже можно считать как проявление интереса
-    discountLink.addEventListener('click', () => {
-      hideBanner();
-    });
-  </script>
+    if (localStorage.getItem('discountApplied')) {
+      discountApplied = true;
+    }
+  })();
+</script>
 
 </body>
 </html>
