@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KADRA records Studio</title>
+  <title>BlackRoom Studio</title>
   <style>
+    /* ===== Общие стили ===== */
     :root{
       --accent:#ff5252;
       --bg:#0d0d0d;
@@ -13,13 +14,28 @@
       --white: #ffffff;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:"Inter", "Arial", sans-serif; background:var(--bg); color:var(--white);}
-    
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", "Arial", sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* ===== Фиксированная шапка ===== */
     header{
       position:fixed;
-      top:0; left:0; width:100%; height:72px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 6%; z-index:1000;
+      top:0;
+      left:0;
+      width:100%;
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 6%;
+      z-index:1000;
       background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
       backdrop-filter: blur(6px);
       border-bottom:1px solid rgba(255,255,255,0.03);
@@ -43,24 +59,11 @@
     }
     nav a:hover{ opacity:1; transform:translateY(-2px); color:var(--accent) }
 
-    /* Кнопка входа */
-    #loginBtn {
-      background: var(--accent);
-      border: none;
-      padding: 8px 18px;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    #loginBtn:hover {
-      background: #e04343;
-    }
-
+    /* ===== Герой (шапка-баннер) ===== */
     .hero{
+      /* фиксируем высоту так, чтобы шапка не перекрывала контент */
       min-height: calc(100vh - 72px);
-      margin-top:72px;
+      margin-top:72px; /* пространство под фиксированный header */
       display:flex;
       align-items:center;
       justify-content:center;
@@ -74,6 +77,7 @@
       background-position:center center;
       background-repeat:no-repeat;
     }
+    /* полупрозрачный слой для читаемости текста */
     .hero::after{
       content:"";
       position:absolute;
@@ -81,6 +85,7 @@
       background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.65) 100%);
       z-index:0;
     }
+
     .hero-inner{
       position:relative;
       z-index:1;
@@ -114,6 +119,7 @@
     }
     .hero .cta:hover{ transform:translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.55) }
 
+    /* ===== Блоки ниже шапки (для контекста) ===== */
     main{padding:60px 6% 120px}
     .services{
       display:grid;
@@ -140,6 +146,8 @@
       border-radius:8px;
       min-width:200px;
     }
+
+    /* ===== Футер ===== */
     footer{
       padding:40px 6%;
       color:rgba(255,255,255,0.7);
@@ -147,82 +155,29 @@
       background:transparent;
     }
 
-    /* Модалка для входа */
-    #loginModal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(3px);
-      justify-content: center;
-      align-items: center;
-    }
-    #loginModal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-      width: 320px;
-      color: var(--white);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .modal-content h2 {
-      margin: 0 0 20px;
-      font-weight: 700;
-      font-size: 24px;
-      text-align: center;
-    }
-    .modal-content input {
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: none;
-      background: #111;
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-    }
-    .modal-content button {
-      padding: 12px 0;
-      background: var(--accent);
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    .modal-content button:hover {
-      background: #e04343;
-    }
-    .modal-content .cancel-btn {
-      background: #444;
-      margin-top: 8px;
-    }
-    .modal-content .cancel-btn:hover {
-      background: #555;
+    /* ===== Адаптив ===== */
+    @media (max-width:720px){
+      header{ padding:10px 5% }
+      nav{ gap:12px; font-size:14px }
+      .hero{ padding:32px 5% }
+      .hero p{ font-size:15px }
     }
   </style>
 </head>
 <body>
 
+  <!-- фиксированная шапка с меню (меню уже есть — без текста на фоне) -->
   <header>
-    <div class="logo">KADRA Records Studio</div>
+    <div class="logo">BlackRoom Studio</div>
     <nav>
       <a href="#services">Услуги</a>
       <a href="#about">О нас</a>
       <a href="#tracks">Работы</a>
       <a href="#contact">Контакты</a>
     </nav>
-    <button id="loginBtn">Вход</button>
   </header>
 
+  <!-- hero: фон берётся из img/studio-bg.jpg (картинка без надписей) -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
       <h1>Создаём музыку, которая говорит за вас</h1>
@@ -262,6 +217,7 @@
     <section id="tracks" style="margin-top:48px;">
       <h2 style="color:var(--accent); text-align:center;">Наши работы</h2>
       <div style="max-width:900px; margin:18px auto;">
+        <!-- вставь сюда свой SoundCloud/Spotify плеер -->
         <iframe width="100%" height="166" scrolling="no" frameborder="no"
           src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1534488977&color=%23ff5500" 
           style="border-radius:8px; box-shadow: 0 8px 20px rgba(0,0,0,0.4)"></iframe>
@@ -270,7 +226,7 @@
 
     <section id="about" style="margin-top:40px;">
       <h2 style="color:var(--accent); text-align:center;">О студии</h2>
-      <p style="max-width:900px; margin:10px auto 0; text-align:center; color:rgba(255,255,255,0.85)">KADRA records — это команда инженеров и продюсеров, которые знают, как превратить идею в хит. Три локации — с разной атмосферой, но с одинаковым подходом к качеству и вниманию к деталям.</p>
+      <p style="max-width:900px; margin:10px auto 0; text-align:center; color:rgba(255,255,255,0.85)">BlackRoom — это команда инженеров и продюсеров, которые знают, как превратить идею в хит. Три локации — с разной атмосферой, но с одинаковым подходом к качеству и вниманию к деталям.</p>
     </section>
 
     <section id="contact" style="margin-top:40px;">
@@ -288,54 +244,10 @@
 
   <footer>
     <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-      <div>© 2025 KADRA records Studio</div>
+      <div>© 2025 BlackRoom Studio</div>
       <div style="opacity:0.9">Москва · Бали · Волгоград — info@blackroomstudio.com</div>
     </div>
   </footer>
-
-  <!-- Модалка входа -->
-  <div id="loginModal">
-    <div class="modal-content">
-      <form id="loginForm">
-        <h2>Вход в кабинет</h2>
-        <input type="text" name="email" placeholder="Логин" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
-        <button type="button" id="closeModal" class="cancel-btn">Отмена</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const adminEmail = 'thekadrainfo';
-    const adminPass = 'Ioioiohyadfg';
-
-    const modal = document.getElementById('loginModal');
-    const loginForm = document.getElementById('loginForm');
-    const closeModalBtn = document.getElementById('closeModal');
-    const loginBtn = document.getElementById('loginBtn');
-
-    loginBtn.addEventListener('click', () => {
-      modal.classList.add('active');
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = loginForm.email.value.trim();
-      const pass = loginForm.password.value.trim();
-
-      if(email === adminEmail && pass === adminPass) {
-        alert('Добро пожаловать, Администратор!');
-        window.location.href = 'admin.html'; // путь к админке, файл должен быть рядом
-      } else {
-        alert('Неверный логин или пароль');
-      }
-    });
-  </script>
 
 </body>
 </html>
