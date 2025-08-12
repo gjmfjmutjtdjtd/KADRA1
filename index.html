@@ -200,7 +200,7 @@
       right: 30px;
       background: var(--green-dark);
       color: white;
-      padding: 22px 26px;
+      padding: 22px 26px 22px 26px;
       border-radius: 18px;
       box-shadow: 0 8px 24px var(--shadow);
       font-family: 'Inter', sans-serif;
@@ -270,6 +270,26 @@
       background: var(--green-light);
       color: white;
       box-shadow: 0 7px 22px rgba(74, 222, 128, 0.7);
+      outline: none;
+    }
+    #discount-banner .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      line-height: 1;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+      padding: 0;
+      transition: color 0.2s ease;
+    }
+    #discount-banner .close-btn:hover,
+    #discount-banner .close-btn:focus {
+      color: #bbf7d0;
       outline: none;
     }
 
@@ -433,37 +453,46 @@
     </div>
   </footer>
 
-  <!-- Баннер скидки -->
-  <section id="discount-banner" aria-live="polite" role="region">
-    <p>Получи скидку на первую <a href="#soundcloud-players" tabindex="0">песню из каталога</a> <strong>20%</strong> — успей оформить заявку</p>
+  <!-- Блок скидочного баннера -->
+  <section id="discount-banner" role="region" aria-live="polite" aria-label="Скидочный баннер">
+    <button class="close-btn" aria-label="Свернуть баннер">&times;</button>
+    <p>Получите скидку на первую <a href="#soundcloud-players" tabindex="0">песню из каталога</a> 20% — успей оформить заявку!</p>
     <div class="timer" id="timer">30:00</div>
     <a href="#contact" id="apply-btn" class="btn">Оформить заявку</a>
   </section>
 
   <script>
-    function formatTime(sec) {
-      const m = Math.floor(sec / 60).toString().padStart(2, '0');
-      const s = (sec % 60).toString().padStart(2, '0');
-      return `${m}:${s}`;
-    }
-
     (function() {
       const banner = document.getElementById('discount-banner');
       const timerEl = document.getElementById('timer');
       const applyBtn = document.getElementById('apply-btn');
+      const closeBtn = banner.querySelector('.close-btn');
       const storageKeyTimer = 'discountTimerEnd';
       const storageKeyUsed = 'discountUsed';
+      const storageKeyClosed = 'discountClosed';
 
-      // Если уже использовал скидку - не показываем баннер
+      // Проверяем — использовал ли уже скидку
       if(localStorage.getItem(storageKeyUsed)) return;
 
-      let endTime = localStorage.getItem(storageKeyTimer);
+      // Проверяем, был ли баннер свернут
+      if(localStorage.getItem(storageKeyClosed)) {
+        // Если свернут, не показываем, но таймер в фоне продолжает работать
+        return;
+      }
 
+      // Получаем или задаём время окончания скидки
+      let endTime = localStorage.getItem(storageKeyTimer);
       if(!endTime){
         endTime = Date.now() + 30 * 60 * 1000; // 30 минут
         localStorage.setItem(storageKeyTimer, endTime);
       } else {
         endTime = Number(endTime);
+      }
+
+      function formatTime(sec) {
+        const m = Math.floor(sec / 60).toString().padStart(2, '0');
+        const s = (sec % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
       }
 
       function updateTimer(){
@@ -473,6 +502,7 @@
         if(diffSec <= 0){
           banner.classList.remove('show');
           localStorage.removeItem(storageKeyTimer);
+          localStorage.removeItem(storageKeyClosed);
           clearInterval(timerInterval);
           return;
         }
@@ -480,17 +510,24 @@
         timerEl.textContent = formatTime(diffSec);
       }
 
-      // Показать баннер через 10 секунд после захода на страницу
+      // Показать баннер через 10 секунд после захода
       setTimeout(() => {
         banner.classList.add('show');
         updateTimer();
         timerInterval = setInterval(updateTimer, 1000);
       }, 10000);
 
-      // При нажатии на кнопку «Оформить заявку» - скрыть баннер и отметить использование скидки
+      // Кнопка оформить заявку — помечаем скидку как использованную и прячем баннер
       applyBtn.addEventListener('click', () => {
         localStorage.setItem(storageKeyUsed, 'true');
         banner.classList.remove('show');
+        localStorage.removeItem(storageKeyClosed);
+      });
+
+      // Кнопка свернуть — просто скрываем баннер и ставим отметку свернут
+      closeBtn.addEventListener('click', () => {
+        banner.classList.remove('show');
+        localStorage.setItem(storageKeyClosed, 'true');
       });
 
       let timerInterval;
