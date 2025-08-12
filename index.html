@@ -13,13 +13,26 @@
       --white: #ffffff;
     }
     *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:"Inter", "Arial", sans-serif; background:var(--bg); color:var(--white);}
-    
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", "Arial", sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
     header{
       position:fixed;
-      top:0; left:0; width:100%; height:72px;
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 6%; z-index:1000;
+      top:0;
+      left:0;
+      width:100%;
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 6%;
+      z-index:1000;
       background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
       backdrop-filter: blur(6px);
       border-bottom:1px solid rgba(255,255,255,0.03);
@@ -42,22 +55,6 @@
       transition:opacity .18s, transform .12s;
     }
     nav a:hover{ opacity:1; transform:translateY(-2px); color:var(--accent) }
-
-    /* Кнопка входа */
-    #loginBtn {
-      background: var(--accent);
-      border: none;
-      padding: 8px 18px;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    #loginBtn:hover {
-      background: #e04343;
-    }
-
     .hero{
       min-height: calc(100vh - 72px);
       margin-top:72px;
@@ -113,7 +110,6 @@
       transition:transform .14s, box-shadow .14s;
     }
     .hero .cta:hover{ transform:translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.55) }
-
     main{padding:60px 6% 120px}
     .services{
       display:grid;
@@ -146,67 +142,11 @@
       border-top:1px solid rgba(255,255,255,0.03);
       background:transparent;
     }
-
-    /* Модалка для входа */
-    #loginModal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(3px);
-      justify-content: center;
-      align-items: center;
-    }
-    #loginModal.active {
-      display: flex;
-    }
-    .modal-content {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-      width: 320px;
-      color: var(--white);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .modal-content h2 {
-      margin: 0 0 20px;
-      font-weight: 700;
-      font-size: 24px;
-      text-align: center;
-    }
-    .modal-content input {
-      padding: 10px 14px;
-      border-radius: 8px;
-      border: none;
-      background: #111;
-      color: #fff;
-      font-size: 16px;
-      outline: none;
-    }
-    .modal-content button {
-      padding: 12px 0;
-      background: var(--accent);
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    .modal-content button:hover {
-      background: #e04343;
-    }
-    .modal-content .cancel-btn {
-      background: #444;
-      margin-top: 8px;
-    }
-    .modal-content .cancel-btn:hover {
-      background: #555;
+    @media (max-width:720px){
+      header{ padding:10px 5% }
+      nav{ gap:12px; font-size:14px }
+      .hero{ padding:32px 5% }
+      .hero p{ font-size:15px }
     }
   </style>
 </head>
@@ -220,7 +160,6 @@
       <a href="#tracks">Работы</a>
       <a href="#contact">Контакты</a>
     </nav>
-    <button id="loginBtn">Вход</button>
   </header>
 
   <section class="hero" role="region" aria-label="Главный баннер">
@@ -248,7 +187,6 @@
           <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
         </div>
       </div>
-
       <div style="margin-top:28px;">
         <h3 style="color:var(--accent);">Локации студий</h3>
         <div class="locations">
@@ -292,50 +230,6 @@
       <div style="opacity:0.9">Москва · Бали · Волгоград — info@blackroomstudio.com</div>
     </div>
   </footer>
-
-  <!-- Модалка входа -->
-  <div id="loginModal">
-    <div class="modal-content">
-      <form id="loginForm">
-        <h2>Вход в кабинет</h2>
-        <input type="text" name="email" placeholder="Логин" required>
-        <input type="password" name="password" placeholder="Пароль" required>
-        <button type="submit">Войти</button>
-        <button type="button" id="closeModal" class="cancel-btn">Отмена</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    const adminEmail = 'thekadrainfo';
-    const adminPass = 'Ioioiohyadfg';
-
-    const modal = document.getElementById('loginModal');
-    const loginForm = document.getElementById('loginForm');
-    const closeModalBtn = document.getElementById('closeModal');
-    const loginBtn = document.getElementById('loginBtn');
-
-    loginBtn.addEventListener('click', () => {
-      modal.classList.add('active');
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
-
-    loginForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const email = loginForm.email.value.trim();
-      const pass = loginForm.password.value.trim();
-
-      if(email === adminEmail && pass === adminPass) {
-        alert('Добро пожаловать, Администратор!');
-        window.location.href = 'admin.html'; // путь к админке, файл должен быть рядом
-      } else {
-        alert('Неверный логин или пароль');
-      }
-    });
-  </script>
 
 </body>
 </html>
