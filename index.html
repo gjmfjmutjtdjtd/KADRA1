@@ -25,6 +25,7 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
+    /* ===== Фиксированная шапка ===== */
     header {
       position: fixed;
       top: 0;
@@ -56,12 +57,15 @@
       font-weight: 600;
       opacity: 0.95;
       transition: opacity 0.18s, transform 0.12s;
+      font-size: 16px;
     }
     nav a:hover {
       opacity: 1;
       transform: translateY(-2px);
       color: var(--accent);
     }
+
+    /* Кнопка «Telegram» в меню */
     nav .chat-btn {
       padding: 8px 18px;
       background: var(--accent);
@@ -70,12 +74,14 @@
       font-weight: 700;
       text-decoration: none;
       transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
     }
     nav .chat-btn:hover {
       background-color: #ff3333;
       transform: translateY(-2px);
     }
 
+    /* ===== Герой (шапка-баннер) ===== */
     .hero {
       min-height: calc(100vh - 72px);
       margin-top: 72px;
@@ -129,6 +135,7 @@
       box-shadow: 0 16px 32px rgba(0,0,0,0.55);
     }
 
+    /* ===== Блоки ниже шапки ===== */
     main {
       padding: 60px 6% 120px;
     }
@@ -161,6 +168,7 @@
       min-width: 200px;
     }
 
+    /* ===== SoundCloud плееры (новый блок) ===== */
     #soundcloud-players {
       margin-top: 48px;
       display: flex;
@@ -194,13 +202,55 @@
       width: 100% !important;
     }
 
+    /* ===== Футер ===== */
+    footer {
+      padding: 40px 6%;
+      color: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    footer .copyright {
+      flex: 1;
+      min-width: 200px;
+    }
+    footer .contacts {
+      flex: 1;
+      min-width: 200px;
+      opacity: 0.9;
+    }
+    footer .admin-login {
+      flex-shrink: 0;
+    }
+    footer .admin-login button {
+      background-color: var(--accent);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,82,82,0.5);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+    footer .admin-login button:hover {
+      background-color: #ff3333;
+      transform: translateY(-3px);
+    }
+
+    /* ===== Баннер скидки ===== */
     #discount-banner {
       position: fixed;
       bottom: 30px;
       right: 30px;
       background: var(--green-dark);
       color: white;
-      padding: 22px 26px 22px 26px;
+      padding: 22px 26px;
       border-radius: 18px;
       box-shadow: 0 8px 24px var(--shadow);
       font-family: 'Inter', sans-serif;
@@ -264,6 +314,7 @@
       display: inline-block;
       min-width: 160px;
       text-align: center;
+      cursor: pointer;
     }
     #discount-banner .btn:hover,
     #discount-banner .btn:focus {
@@ -293,52 +344,31 @@
       outline: none;
     }
 
-    footer {
-      padding: 40px 6%;
-      color: rgba(255,255,255,0.7);
-      border-top: 1px solid rgba(255,255,255,0.03);
-      background: transparent;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    footer .copyright {
-      flex: 1;
-      min-width: 200px;
-    }
-    footer .contacts {
-      flex: 1;
-      min-width: 200px;
-      opacity: 0.9;
-    }
-    footer .admin-login {
-      flex-shrink: 0;
-    }
-    footer .admin-login button {
-      background-color: var(--accent);
-      border: none;
-      color: #fff;
-      font-weight: 700;
-      padding: 10px 24px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255,82,82,0.5);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-size: 16px;
-    }
-    footer .admin-login button:hover {
-      background-color: #ff3333;
-      transform: translateY(-3px);
-    }
-
+    /* ===== Адаптив ===== */
     @media (max-width: 720px) {
-      header { padding: 10px 5% }
-      nav { gap: 12px; font-size: 14px }
-      .hero { padding: 32px 5% }
-      .hero p { font-size: 15px }
-
+      header {
+        padding: 10px 5%;
+      }
+      .logo {
+        font-size: 16px !important;
+      }
+      nav {
+        gap: 12px;
+        font-size: 14px;
+      }
+      nav a {
+        font-size: 12px !important;
+      }
+      nav .chat-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+      }
+      .hero {
+        padding: 32px 5%;
+      }
+      .hero p {
+        font-size: 15px;
+      }
       #soundcloud-players {
         flex-direction: column;
         align-items: center;
@@ -347,7 +377,6 @@
         max-width: 90vw;
         margin-bottom: 30px;
       }
-
       footer {
         flex-direction: column;
         align-items: center;
@@ -365,6 +394,7 @@
 </head>
 <body>
 
+  <!-- фиксированная шапка с меню -->
   <header>
     <div class="logo">Kadra Records Studio</div>
     <nav>
@@ -376,6 +406,7 @@
     </nav>
   </header>
 
+  <!-- hero -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
       <h1>Создаём музыку, которая говорит за вас</h1>
@@ -412,6 +443,7 @@
       </div>
     </section>
 
+    <!-- Новый блок с двумя SoundCloud плеерами рядом -->
     <section id="soundcloud-players">
       <div>
         <h3>Готовые песни</h3>
@@ -439,99 +471,89 @@
           <input name="name" placeholder="Ваше имя" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
           <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
           <textarea name="message" rows="5" placeholder="Сообщение" style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;"></textarea>
-          <button type="submit" style="padding:12px;border-radius:8px;border:none;background:var(--accent);color:#fff;font-weight:700;">Отправить</button>
+          <button type="submit" style="background:var(--accent);color:#fff;padding:12px;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:background 0.3s ease;">Отправить</button>
         </form>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="copyright">© 2025 Kadra Records Studio</div>
-    <div class="contacts">Москва · Бали · Волгоград — info@KadraRecordsstudio.com</div>
+    <div class="copyright">&copy; 2025 Kadra Records Studio</div>
+    <div class="contacts">Email: hello@kadrarecordsstudio.com | Тел: +7 999 123 45 67</div>
     <div class="admin-login">
-      <button onclick="location.href='/admin-login.html'">Вход</button>
+      <button>Войти</button>
     </div>
   </footer>
 
-  <!-- Блок скидочного баннера -->
-  <section id="discount-banner" role="region" aria-live="polite" aria-label="Скидочный баннер">
-    <button class="close-btn" aria-label="Свернуть баннер">&times;</button>
-    <p>Получите скидку на первую <a href="#soundcloud-players" tabindex="0">песню из каталога</a> 20% — успей оформить заявку!</p>
-    <div class="timer" id="timer">30:00</div>
-    <a href="#contact" id="apply-btn" class="btn">Оформить заявку</a>
-  </section>
+  <!-- Баннер скидки -->
+  <div id="discount-banner" role="dialog" aria-live="polite" aria-label="Скидка на первую песню">
+    <p>Получи скидку на первую <a href="#soundcloud-players" id="discount-link">песню из каталога</a> 20%. Успей оформить заявку!</p>
+    <div class="timer" id="discount-timer">10</div>
+    <button class="btn" id="discount-apply-btn">Оформить заявку</button>
+    <button class="close-btn" id="discount-minimize-btn" aria-label="Свернуть баннер">–</button>
+  </div>
 
   <script>
-    (function() {
-      const banner = document.getElementById('discount-banner');
-      const timerEl = document.getElementById('timer');
-      const applyBtn = document.getElementById('apply-btn');
-      const closeBtn = banner.querySelector('.close-btn');
-      const storageKeyTimer = 'discountTimerEnd';
-      const storageKeyUsed = 'discountUsed';
-      const storageKeyClosed = 'discountClosed';
+    const banner = document.getElementById('discount-banner');
+    const timerElem = document.getElementById('discount-timer');
+    const applyBtn = document.getElementById('discount-apply-btn');
+    const minimizeBtn = document.getElementById('discount-minimize-btn');
+    const discountLink = document.getElementById('discount-link');
 
-      // Проверяем — использовал ли уже скидку
-      if(localStorage.getItem(storageKeyUsed)) return;
+    let countdown = 10;
+    let countdownInterval;
+    let minimized = false;
+    let applied = false;
 
-      // Проверяем, был ли баннер свернут
-      if(localStorage.getItem(storageKeyClosed)) {
-        // Если свернут, не показываем, но таймер в фоне продолжает работать
-        return;
-      }
+    function showBanner() {
+      banner.classList.add('show');
+      countdown = 10;
+      timerElem.textContent = countdown;
 
-      // Получаем или задаём время окончания скидки
-      let endTime = localStorage.getItem(storageKeyTimer);
-      if(!endTime){
-        endTime = Date.now() + 30 * 60 * 1000; // 30 минут
-        localStorage.setItem(storageKeyTimer, endTime);
-      } else {
-        endTime = Number(endTime);
-      }
-
-      function formatTime(sec) {
-        const m = Math.floor(sec / 60).toString().padStart(2, '0');
-        const s = (sec % 60).toString().padStart(2, '0');
-        return `${m}:${s}`;
-      }
-
-      function updateTimer(){
-        const now = Date.now();
-        const diffSec = Math.floor((endTime - now) / 1000);
-
-        if(diffSec <= 0){
-          banner.classList.remove('show');
-          localStorage.removeItem(storageKeyTimer);
-          localStorage.removeItem(storageKeyClosed);
-          clearInterval(timerInterval);
-          return;
+      countdownInterval = setInterval(() => {
+        countdown--;
+        if(countdown <= 0){
+          clearInterval(countdownInterval);
+          hideBanner();
+          localStorage.setItem('discountExpired', 'true');
+        } else {
+          timerElem.textContent = countdown;
         }
+      }, 1000);
+    }
 
-        timerEl.textContent = formatTime(diffSec);
+    function hideBanner() {
+      banner.classList.remove('show');
+    }
+
+    // Показывать баннер, если не прошло 10 секунд и не применили скидку
+    window.addEventListener('load', () => {
+      if(!localStorage.getItem('discountApplied')){
+        setTimeout(() => {
+          if(!localStorage.getItem('discountExpired')){
+            showBanner();
+          }
+        }, 10000);
       }
+    });
 
-      // Показать баннер через 10 секунд после захода
-      setTimeout(() => {
-        banner.classList.add('show');
-        updateTimer();
-        timerInterval = setInterval(updateTimer, 1000);
-      }, 10000);
+    applyBtn.addEventListener('click', () => {
+      applied = true;
+      localStorage.setItem('discountApplied', 'true');
+      hideBanner();
+      alert('Заявка на скидку принята! Мы свяжемся с вами.');
+    });
 
-      // Кнопка оформить заявку — помечаем скидку как использованную и прячем баннер
-      applyBtn.addEventListener('click', () => {
-        localStorage.setItem(storageKeyUsed, 'true');
-        banner.classList.remove('show');
-        localStorage.removeItem(storageKeyClosed);
-      });
+    minimizeBtn.addEventListener('click', () => {
+      minimized = true;
+      hideBanner();
+      // Чтобы баннер показывался снова при следующей загрузке страницы, не ставим никаких флагов.
+    });
 
-      // Кнопка свернуть — просто скрываем баннер и ставим отметку свернут
-      closeBtn.addEventListener('click', () => {
-        banner.classList.remove('show');
-        localStorage.setItem(storageKeyClosed, 'true');
-      });
-
-      let timerInterval;
-    })();
+    // Если пользователь кликает по ссылке скидки — тоже можно считать как проявление интереса
+    discountLink.addEventListener('click', () => {
+      hideBanner();
+    });
   </script>
 
 </body>
