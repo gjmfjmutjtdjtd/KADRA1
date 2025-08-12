@@ -5,29 +5,195 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>KADRA Records Studio</title>
   <style>
-    /* ===== Общие стили ===== */
-    :root{
-      --accent:#ff5252;
-      --bg:#0d0d0d;
-      --card:#1a1a1a;
-      --glass: rgba(0,0,0,0.6);
+    :root {
+      --accent: #ff5252;
+      --bg: #0d0d0d;
+      --card: #1a1a1a;
+      --glass: rgba(0, 0, 0, 0.6);
       --white: #ffffff;
-      --green-light: #4ade80; /* светлый зелёный */
-      --green-dark: #22c55e; /* насыщенный зелёный */
+      --green-light: #4ade80;
+      --green-dark: #22c55e;
       --shadow: rgba(34, 197, 94, 0.3);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
+    * { box-sizing: border-box }
+    html, body { height: 100%; margin: 0; }
+    body {
       font-family: "Inter", "Arial", sans-serif;
-      background:var(--bg);
-      color:var(--white);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      background: var(--bg);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ===== Баннер скидки с таймером ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6%;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.95;
+      transition: opacity 0.18s, transform 0.12s;
+    }
+    nav a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      color: var(--accent);
+    }
+    nav .chat-btn {
+      padding: 8px 18px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    nav .chat-btn:hover {
+      background-color: #ff3333;
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      min-height: calc(100vh - 72px);
+      margin-top: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 48px 6%;
+      text-align: center;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url('img/studio-bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 56px);
+      line-height: 1.02;
+      margin: 0 0 18px 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      margin: 0 auto 26px;
+      max-width: 820px;
+      color: rgba(255,255,255,0.88);
+      font-size: clamp(14px, 1.6vw, 18px);
+      line-height: 1.5;
+    }
+    .hero .cta {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+      transition: transform 0.14s, box-shadow 0.14s;
+    }
+    .hero .cta:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.55);
+    }
+
+    main {
+      padding: 60px 6% 120px;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .locations {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .loc {
+      background: rgba(255,255,255,0.03);
+      padding: 14px 18px;
+      border-radius: 8px;
+      min-width: 200px;
+    }
+
+    #soundcloud-players {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #soundcloud-players > div {
+      flex: 1 1 400px;
+      max-width: 400px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,82,82,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #soundcloud-players h3 {
+      color: var(--accent);
+      font-family: "Inter", Arial, sans-serif;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    iframe {
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 100% !important;
+    }
+
     #discount-banner {
       position: fixed;
       bottom: 30px;
@@ -73,7 +239,7 @@
     }
     #discount-banner p a:hover,
     #discount-banner p a:focus {
-      color: #bbf7d0; /* светло-зелёный для ховера */
+      color: #bbf7d0;
       outline: none;
     }
     #discount-banner .timer {
@@ -107,175 +273,11 @@
       outline: none;
     }
 
-    /* ===== Остальной CSS (без изменений) ===== */
-    /* Фиксированная шапка и т.д. */
-
-    header{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:72px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 6%;
-      z-index:1000;
-      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
-      backdrop-filter: blur(6px);
-      border-bottom:1px solid rgba(255,255,255,0.03);
-    }
-    .logo{
-      font-weight:700;
-      font-size:20px;
-      letter-spacing:1px;
-    }
-    nav{
-      display:flex;
-      gap:20px;
-      align-items:center;
-    }
-    nav a{
-      color:var(--white);
-      text-decoration:none;
-      font-weight:600;
-      opacity:0.95;
-      transition:opacity .18s, transform .12s;
-    }
-    nav a:hover{ opacity:1; transform:translateY(-2px); color:var(--accent) }
-
-    nav .chat-btn {
-      padding: 8px 18px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 6px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    nav .chat-btn:hover {
-      background-color: #ff3333;
-      transform: translateY(-2px);
-    }
-
-    .hero{
-      min-height: calc(100vh - 72px);
-      margin-top:72px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      padding:48px 6%;
-      text-align:center;
-      color:var(--white);
-      background:
-        linear-gradient(
-          rgba(0,0,0,0.65), 
-          rgba(0,0,0,0.65)
-        ),
-        url('img/studio-bg.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-    .hero-inner{
-      position:relative;
-      z-index:1;
-      max-width:1100px;
-      width:100%;
-    }
-    .hero h1{
-      font-size: clamp(28px, 5vw, 56px);
-      line-height:1.02;
-      margin:0 0 18px 0;
-      font-weight:800;
-      letter-spacing:-0.02em;
-    }
-    .hero p{
-      margin:0 auto 26px;
-      max-width:820px;
-      color: rgba(255,255,255,0.88);
-      font-size: clamp(14px, 1.6vw, 18px);
-      line-height:1.5;
-    }
-    .hero .cta{
-      display:inline-block;
-      padding:12px 28px;
-      background:var(--accent);
-      color:#fff;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:700;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-      transition:transform .14s, box-shadow .14s;
-    }
-    .hero .cta:hover{ transform:translateY(-4px); box-shadow: 0 16px 32px rgba(0,0,0,0.55) }
-
-    main{padding:60px 6% 120px}
-    .services{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap:20px;
-      margin-top:10px;
-    }
-    .card{
-      background:var(--card);
-      padding:20px;
-      border-radius:10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-    }
-    .card h3{ margin:0 0 10px; color:var(--accent) }
-    .locations{
-      margin-top:30px;
-      display:flex;
-      gap:20px;
-      flex-wrap:wrap;
-    }
-    .loc{
-      background: rgba(255,255,255,0.03);
-      padding:14px 18px;
-      border-radius:8px;
-      min-width:200px;
-    }
-
-    #soundcloud-players {
-      margin-top: 48px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      flex-wrap: wrap;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #soundcloud-players > div {
-      flex: 1 1 400px;
-      max-width: 400px;
-      background: var(--card);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255,82,82,0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #soundcloud-players h3 {
-      color: var(--accent);
-      font-family: "Inter", Arial, sans-serif;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    iframe {
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      width: 100% !important;
-    }
-
-    footer{
-      padding:40px 6%;
-      color:rgba(255,255,255,0.7);
-      border-top:1px solid rgba(255,255,255,0.03);
-      background:transparent;
+    footer {
+      padding: 40px 6%;
+      color: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: transparent;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -312,10 +314,10 @@
     }
 
     @media (max-width: 720px) {
-      header{ padding:10px 5% }
-      nav{ gap:12px; font-size:14px }
-      .hero{ padding:32px 5% }
-      .hero p{ font-size:15px }
+      header { padding: 10px 5% }
+      nav { gap: 12px; font-size: 14px }
+      .hero { padding: 32px 5% }
+      .hero p { font-size: 15px }
 
       #soundcloud-players {
         flex-direction: column;
@@ -343,14 +345,6 @@
 </head>
 <body>
 
-  <!-- Баннер скидки с таймером -->
-  <section id="discount-banner" aria-live="polite" role="region">
-    <p>Получи скидку на первую <a href="#soundcloud-players" tabindex="0">песню из каталога</a> <strong>20%</strong> — успей оформить заявку</p>
-    <div class="timer" id="timer">30:00</div>
-    <a href="#contact" class="btn">Оформить заявку</a>
-  </section>
-
-  <!-- фиксированная шапка с меню -->
   <header>
     <div class="logo">Kadra Records Studio</div>
     <nav>
@@ -362,7 +356,6 @@
     </nav>
   </header>
 
-  <!-- hero -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
       <h1>Создаём музыку, которая говорит за вас</h1>
@@ -399,7 +392,6 @@
       </div>
     </section>
 
-    <!-- Новый блок с двумя SoundCloud плеерами рядом -->
     <section id="soundcloud-players">
       <div>
         <h3>Готовые песни</h3>
@@ -423,7 +415,7 @@
     <section id="contact" style="margin-top:40px;">
       <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
       <div style="max-width:640px; margin:14px auto;">
-        <form action="mailto:hello@Kadra Recordsstudio.com" method="post" enctype="text/plain" style="display:flex;flex-direction:column;gap:10px;">
+        <form action="mailto:hello@KadraRecordsstudio.com" method="post" enctype="text/plain" style="display:flex;flex-direction:column;gap:10px;">
           <input name="name" placeholder="Ваше имя" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
           <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
           <textarea name="message" rows="5" placeholder="Сообщение" style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;"></textarea>
@@ -435,30 +427,41 @@
 
   <footer>
     <div class="copyright">© 2025 Kadra Records Studio</div>
-    <div class="contacts">Москва · Бали · Волгоград — info@Kadra Recordsstudio.com</div>
+    <div class="contacts">Москва · Бали · Волгоград — info@KadraRecordsstudio.com</div>
     <div class="admin-login">
       <button onclick="location.href='/admin-login.html'">Вход</button>
     </div>
   </footer>
 
+  <!-- Баннер скидки -->
+  <section id="discount-banner" aria-live="polite" role="region">
+    <p>Получи скидку на первую <a href="#soundcloud-players" tabindex="0">песню из каталога</a> <strong>20%</strong> — успей оформить заявку</p>
+    <div class="timer" id="timer">30:00</div>
+    <a href="#contact" id="apply-btn" class="btn">Оформить заявку</a>
+  </section>
+
   <script>
-    // Форматирует секунды в mm:ss
     function formatTime(sec) {
       const m = Math.floor(sec / 60).toString().padStart(2, '0');
       const s = (sec % 60).toString().padStart(2, '0');
       return `${m}:${s}`;
     }
 
-    (function(){
+    (function() {
       const banner = document.getElementById('discount-banner');
       const timerEl = document.getElementById('timer');
-      const storageKey = 'discountTimerEnd';
+      const applyBtn = document.getElementById('apply-btn');
+      const storageKeyTimer = 'discountTimerEnd';
+      const storageKeyUsed = 'discountUsed';
 
-      let endTime = localStorage.getItem(storageKey);
+      // Если уже использовал скидку - не показываем баннер
+      if(localStorage.getItem(storageKeyUsed)) return;
+
+      let endTime = localStorage.getItem(storageKeyTimer);
 
       if(!endTime){
-        endTime = Date.now() + 30 * 60 * 1000;
-        localStorage.setItem(storageKey, endTime);
+        endTime = Date.now() + 30 * 60 * 1000; // 30 минут
+        localStorage.setItem(storageKeyTimer, endTime);
       } else {
         endTime = Number(endTime);
       }
@@ -469,7 +472,7 @@
 
         if(diffSec <= 0){
           banner.classList.remove('show');
-          localStorage.removeItem(storageKey);
+          localStorage.removeItem(storageKeyTimer);
           clearInterval(timerInterval);
           return;
         }
@@ -477,12 +480,18 @@
         timerEl.textContent = formatTime(diffSec);
       }
 
-      // Показываем баннер через 10 секунд после захода на сайт
+      // Показать баннер через 10 секунд после захода на страницу
       setTimeout(() => {
         banner.classList.add('show');
         updateTimer();
         timerInterval = setInterval(updateTimer, 1000);
       }, 10000);
+
+      // При нажатии на кнопку «Оформить заявку» - скрыть баннер и отметить использование скидки
+      applyBtn.addEventListener('click', () => {
+        localStorage.setItem(storageKeyUsed, 'true');
+        banner.classList.remove('show');
+      });
 
       let timerInterval;
     })();
