@@ -1,142 +1,41 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Чат с Telegram</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #f4f4f4;
-    }
-    .tg-chat-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #0088cc;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .tg-chat-btn:hover {
-      transform: scale(1.1);
-    }
-    .tg-chat-btn img {
-      width: 32px;
-      height: 32px;
-    }
-    .tg-chat-window {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 300px;
-      height: 400px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      display: none;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 9999;
-    }
-    .tg-chat-window.open {
-      display: flex;
-    }
-    .tg-chat-header {
-      background: #0088cc;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
-    .tg-chat-messages {
-      flex: 1;
-      padding: 10px;
-      overflow-y: auto;
-      font-size: 14px;
-    }
-    .tg-chat-input {
-      display: flex;
-      border-top: 1px solid #ddd;
-    }
-    .tg-chat-input input {
-      flex: 1;
-      border: none;
-      padding: 10px;
-      font-size: 14px;
-    }
-    .tg-chat-input button {
-      background: #0088cc;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Кнопка Telegram</title>
+<style>
+  .tg-chat-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0088cc;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .tg-chat-btn:hover {
+    transform: scale(1.1);
+  }
+  .tg-chat-btn img {
+    width: 32px;
+    height: 32px;
+  }
+</style>
 </head>
 <body>
 
-<!-- Кнопка -->
-<div class="tg-chat-btn" onclick="document.querySelector('.tg-chat-window').classList.toggle('open')">
+<!-- Плавающая кнопка -->
+<a href="https://t.me/kadrarec" target="_blank" class="tg-chat-btn">
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="TG">
-</div>
-
-<!-- Окно чата -->
-<div class="tg-chat-window">
-  <div class="tg-chat-header">Чат с группой</div>
-  <div class="tg-chat-messages" id="chatMessages">
-    <p style="color: gray;">Напишите сообщение...</p>
-  </div>
-  <div class="tg-chat-input">
-    <input type="text" id="chatInput" placeholder="Ваше сообщение...">
-    <button onclick="sendMessage()">➤</button>
-  </div>
-</div>
-
-<script>
-  const BOT_TOKEN = "8165055465:AAFWH5_jnWHtg6H46P6-xoalP9q3yxzQH_Y";
-  const CHAT_ID = "1730906786";
-
-  function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    if (!message) return;
-
-    // Отображаем сообщение у себя
-    const chatBox = document.getElementById('chatMessages');
-    const p = document.createElement('p');
-    p.textContent = "Вы: " + message;
-    chatBox.appendChild(p);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    // Отправляем в Telegram
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: message
-      })
-    }).then(res => res.json())
-      .then(data => {
-        if (data.ok) {
-          console.log("Сообщение отправлено");
-        } else {
-          console.error("Ошибка отправки", data);
-        }
-      })
-      .catch(err => console.error("Ошибка:", err));
-
-    input.value = "";
-  }
-</script>
+</a>
 
 </body>
 </html>
