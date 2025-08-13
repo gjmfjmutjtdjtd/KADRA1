@@ -397,7 +397,6 @@
 </head>
 <body>
 
-  <!-- фиксированная шапка с меню -->
   <header>
     <div class="logo">Kadra Records Studio</div>
     <nav>
@@ -409,17 +408,15 @@
     </nav>
   </header>
 
-  <!-- Таймер релиза под шапкой -->
   <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
     <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
   </div>
 
-  <!-- hero -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
       <h1>Создаём музыку, которая говорит за вас</h1>
       <p>Профессиональная запись, сведение, мастеринг и полное продюсирование треков — три студии: Москва · Бали · Волгоград.</p>
-      <a class="cta" href="#contact">Записаться</a>
+      <a class="cta" href="#application-form">Записаться</a>
     </div>
   </section>
 
@@ -451,7 +448,6 @@
       </div>
     </section>
 
-    <!-- Новый блок с двумя SoundCloud плеерами рядом -->
     <section id="soundcloud-players">
       <div>
         <h3>Готовые песни</h3>
@@ -482,6 +478,23 @@
         Адреса студий указаны в разделе «Локации студий» выше.
       </p>
     </section>
+
+    <section id="application-form" style="margin-top: 80px;">
+        <h2 style="color:var(--accent); text-align:center;">Оставить заявку</h2>
+        <form id="contactForm" style="max-width: 500px; margin: 0 auto; padding: 20px; background: var(--card); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
+            <p style="text-align: center;">Оставьте свои контактные данные, и мы свяжемся с вами, чтобы обсудить детали.</p>
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600;">Ваше имя</label>
+                <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 600;">Номер телефона</label>
+                <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+            </div>
+            <button type="submit" style="width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 18px; cursor: pointer; transition: background-color 0.3s ease;">Отправить заявку</button>
+            <p id="formMessage" style="text-align: center; margin-top: 15px; font-weight: 600;"></p>
+        </form>
+    </section>
   </main>
 
   <footer>
@@ -494,7 +507,6 @@
     </div>
   </footer>
 
-  <!-- Модальное окно логина -->
   <div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
     <div class="modal-content">
       <button class="close-btn" aria-label="Закрыть">&times;</button>
@@ -510,7 +522,6 @@
     </div>
   </div>
 
-  <!-- Админка -->
   <section id="adminPanel" aria-label="Административная панель">
     <h2>Редактирование таймера релиза</h2>
     <label for="releaseTitleInput">Название таймера</label>
@@ -540,6 +551,9 @@
     const releaseDateInput = document.getElementById('releaseDateInput');
     const saveReleaseBtn = document.getElementById('saveReleaseBtn');
     const logoutBtn = document.getElementById('logoutBtn');
+
+    const contactForm = document.getElementById('contactForm');
+    const formMessage = document.getElementById('formMessage');
 
     const ADMIN_LOGIN = 'thekadrainfo';
     const ADMIN_PASSWORD = 'Ioioiohyadfg';
@@ -676,6 +690,33 @@
 
       alert('Настройки сохранены.');
     });
+
+    // Обработчик формы заявки
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        console.log('Данные заявки:', { name, phone });
+
+        formMessage.textContent = 'Отправка...';
+        formMessage.style.color = '#fff';
+
+        try {
+            // Здесь должен быть реальный код для отправки данных на сервер
+            // Например: await fetch('ваш_адрес_сервера', { method: 'POST', body: JSON.stringify({ name, phone }) });
+
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена.';
+            formMessage.style.color = 'var(--green-light)';
+            contactForm.reset();
+        } catch (error) {
+            formMessage.textContent = 'Произошла ошибка при отправке заявки. Попробуйте ещё раз.';
+            formMessage.style.color = '#ff5555';
+        }
+    });
+
 
     // При загрузке страницы
     window.addEventListener('load', () => {
