@@ -636,7 +636,7 @@
   </section>
 
   <script>
-    // Переменные
+    // Переменные для основных элементов
     const releaseTimer = document.getElementById('release-timer');
     const releaseTitleElem = document.getElementById('release-title');
     const releaseCountdownElem = document.getElementById('release-countdown');
@@ -661,7 +661,7 @@
     const ADMIN_LOGIN = 'thekadrainfo';
     const ADMIN_PASSWORD = 'Ioioiohyadfg';
 
-    // Функция показа модалки логина
+    // ======== Функции для админки и таймера релиза ========
     function showLogin() {
       loginModal.classList.add('active');
       adminLoginBtn.setAttribute('aria-expanded', 'true');
@@ -670,30 +670,25 @@
       loginInput.focus();
     }
 
-    // Скрыть модалку
     function hideLogin() {
       loginModal.classList.remove('active');
       adminLoginBtn.setAttribute('aria-expanded', 'false');
     }
 
-    // Показать админку
     function showAdminPanel() {
       adminPanel.classList.add('active');
       releaseTimer.style.display = 'none';
     }
 
-    // Скрыть админку
     function hideAdminPanel() {
       adminPanel.classList.remove('active');
       releaseTimer.style.display = 'block';
     }
 
-    // Проверка авторизации
     function isLoggedIn() {
       return sessionStorage.getItem('adminLogged') === 'true';
     }
 
-    // Авторизация
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const loginVal = loginInput.value.trim();
@@ -709,7 +704,6 @@
       }
     });
 
-    // Кнопка входа в админку
     adminLoginBtn.addEventListener('click', () => {
       if(isLoggedIn()) {
         showAdminPanel();
@@ -718,18 +712,15 @@
       }
     });
 
-    // Кнопка закрытия модалки
     document.querySelector('#loginModal .close-btn').addEventListener('click', () => {
       hideLogin();
     });
 
-    // Выход из админки
     logoutBtn.addEventListener('click', () => {
       sessionStorage.removeItem('adminLogged');
       hideAdminPanel();
     });
 
-    // Загрузка настроек из localStorage
     function loadSettings() {
       const title = localStorage.getItem('releaseTitle') || 'Релиз через';
       const dateStr = localStorage.getItem('releaseDate');
@@ -742,7 +733,6 @@
       }
     }
 
-    // Обновление обратного отсчёта
     function updateCountdown(targetDate) {
       function tick() {
         const now = new Date();
@@ -763,19 +753,16 @@
       const intervalId = setInterval(tick, 1000);
     }
 
-    // Загрузка настроек в админку
     function loadSettingsToAdmin() {
       releaseTitleInput.value = localStorage.getItem('releaseTitle') || 'Релиз через';
       const dateStr = localStorage.getItem('releaseDate');
       if(dateStr) {
-        // Для datetime-local формат YYYY-MM-DDTHH:mm
         releaseDateInput.value = new Date(dateStr).toISOString().slice(0,16);
       } else {
         releaseDateInput.value = '';
       }
     }
 
-    // Сохранение настроек из админки
     saveReleaseBtn.addEventListener('click', () => {
       const newTitle = releaseTitleInput.value.trim() || 'Релиз через';
       const newDate = releaseDateInput.value;
@@ -794,7 +781,7 @@
       alert('Настройки сохранены.');
     });
 
-    // Обработчик формы заявки
+    // ======== Функции для формы заявки ========
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -820,7 +807,7 @@
         }
     });
 
-    // Код для баннера скидки
+    // ======== Функции для баннера скидки ========
     (() => {
       const banner = document.getElementById('discount-banner');
       const timerEl = banner.querySelector('.timer');
@@ -890,9 +877,10 @@
         localStorage.removeItem('discountBannerShownDate');
       }
 
+      // Главное изменение: баннер появляется через 10 секунд
       window.addEventListener('load', () => {
         if (!hasShownToday()) {
-          setTimeout(showBanner, 7000);
+          setTimeout(showBanner, 10000);
         }
       });
 
@@ -913,7 +901,7 @@
       });
     })();
 
-    // При загрузке страницы
+    // ======== Действия при загрузке страницы ========
     window.addEventListener('load', () => {
       if(isLoggedIn()) {
         showAdminPanel();
