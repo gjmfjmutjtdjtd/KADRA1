@@ -250,7 +250,7 @@
       right: 30px;
       background: var(--green-dark);
       color: white;
-      padding: 22px 26px;
+      padding: 22px 26px 26px 26px;
       border-radius: 18px;
       box-shadow: 0 8px 24px var(--shadow);
       font-family: 'Inter', sans-serif;
@@ -267,11 +267,13 @@
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease;
       transform: translateY(20px);
+      position: fixed;
     }
     #discount-banner.show {
       display: flex;
       opacity: 1;
       transform: translateY(0);
+      cursor: auto;
     }
     #discount-banner p {
       margin: 0;
@@ -299,6 +301,7 @@
       font-family: 'Courier New', Courier, monospace;
       text-shadow: 0 1px 3px rgba(0,0,0,0.4);
       user-select: text;
+      margin-top: 4px;
     }
     #discount-banner .btn {
       background: white;
@@ -315,6 +318,7 @@
       min-width: 160px;
       text-align: center;
       cursor: pointer;
+      margin-top: 6px;
     }
     #discount-banner .btn:hover,
     #discount-banner .btn:focus {
@@ -329,7 +333,7 @@
       right: 12px;
       background: transparent;
       border: none;
-      font-size: 28px;
+      font-size: 24px;
       line-height: 1;
       color: white;
       cursor: pointer;
@@ -337,7 +341,6 @@
       font-weight: 700;
       padding: 0;
       transition: color 0.2s ease;
-      user-select:none;
     }
     #discount-banner .minimize-btn:hover,
     #discount-banner .minimize-btn:focus {
@@ -469,94 +472,121 @@
       <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
       <div style="max-width:640px; margin:14px auto;">
         <form action="mailto:hello@KadraRecordsstudio.com" method="post" enctype="text/plain" style="display:flex;flex-direction:column;gap:10px;">
-          <input name="name" placeholder="Ваше имя" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
-          <input type="email" name="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;">
-          <textarea name="message" placeholder="Сообщение" rows="4" required style="padding:10px;border-radius:6px;border:none;background:#111;color:#fff;"></textarea>
-          <button type="submit" style="padding:12px; border:none; border-radius:8px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; font-size:16px;">Отправить</button>
+          <input name="name" placeholder="Ваше имя" required style="padding:10px;border-radius:6px;border:none;background:#222;color:#eee;font-size:16px;" />
+          <input name="email" type="email" placeholder="Email" required style="padding:10px;border-radius:6px;border:none;background:#222;color:#eee;font-size:16px;" />
+          <textarea name="message" placeholder="Сообщение" rows="5" required style="padding:10px;border-radius:6px;border:none;background:#222;color:#eee;font-size:16px;"></textarea>
+          <button type="submit" style="padding:14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:16px;cursor:pointer;transition:background 0.3s ease;">Отправить</button>
         </form>
       </div>
     </section>
+
   </main>
 
   <footer>
-    <div class="copyright">© 2025 Kadra Records Studio</div>
-    <div class="contacts">Email: hello@KadraRecordsstudio.com<br>Телефон: +7 (495) 123-45-67</div>
-    <div class="admin-login"><button onclick="alert('Вход в админку пока не реализован')">Админка</button></div>
+    <div class="copyright">&copy; 2025 Kadra Records Studio</div>
+    <div class="contacts">hello@kadrarecordsstudio.com<br>+7 (999) 123-45-67</div>
+    <div class="admin-login">
+      <button type="button" onclick="alert('Вход для администратора пока не настроен')">Админ</button>
+    </div>
   </footer>
 
   <!-- Баннер скидки -->
-<div id="discount-banner" role="alert" aria-live="assertive" aria-atomic="true">
-  <button class="minimize-btn" aria-label="Закрыть баннер скидки">&times;</button>
-  <p><strong>Скидка 15% при записи трека!</strong></p>
-  <p>Успей оформить заявку — акция заканчивается через <span class="timer" aria-live="polite" aria-atomic="true">30:00</span> минут</p>
-  <a href="#soundcloud-players" class="btn" role="button" aria-label="Оформить заявку со скидкой">Оформить заявку</a>
-</div>
+  <div id="discount-banner" role="alert" aria-live="assertive" aria-atomic="true" aria-label="Баннер скидки">
+    <button class="minimize-btn" aria-label="Закрыть баннер скидки">&times;</button>
+    <p><strong>Скидка 15% при записи трека!</strong></p>
+    <p>Успей оформить заявку — акция заканчивается через <span class="timer" aria-live="polite" aria-atomic="true">30:00</span> минут</p>
+    <a href="#soundcloud-players" class="btn" role="button" aria-label="Оформить заявку со скидкой">Оформить заявку</a>
+  </div>
 
-<script>
-  (() => {
-    const banner = document.getElementById('discount-banner');
-    const timerEl = banner.querySelector('.timer');
-    const btnClose = banner.querySelector('.minimize-btn');
-    const btnAction = banner.querySelector('.btn');
+  <script>
+    (() => {
+      const banner = document.getElementById('discount-banner');
+      const timerEl = banner.querySelector('.timer');
+      const btnClose = banner.querySelector('.minimize-btn');
+      const btnAction = banner.querySelector('.btn');
 
-    let countdown = 1800; // 30 минут в секундах
-    let countdownInterval;
-    let discountApplied = false;
+      const countdownDuration = 1800; // 30 минут в секундах
+      let countdown = countdownDuration;
+      let countdownInterval;
 
-    function formatTime(seconds) {
-      const m = Math.floor(seconds / 60);
-      const s = seconds % 60;
-      return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-    }
-
-    // Показываем баннер и запускаем таймер
-    function showBanner() {
-      banner.classList.add('show');
-      timerEl.textContent = formatTime(countdown);
-
-      countdownInterval = setInterval(() => {
-        countdown--;
-        if (countdown < 0) {
-          clearInterval(countdownInterval);
-          banner.classList.remove('show');
-          return;
-        }
-        timerEl.textContent = formatTime(countdown);
-      }, 1000);
-    }
-
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        if (!localStorage.getItem('discountBannerClosed') && !discountApplied) {
-          showBanner();
-        }
-      }, 7000);
-    });
-
-    btnClose.addEventListener('click', () => {
-      banner.classList.remove('show');
-      clearInterval(countdownInterval);
-      localStorage.setItem('discountBannerClosed', 'true');
-    });
-
-    btnAction.addEventListener('click', (e) => {
-      e.preventDefault();
-      discountApplied = true;
-      banner.classList.remove('show');
-      clearInterval(countdownInterval);
-      localStorage.setItem('discountApplied', 'true');
-      const targetId = btnAction.getAttribute('href').slice(1);
-      const target = document.getElementById(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+      // Форматируем время mm:ss
+      function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
       }
-    });
 
-    if (localStorage.getItem('discountApplied')) {
-      discountApplied = true;
-    }
-  })();
-</script>
+      // Получить сегодняшнюю дату в формате YYYY-MM-DD
+      function getTodayDateString() {
+        const today = new Date();
+        return today.toISOString().slice(0, 10);
+      }
+
+      // Проверяем, показывали ли баннер сегодня
+      function hasShownToday() {
+        return localStorage.getItem('discountBannerShownDate') === getTodayDateString();
+      }
+
+      // Помечаем в localStorage, что баннер показан сегодня
+      function markShownToday() {
+        localStorage.setItem('discountBannerShownDate', getTodayDateString());
+      }
+
+      // Показываем баннер и запускаем таймер
+      function showBanner() {
+        banner.style.display = 'flex';
+        banner.classList.add('show');
+        countdown = countdownDuration;
+        timerEl.textContent = formatTime(countdown);
+
+        countdownInterval = setInterval(() => {
+          countdown--;
+          if (countdown < 0) {
+            clearInterval(countdownInterval);
+            hideBanner();
+            return;
+          }
+          timerEl.textContent = formatTime(countdown);
+        }, 1000);
+
+        markShownToday();
+      }
+
+      // Скрываем баннер и останавливаем таймер
+      function hideBanner() {
+        banner.style.display = 'none';
+        banner.classList.remove('show');
+        clearInterval(countdownInterval);
+      }
+
+      // При загрузке страницы показываем баннер через 7 секунд, если не показывали сегодня
+      window.addEventListener('load', () => {
+        if (!hasShownToday()) {
+          setTimeout(() => {
+            showBanner();
+          }, 7000);
+        }
+      });
+
+      // Кнопка закрытия баннера — просто скрывает его
+      btnClose.addEventListener('click', () => {
+        hideBanner();
+      });
+
+      // Кнопка заявки — скрывает баннер, ставит флаг "скидка применена", скроллит к блоку
+      btnAction.addEventListener('click', (e) => {
+        e.preventDefault();
+        hideBanner();
+        localStorage.setItem('discountApplied', 'true');
+        const targetId = btnAction.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+        alert('Заявка принята! Мы свяжемся с вами.');
+      });
+    })();
+  </script>
 
 </body>
 </html>
