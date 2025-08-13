@@ -484,39 +484,43 @@
       <div>
         <h3>Примеры работ</h3>
         <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true" style="width:100%;">
         </iframe>
       </div>
     </section>
 
-    <section id="about" style="margin-top: 80px;">
-      <h2 style="color:var(--accent); text-align:center;">О студии</h2>
-      <p style="max-width:720px; margin: 0 auto; text-align:center;">
-        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук, который продаёт и живёт в сердцах слушателей.
-      </p>
-    </section>
-
-    <section id="contact" style="margin-top: 80px;">
-      <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
-      <p style="text-align:center; max-width: 600px; margin: 0 auto;">
-        Напишите нам в Telegram для быстрой связи и заказа студийного времени:<br>
-        <a href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight:700; text-decoration:none;">@kadrarec</a>
-      </p>
+    <!-- Контакты -->
+    <section id="contact" style="margin-top: 60px; text-align: center;">
+      <h2 style="color:var(--accent); margin-bottom: 12px;">Свяжитесь с нами</h2>
+      <p>Телефон: +7 999 123-45-67</p>
+      <p>Email: info@kadra-records.ru</p>
+      <a href="mailto:info@kadra-records.ru" style="color: var(--accent); font-weight: 700; text-decoration: none;">Написать на почту</a>
     </section>
   </main>
 
   <footer>
     <div class="copyright">© 2025 Kadra Records Studio</div>
     <div class="contacts">Телефон: +7 999 123-45-67<br>email: info@kadra-records.ru</div>
-    <div class="admin-login"><button>Войти в админку</button></div>
+    <div class="admin-login">
+      <button onclick="location.href='admin.html'">Войти в админку</button>
+    </div>
   </footer>
 
   <script>
     (() => {
       const countdownEl = document.getElementById('release-countdown');
 
-      // Дата релиза (UTC), настрой по нужному времени релиза
-      const releaseDate = new Date('2025-08-25T20:00:00Z');
+      // Берём дату релиза из localStorage или ставим дефолт
+      let storedDate = localStorage.getItem('releaseDate');
+      let releaseDate;
+      if (storedDate) {
+        releaseDate = new Date(storedDate);
+        if (isNaN(releaseDate)) {
+          releaseDate = new Date('2025-08-25T20:00:00Z');
+        }
+      } else {
+        releaseDate = new Date('2025-08-25T20:00:00Z');
+      }
 
       function updateTimer() {
         const now = new Date();
@@ -544,5 +548,6 @@
       const timerInterval = setInterval(updateTimer, 1000);
     })();
   </script>
+
 </body>
 </html>
