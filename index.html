@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -264,157 +264,135 @@
       transform: translateY(-3px);
     }
 
-    /* ===== Баннер скидки ===== */
-    #discount-banner {
+    /* ===== Модальное окно логина ===== */
+    #loginModal {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--green-dark);
-      color: white;
-      padding: 22px 26px 26px 26px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px var(--shadow);
-      font-family: 'Inter', sans-serif;
-      font-size: 1.05rem;
-      max-width: 320px;
-      z-index: 1200;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
       display: none;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 14px;
-      text-align: center;
-      user-select: none;
-      cursor: default;
-      opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      transform: translateY(20px);
-      position: fixed;
+      z-index: 2000;
     }
-    #discount-banner.show {
+    #loginModal.active {
       display: flex;
-      opacity: 1;
-      transform: translateY(0);
-      cursor: auto;
     }
-    #discount-banner p {
-      margin: 0;
-      font-weight: 600;
-      line-height: 1.4;
-      color: white;
-      user-select: text;
+    #loginModal .modal-content {
+      background: var(--card);
+      padding: 30px 40px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 8px 25px rgba(255,82,82,0.7);
+      color: var(--white);
+      position: relative;
     }
-    #discount-banner p a {
-      color: var(--green-light);
+    #loginModal h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
       font-weight: 700;
-      text-decoration: underline;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-    #discount-banner p a:hover,
-    #discount-banner p a:focus {
-      color: #bbf7d0;
-      outline: none;
-    }
-    #discount-banner .timer {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      font-family: 'Courier New', Courier, monospace;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-      user-select: text;
-      margin-top: 4px;
-    }
-    #discount-banner .btn {
-      background: white;
-      color: var(--green-dark);
-      font-weight: 700;
-      padding: 11px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 1.15rem;
-      box-shadow: 0 5px 15px var(--shadow);
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      display: inline-block;
-      min-width: 160px;
       text-align: center;
-      cursor: pointer;
-      margin-top: 6px;
+      color: var(--accent);
     }
-    #discount-banner .btn:hover,
-    #discount-banner .btn:focus {
-      background: var(--green-light);
+    #loginModal label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    #loginModal input[type="text"],
+    #loginModal input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    #loginModal button.submit-btn {
+      background: var(--accent);
       color: white;
-      box-shadow: 0 7px 22px rgba(74, 222, 128, 0.7);
-      outline: none;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
     }
-    #discount-banner .minimize-btn {
+    #loginModal button.submit-btn:hover {
+      background-color: #ff3333;
+    }
+    #loginModal .close-btn {
       position: absolute;
-      top: 8px;
-      right: 12px;
+      top: 10px; right: 14px;
       background: transparent;
       border: none;
-      font-size: 24px;
-      line-height: 1;
-      color: white;
+      font-size: 28px;
+      color: var(--accent);
       cursor: pointer;
-      user-select: none;
       font-weight: 700;
+      line-height: 1;
       padding: 0;
-      transition: color 0.2s ease;
+      user-select: none;
     }
-    #discount-banner .minimize-btn:hover,
-    #discount-banner .minimize-btn:focus {
-      color: #bbf7d0;
-      outline: none;
+    #loginModal .error-msg {
+      color: #ff5555;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 700;
     }
 
-    /* ===== Адаптив ===== */
-    @media (max-width: 720px) {
-      header {
-        padding: 10px 5%;
-      }
-      .logo {
-        font-size: 16px !important;
-      }
-      nav {
-        gap: 12px;
-        font-size: 14px;
-      }
-      nav a {
-        font-size: 12px !important;
-      }
-      nav .chat-btn {
-        padding: 6px 12px !important;
-        font-size: 12px !important;
-      }
-      .hero {
-        padding: 32px 5%;
-      }
-      .hero p {
-        font-size: 15px;
-      }
-      #soundcloud-players {
-        flex-direction: column;
-        align-items: center;
-      }
-      #soundcloud-players > div {
-        max-width: 90vw;
-        margin-bottom: 30px;
-      }
-      footer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 15px;
-      }
-      footer .copyright,
-      footer .contacts,
-      footer .admin-login {
-        flex: none;
-        min-width: auto;
-      }
+    /* ===== Админка ===== */
+    #adminPanel {
+      display: none;
+      padding: 20px 6%;
+      max-width: 600px;
+      margin: 80px auto 120px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(255,82,82,0.7);
+      color: var(--white);
     }
+    #adminPanel.active {
+      display: block;
+    }
+    #adminPanel h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+    #adminPanel label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    #adminPanel input[type="text"],
+    #adminPanel input[type="datetime-local"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 18px;
+      font-size: 16px;
+      color: var(--bg);
+    }
+    #adminPanel button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #adminPanel button:hover {
+      background-color: #ff3333;
+    }
+
   </style>
 </head>
 <body>
@@ -433,7 +411,7 @@
 
   <!-- Таймер релиза под шапкой -->
   <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
-    Релиз через <span id="release-countdown">загрузка...</span>
+    <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
   </div>
 
   <!-- hero -->
@@ -492,58 +470,222 @@
     <section id="about" style="margin-top: 80px;">
       <h2 style="color:var(--accent); text-align:center;">О студии</h2>
       <p style="max-width:720px; margin: 0 auto; text-align:center;">
-        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук, который продаёт и живёт в сердцах слушателей.
+        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук и атмосферу, которые слышны в каждом треке.
       </p>
     </section>
 
     <section id="contact" style="margin-top: 80px;">
       <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
-      <p style="text-align:center; max-width: 600px; margin: 0 auto;">
-        Напишите нам в Telegram для быстрой связи и заказа студийного времени:<br>
-        <a href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight:700; text-decoration:none;">@kadrarec</a>
+      <p style="max-width:720px; margin: 0 auto; text-align:center;">
+        Телефон: +7 999 123-45-67<br>
+        Email: info@kadrarecords.ru<br>
+        Адреса студий указаны в разделе «Локации студий» выше.
       </p>
     </section>
   </main>
 
   <footer>
-    <div class="copyright">© 2025 Kadra Records Studio</div>
-    <div class="contacts">Телефон: +7 999 123-45-67<br>email: info@kadra-records.ru</div>
-    <div class="admin-login"><button>Войти в админку</button></div>
+    <div class="copyright">&copy; 2025 Kadra Records Studio. Все права защищены.</div>
+    <div class="contacts">
+      <a href="mailto:info@kadrarecords.ru" style="color:inherit; text-decoration:none;">info@kadrarecords.ru</a> | Тел: +7 999 123-45-67
+    </div>
+    <div class="admin-login">
+      <button id="adminLoginBtn" aria-haspopup="dialog" aria-controls="loginModal" aria-expanded="false">Войти в админку</button>
+    </div>
   </footer>
 
+  <!-- Модальное окно логина -->
+  <div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
+    <div class="modal-content">
+      <button class="close-btn" aria-label="Закрыть">&times;</button>
+      <h2 id="loginTitle">Авторизация</h2>
+      <div class="error-msg" id="loginError" aria-live="polite"></div>
+      <form id="loginForm">
+        <label for="loginInput">Логин</label>
+        <input type="text" id="loginInput" name="login" autocomplete="username" required />
+        <label for="passwordInput">Пароль</label>
+        <input type="password" id="passwordInput" name="password" autocomplete="current-password" required />
+        <button type="submit" class="submit-btn">Войти</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Админка -->
+  <section id="adminPanel" aria-label="Административная панель">
+    <h2>Редактирование таймера релиза</h2>
+    <label for="releaseTitleInput">Название таймера</label>
+    <input type="text" id="releaseTitleInput" placeholder="Например, 'Релиз через'" />
+    <label for="releaseDateInput">Дата и время релиза</label>
+    <input type="datetime-local" id="releaseDateInput" />
+    <button id="saveReleaseBtn">Сохранить</button>
+    <button id="logoutBtn" style="margin-top: 12px; background:#888;">Выйти из админки</button>
+  </section>
+
   <script>
-    (() => {
-      const countdownEl = document.getElementById('release-countdown');
+    // Переменные
+    const releaseTimer = document.getElementById('release-timer');
+    const releaseTitleElem = document.getElementById('release-title');
+    const releaseCountdownElem = document.getElementById('release-countdown');
 
-      // Дата релиза (UTC), настрой по нужному времени релиза
-      const releaseDate = new Date('2025-08-25T20:00:00Z');
+    const loginModal = document.getElementById('loginModal');
+    const adminPanel = document.getElementById('adminPanel');
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
 
-      function updateTimer() {
+    const loginForm = document.getElementById('loginForm');
+    const loginInput = document.getElementById('loginInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginError = document.getElementById('loginError');
+
+    const releaseTitleInput = document.getElementById('releaseTitleInput');
+    const releaseDateInput = document.getElementById('releaseDateInput');
+    const saveReleaseBtn = document.getElementById('saveReleaseBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const ADMIN_LOGIN = 'thekadrainfo';
+    const ADMIN_PASSWORD = 'Ioioiohyadfg';
+
+    // Функция показа модалки логина
+    function showLogin() {
+      loginModal.classList.add('active');
+      adminLoginBtn.setAttribute('aria-expanded', 'true');
+      loginError.textContent = '';
+      loginForm.reset();
+      loginInput.focus();
+    }
+
+    // Скрыть модалку
+    function hideLogin() {
+      loginModal.classList.remove('active');
+      adminLoginBtn.setAttribute('aria-expanded', 'false');
+    }
+
+    // Показать админку
+    function showAdminPanel() {
+      adminPanel.classList.add('active');
+      releaseTimer.style.display = 'none';
+    }
+
+    // Скрыть админку
+    function hideAdminPanel() {
+      adminPanel.classList.remove('active');
+      releaseTimer.style.display = 'block';
+    }
+
+    // Проверка авторизации
+    function isLoggedIn() {
+      return sessionStorage.getItem('adminLogged') === 'true';
+    }
+
+    // Авторизация
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const loginVal = loginInput.value.trim();
+      const passwordVal = passwordInput.value;
+
+      if(loginVal === ADMIN_LOGIN && passwordVal === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLogged', 'true');
+        hideLogin();
+        showAdminPanel();
+        loadSettingsToAdmin();
+      } else {
+        loginError.textContent = 'Неверный логин или пароль.';
+      }
+    });
+
+    // Кнопка входа в админку
+    adminLoginBtn.addEventListener('click', () => {
+      if(isLoggedIn()) {
+        showAdminPanel();
+      } else {
+        showLogin();
+      }
+    });
+
+    // Кнопка закрытия модалки
+    document.querySelector('#loginModal .close-btn').addEventListener('click', () => {
+      hideLogin();
+    });
+
+    // Выход из админки
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('adminLogged');
+      hideAdminPanel();
+    });
+
+    // Загрузка настроек из localStorage
+    function loadSettings() {
+      const title = localStorage.getItem('releaseTitle') || 'Релиз через';
+      const dateStr = localStorage.getItem('releaseDate');
+      releaseTitleElem.textContent = title;
+
+      if(dateStr) {
+        updateCountdown(new Date(dateStr));
+      } else {
+        releaseCountdownElem.textContent = 'дата не установлена';
+      }
+    }
+
+    // Обновление обратного отсчёта
+    function updateCountdown(targetDate) {
+      function tick() {
         const now = new Date();
-        const diff = releaseDate - now;
-
-        if (diff <= 0) {
-          countdownEl.textContent = 'Релиз уже вышел!';
-          clearInterval(timerInterval);
+        const diff = targetDate - now;
+        if(diff <= 0) {
+          releaseCountdownElem.textContent = 'Релиз уже состоялся!';
+          clearInterval(intervalId);
           return;
         }
-
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff / (1000*60*60)) % 24);
+        const minutes = Math.floor((diff / (1000*60)) % 60);
         const seconds = Math.floor((diff / 1000) % 60);
+        releaseCountdownElem.textContent =
+          `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+      }
+      tick();
+      const intervalId = setInterval(tick, 1000);
+    }
 
-        countdownEl.textContent =
-          (days > 0 ? days + ' дн. ' : '') +
-          (hours < 10 ? '0' + hours : hours) + ':' +
-          (minutes < 10 ? '0' + minutes : minutes) + ':' +
-          (seconds < 10 ? '0' + seconds : seconds);
+    // Загрузка настроек в админку
+    function loadSettingsToAdmin() {
+      releaseTitleInput.value = localStorage.getItem('releaseTitle') || 'Релиз через';
+      const dateStr = localStorage.getItem('releaseDate');
+      if(dateStr) {
+        // Для datetime-local формат YYYY-MM-DDTHH:mm
+        releaseDateInput.value = new Date(dateStr).toISOString().slice(0,16);
+      } else {
+        releaseDateInput.value = '';
+      }
+    }
+
+    // Сохранение настроек из админки
+    saveReleaseBtn.addEventListener('click', () => {
+      const newTitle = releaseTitleInput.value.trim() || 'Релиз через';
+      const newDate = releaseDateInput.value;
+
+      if(!newDate) {
+        alert('Пожалуйста, выберите дату и время релиза.');
+        return;
       }
 
-      updateTimer();
-      const timerInterval = setInterval(updateTimer, 1000);
-    })();
+      localStorage.setItem('releaseTitle', newTitle);
+      localStorage.setItem('releaseDate', newDate);
+
+      releaseTitleElem.textContent = newTitle;
+      updateCountdown(new Date(newDate));
+
+      alert('Настройки сохранены.');
+    });
+
+    // При загрузке страницы
+    window.addEventListener('load', () => {
+      if(isLoggedIn()) {
+        showAdminPanel();
+        loadSettingsToAdmin();
+      } else {
+        loadSettings();
+      }
+    });
   </script>
 </body>
 </html>
-
