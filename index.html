@@ -102,6 +102,42 @@
       user-select: none;
     }
 
+    /* ===== Всплывающее окно "Скоро релиз" ===== */
+    #upcoming-release {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%) translateX(100%); /* Начальное положение - скрыто */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      background: linear-gradient(90deg, transparent, var(--glass) 50%);
+      backdrop-filter: blur(5px);
+      border-radius: 12px 0 0 12px;
+      border-left: 3px solid var(--accent);
+      box-shadow: -8px 0 20px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      cursor: pointer;
+      opacity: 0.9;
+    }
+    #upcoming-release.active {
+      transform: translateY(-50%) translateX(0); /* Конечное положение - видимо */
+    }
+    #upcoming-release .title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    #upcoming-release .countdown {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
     /* ===== Герой (шапка-баннер) ===== */
     .hero {
       min-height: calc(100vh - 72px);
@@ -575,6 +611,11 @@
   <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
     <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
   </div>
+  
+  <a href="#tracks" id="upcoming-release" role="button" aria-label="Скоро релиз, перейти к нашим работам">
+    <div class="title">Скоро релиз</div>
+    <div class="countdown" id="upcoming-release-countdown">00:00:00</div>
+  </a>
 
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
@@ -787,6 +828,8 @@
     const releaseTimer = document.getElementById('release-timer');
     const releaseTitleElem = document.getElementById('release-title');
     const releaseCountdownElem = document.getElementById('release-countdown');
+    const upcomingReleaseBlock = document.getElementById('upcoming-release');
+    const upcomingReleaseCountdown = document.getElementById('upcoming-release-countdown');
 
     const loginModal = document.getElementById('loginModal');
     const adminPanel = document.getElementById('adminPanel');
@@ -825,11 +868,13 @@
     function showAdminPanel() {
       adminPanel.classList.add('active');
       releaseTimer.style.display = 'none';
+      if(upcomingReleaseBlock) upcomingReleaseBlock.style.display = 'none';
     }
 
     function hideAdminPanel() {
       adminPanel.classList.remove('active');
       releaseTimer.style.display = 'block';
+      if(upcomingReleaseBlock) upcomingReleaseBlock.style.display = 'flex';
     }
 
     function isLoggedIn() {
@@ -886,6 +931,7 @@
         const diff = targetDate - now;
         if(diff <= 0) {
           releaseCountdownElem.textContent = 'Релиз уже состоялся!';
+          upcomingReleaseCountdown.textContent = '00:00:00';
           clearInterval(intervalId);
           return;
         }
@@ -895,6 +941,11 @@
         const seconds = Math.floor((diff / 1000) % 60);
         releaseCountdownElem.textContent =
           `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+
+        // Обновление нового таймера
+        const totalHours = Math.floor(diff / (1000 * 60 * 60));
+        upcomingReleaseCountdown.textContent =
+          `${totalHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
       }
       tick();
       const intervalId = setInterval(tick, 1000);
@@ -1013,9 +1064,21 @@
               startOrResumeTimer();
             }
         });
-
     })();
 
+    // ======== Новый скрипт для всплывающего окна "Скоро релиз" ========
+    (() => {
+      const releasePopup = document.getElementById('upcoming-release');
+      if (releasePopup) {
+        setTimeout(() => {
+          releasePopup.classList.add('active');
+        }, 1000); // Показываем через 1 секунду после загрузки
+        
+        releasePopup.addEventListener('click', () => {
+          releasePopup.classList.remove('active');
+        });
+      }
+    })();
 
     // ======== Действия при загрузке страницы ========
     window.addEventListener('load', () => {
