@@ -1,1029 +1,947 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>KADRA Records Studio</title>
-  <style>
-    :root {
-      --accent: #ff5252;
-      --bg: #0d0d0d;
-      --card: #1a1a1a;
-      --glass: rgba(0, 0, 0, 0.6);
-      --white: #ffffff;
-      --green-light: #4ade80;
-      --green-dark: #22c55e;
-      --shadow: rgba(34, 197, 94, 0.3);
-    }
-    * { box-sizing: border-box }
-    html, body { height: 100%; margin: 0; }
-    body {
-      font-family: "Inter", "Arial", sans-serif;
-      background: var(--bg);
-      color: var(--white);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KADRA Records Studio</title>
+  <style>
+    :root {
+      --accent: #ff5252;
+      --bg: #0d0d0d;
+      --card: #1a1a1a;
+      --glass: rgba(0, 0, 0, 0.6);
+      --white: #ffffff;
+      --green-light: #4ade80;
+      --green-dark: #22c55e;
+      --shadow: rgba(34, 197, 94, 0.3);
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: "Inter", "Arial", sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-    /* ===== Фиксированная шапка ===== */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 6%;
-      z-index: 1000;
-      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 20px;
-      letter-spacing: 1px;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-    nav a {
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 600;
-      opacity: 0.95;
-      transition: opacity 0.18s, transform 0.12s;
-      font-size: 16px;
-    }
-    nav a:hover {
-      opacity: 1;
-      transform: translateY(-2px);
-      color: var(--accent);
-    }
+    /* ===== Фиксированная шапка ===== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6%;
+      z-index: 1000;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.95;
+      transition: opacity 0.18s, transform 0.12s;
+      font-size: 16px;
+    }
+    nav a:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      color: var(--accent);
+    }
 
-    /* Кнопка «Telegram» в меню */
-    nav .chat-btn {
-      padding: 8px 18px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 6px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-size: 16px;
-    }
-    nav .chat-btn:hover {
-      background-color: #ff3333;
-      transform: translateY(-2px);
-    }
+    /* Кнопка «Telegram» в меню */
+    nav .chat-btn {
+      padding: 8px 18px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+    nav .chat-btn:hover {
+      background-color: #ff3333;
+      transform: translateY(-2px);
+    }
 
-    /* ===== Таймер релиза под шапкой ===== */
-    #release-timer {
-      position: fixed;
-      top: 72px; /* сразу под шапкой */
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: white;
-      padding: 12px 24px;
-      border-radius: 0 0 12px 12px;
-      font-family: 'Inter', sans-serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      max-width: 480px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6);
-      z-index: 1100;
-      user-select: none;
-    }
+    /* ===== Таймер релиза под шапкой ===== */
+    #release-timer {
+      position: fixed;
+      top: 72px; /* сразу под шапкой */
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 0 0 12px 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6);
+      z-index: 1100;
+      user-select: none;
+    }
 
-    /* ===== Герой (шапка-баннер) ===== */
-    .hero {
-      min-height: calc(100vh - 72px);
-      margin-top: 102px; /* 72 шапка + 30 таймер */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 48px 6%;
-      text-align: center;
-      color: var(--white);
-      background:
-        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-        url('img/studio-bg.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-    .hero-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      width: 100%;
-    }
-    .hero h1 {
-      font-size: clamp(28px, 5vw, 56px);
-      line-height: 1.02;
-      margin: 0 0 18px 0;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    .hero p {
-      margin: 0 auto 26px;
-      max-width: 820px;
-      color: rgba(255,255,255,0.88);
-      font-size: clamp(14px, 1.6vw, 18px);
-      line-height: 1.5;
-    }
-    .hero .cta {
-      display: inline-block;
-      padding: 12px 28px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-      transition: transform 0.14s, box-shadow 0.14s;
-    }
-    .hero .cta:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.55);
-    }
+    /* ===== Герой (шапка-баннер) ===== */
+    .hero {
+      min-height: calc(100vh - 72px);
+      margin-top: 102px; /* 72 шапка + 30 таймер */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 48px 6%;
+      text-align: center;
+      color: var(--white);
+      background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+        url('img/studio-bg.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 56px);
+      line-height: 1.02;
+      margin: 0 0 18px 0;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      margin: 0 auto 26px;
+      max-width: 820px;
+      color: rgba(255,255,255,0.88);
+      font-size: clamp(14px, 1.6vw, 18px);
+      line-height: 1.5;
+    }
+    .hero .cta {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+      transition: transform 0.14s, box-shadow 0.14s;
+    }
+    .hero .cta:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.55);
+    }
 
-    /* ===== Блоки ниже шапки ===== */
-    main {
-      padding: 60px 6% 120px;
-    }
-    .section-title {
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 32px;
-      font-weight: 700;
-      font-size: clamp(24px, 4vw, 40px);
-    }
-    .services {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-      gap: 30px;
-      margin-top: 10px;
-    }
-    .card {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-    }
-    .card h3 {
-      margin: 0 0 12px;
-      color: var(--accent);
-      font-size: 1.4rem;
-    }
-    .card p {
-      font-size: 1rem;
-    }
-    .locations {
-      margin-top: 40px;
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .loc {
-      background: rgba(255,255,255,0.03);
-      padding: 16px 20px;
-      border-radius: 8px;
-      min-width: 250px;
-      font-size: 1rem;
-    }
-    .loc strong {
-      font-size: 1.1rem;
-    }
+    /* ===== Блоки ниже шапки ===== */
+    main {
+      padding: 60px 6% 120px;
+    }
+    .section-title {
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 32px;
+      font-weight: 700;
+      font-size: clamp(24px, 4vw, 40px);
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 30px;
+      margin-top: 10px;
+    }
+    .card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    .card p {
+      font-size: 1rem;
+    }
+    .locations {
+      margin-top: 40px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .loc {
+      background: rgba(255,255,255,0.03);
+      padding: 16px 20px;
+      border-radius: 8px;
+      min-width: 250px;
+      font-size: 1rem;
+    }
+    .loc strong {
+      font-size: 1.1rem;
+    }
 
-    /* ===== SoundCloud плееры (новый блок) ===== */
-    #soundcloud-players {
-      margin-top: 60px;
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    #soundcloud-players > div {
-      flex: 1 1 450px;
-      max-width: 450px;
-      background: var(--card);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255,82,82,0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #soundcloud-players h3 {
-      color: var(--accent);
-      font-family: "Inter", Arial, sans-serif;
-      margin-bottom: 24px;
-      text-align: center;
-      font-size: 1.5rem;
-    }
-    iframe {
-      border-radius: 8px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      width: 100% !important;
-    }
+    /* ===== SoundCloud плееры (новый блок) ===== */
+    #soundcloud-players {
+      margin-top: 60px;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #soundcloud-players > div {
+      flex: 1 1 450px;
+      max-width: 450px;
+      background: var(--card);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,82,82,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #soundcloud-players h3 {
+      color: var(--accent);
+      font-family: "Inter", Arial, sans-serif;
+      margin-bottom: 24px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    iframe {
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 100% !important;
+    }
 
-    /* ===== НОВЫЕ СЕКЦИИ ===== */
-    .content-section {
-        margin-top: 100px;
-        max-width: 1100px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    #artists .artist-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 32px;
-      margin-top: 32px;
-    }
-    #artists .artist-card {
-      background: var(--card);
-      padding: 30px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #artists .artist-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin-bottom: 16px;
-      object-fit: cover;
-      object-position: center;
-      border: 3px solid var(--accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-    #artists .artist-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    #artists .artist-card p {
-      font-size: 1rem;
-    }
+    /* ===== НОВЫЕ СЕКЦИИ ===== */
+    .content-section {
+        margin-top: 100px;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #artists .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-top: 32px;
+    }
+    #artists .artist-card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #artists .artist-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 16px;
+      object-fit: cover;
+      object-position: center;
+      border: 3px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+    #artists .artist-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    #artists .artist-card p {
+      font-size: 1rem;
+    }
 
-    #equipment .equipment-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
-    }
-    #equipment .equipment-item {
-      background: var(--card);
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      display: flex;
-      align-items: center;
-      gap: 24px;
-    }
-    #equipment .equipment-photo {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      border: 2px solid var(--accent);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    #equipment .equipment-item h4 {
-        margin: 0;
-        color: var(--accent);
-        font-size: 1.2rem;
-    }
-    #equipment .equipment-item p {
-        margin: 4px 0 0;
-        font-size: 1rem;
-        color: rgba(255,255,255,0.8);
-    }
+    #equipment .equipment-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+    #equipment .equipment-item {
+      background: var(--card);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    #equipment .equipment-photo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      border: 2px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    #equipment .equipment-item h4 {
+        margin: 0;
+        color: var(--accent);
+        font-size: 1.2rem;
+    }
+    #equipment .equipment-item p {
+        margin: 4px 0 0;
+        font-size: 1rem;
+        color: rgba(255,255,255,0.8);
+    }
 
-    #reviews .review-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 40px;
-      margin-top: 32px;
-    }
-    #reviews .review-card {
-      background: var(--card);
-      padding: 36px;
-      border-radius: 16px;
-      position: relative;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-      border-left: 5px solid var(--accent);
-    }
-    #reviews .review-text {
-      font-style: italic;
-      line-height: 1.6;
-      font-size: 1.1rem;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 18px;
-    }
-    #reviews .review-author {
-      font-weight: 700;
-      color: var(--accent);
-      text-align: right;
-      font-size: 1.1rem;
-    }
+    #reviews .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 40px;
+      margin-top: 32px;
+    }
+    #reviews .review-card {
+      background: var(--card);
+      padding: 36px;
+      border-radius: 16px;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+      border-left: 5px solid var(--accent);
+    }
+    #reviews .review-text {
+      font-style: italic;
+      line-height: 1.6;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 18px;
+    }
+    #reviews .review-author {
+      font-weight: 700;
+      color: var(--accent);
+      text-align: right;
+      font-size: 1.1rem;
+    }
 
-    /* ===== Футер ===== */
-    footer {
-      padding: 40px 6%;
-      color: rgba(255,255,255,0.7);
-      border-top: 1px solid rgba(255,255,255,0.03);
-      background: transparent;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    footer .copyright {
-      flex: 1;
-      min-width: 200px;
-    }
-    footer .contacts {
-      flex: 1;
-      min-width: 200px;
-      opacity: 0.9;
-    }
-    footer .admin-login {
-      flex-shrink: 0;
-    }
-    footer .admin-login button {
-      background-color: var(--accent);
-      border: none;
-      color: #fff;
-      font-weight: 700;
-      padding: 10px 24px;
-      border-radius: 30px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255,82,82,0.5);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      font-size: 16px;
-    }
-    footer .admin-login button:hover {
-      background-color: #ff3333;
-      transform: translateY(-3px);
-    }
+    /* ===== Футер ===== */
+    footer {
+      padding: 40px 6%;
+      color: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    footer .copyright {
+      flex: 1;
+      min-width: 200px;
+    }
+    footer .contacts {
+      flex: 1;
+      min-width: 200px;
+      opacity: 0.9;
+    }
+    footer .admin-login {
+      flex-shrink: 0;
+    }
+    footer .admin-login button {
+      background-color: var(--accent);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,82,82,0.5);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+    footer .admin-login button:hover {
+      background-color: #ff3333;
+      transform: translateY(-3px);
+    }
 
-    /* ===== Модальное окно логина ===== */
-    #loginModal {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.85);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    #loginModal.active {
-      display: flex;
-    }
-    #loginModal .modal-content {
-      background: var(--card);
-      padding: 30px 40px;
-      border-radius: 12px;
-      width: 320px;
-      box-shadow: 0 8px 25px rgba(255,82,82,0.7);
-      color: var(--white);
-      position: relative;
-    }
-    #loginModal h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-weight: 700;
-      text-align: center;
-      color: var(--accent);
-    }
-    #loginModal label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    #loginModal input[type="text"],
-    #loginModal input[type="password"] {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 6px;
-      border: none;
-      margin-bottom: 16px;
-      font-size: 16px;
-      background: rgba(255,255,255,0.9);
-      color: var(--bg);
-    }
-    #loginModal button.submit-btn {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 0;
-      width: 100%;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    #loginModal button.submit-btn:hover {
-      background-color: #ff3333;
-    }
-    #loginModal .close-btn {
-      position: absolute;
-      top: 10px; right: 14px;
-      background: transparent;
-      border: none;
-      font-size: 28px;
-      color: var(--accent);
-      cursor: pointer;
-      font-weight: 700;
-      line-height: 1;
-      padding: 0;
-      user-select: none;
-    }
-    #loginModal .error-msg {
-      color: #ff5555;
-      margin-bottom: 10px;
-      text-align: center;
-      font-weight: 700;
-    }
+    /* ===== Модальное окно логина ===== */
+    #loginModal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    #loginModal.active {
+      display: flex;
+    }
+    #loginModal .modal-content {
+      background: var(--card);
+      padding: 30px 40px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 8px 25px rgba(255,82,82,0.7);
+      color: var(--white);
+      position: relative;
+    }
+    #loginModal h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-align: center;
+      color: var(--accent);
+    }
+    #loginModal label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    #loginModal input[type="text"],
+    #loginModal input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 16px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
+      color: var(--bg);
+    }
+    #loginModal button.submit-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #loginModal button.submit-btn:hover {
+      background-color: #ff3333;
+    }
+    #loginModal .close-btn {
+      position: absolute;
+      top: 10px; right: 14px;
+      background: transparent;
+      border: none;
+      font-size: 28px;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+      padding: 0;
+      user-select: none;
+    }
+    #loginModal .error-msg {
+      color: #ff5555;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 700;
+    }
 
-    /* ===== Админка ===== */
-    #adminPanel {
-      display: none;
-      padding: 20px 6%;
-      max-width: 600px;
-      margin: 80px auto 120px;
-      background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(255,82,82,0.7);
-      color: var(--white);
-    }
-    #adminPanel.active {
-      display: block;
-    }
-    #adminPanel h2 {
-      color: var(--accent);
-      margin-bottom: 20px;
-      text-align: center;
-      font-weight: 700;
-    }
-    #adminPanel label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    #adminPanel input[type="text"],
-    #adminPanel input[type="datetime-local"] {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 6px;
-      border: none;
-      margin-bottom: 18px;
-      font-size: 16px;
-      background: rgba(255,255,255,0.9);
-      color: var(--bg);
-    }
-    #adminPanel button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      padding: 12px 0;
-      width: 100%;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
-    #adminPanel button:hover {
-      background-color: #ff3333;
-    }
+    /* ===== Админка ===== */
+    #adminPanel {
+      display: none;
+      padding: 20px 6%;
+      max-width: 600px;
+      margin: 80px auto 120px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(255,82,82,0.7);
+      color: var(--white);
+    }
+    #adminPanel.active {
+      display: block;
+    }
+    #adminPanel h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+    #adminPanel label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    #adminPanel input[type="text"],
+    #adminPanel input[type="datetime-local"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 18px;
+      font-size: 16px;
+      background: rgba(255,255,255,0.9);
+      color: var(--bg);
+    }
+    #adminPanel button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 0;
+      width: 100%;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+    #adminPanel button:hover {
+      background-color: #ff3333;
+    }
 
-    /* ===== Стили для НОВОГО встроенного таймера ===== */
-    #promo-timer-block {
-      max-width: 500px;
-      margin: 0 auto 30px;
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 82, 82, 0.4);
-      background: rgba(255, 82, 82, 0.08);
-      text-align: center;
-      color: var(--white);
-      box-shadow: 0 0 10px rgba(255, 82, 82, 0.2);
-    }
-    #promo-timer-block .title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    #promo-timer-block .text {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.9);
-      margin-bottom: 12px;
-    }
-    #promo-timer-block .timer {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      font-family: 'Courier New', Courier, monospace;
-      color: var(--green-light);
-      text-shadow: 0 0 10px var(--green-dark);
-    }
-    #promo-timer-block .timer.inactive {
-      color: #888;
-      text-shadow: none;
-    }
-  </style>
+    /* ===== Стили для НОВОГО встроенного таймера ===== */
+    #promo-timer-block {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 82, 82, 0.4);
+      background: rgba(255, 82, 82, 0.08);
+      text-align: center;
+      color: var(--white);
+      box-shadow: 0 0 10px rgba(255, 82, 82, 0.2);
+    }
+    #promo-timer-block .title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    #promo-timer-block .text {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
+    }
+    #promo-timer-block .timer {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      font-family: 'Courier New', Courier, monospace;
+      color: var(--green-light);
+      text-shadow: 0 0 10px var(--green-dark);
+    }
+    #promo-timer-block .timer.inactive {
+      color: #888;
+      text-shadow: none;
+    }
+  </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Kadra Records Studio</div>
-    <nav>
-      
-      <a href="#about">О нас</a>
-      <a href="#tracks">Работы</a>
-      <a href="#contact">Контакты</a>
-      <a href="#application-form">Оставить заявку</a>
-      <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Telegram</a>
-    </nav>
-  </header>
+  <header>
+    <div class="logo">Kadra Records Studio</div>
+    <nav>
+      <a href="#services">Услуги</a>
+      <a href="#artists">Артисты</a>
+      <a href="#equipment">Оборудование</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#tracks">Работы</a>
+      <a href="#application-form">Заявка</a>
+      <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Telegram</a>
+    </nav>
+  </header>
 
-  <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
-    <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
-  </div>
+  <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
+    <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
+  </div>
 
-  <section class="hero" role="region" aria-label="Главный баннер">
-    <div class="hero-inner">
-      <h1>Создаём музыку, которая говорит за вас</h1>
-      <p>Профессиональная запись, сведение, мастеринг и полное продюсирование треков — три студии: Москва · Бали · Волгоград.</p>
-      <a class="cta" href="#application-form">Записаться</a>
-    </div>
-  </section>
+  <section class="hero" role="region" aria-label="Главный баннер">
+    <div class="hero-inner">
+      <h1>Создаём музыку, которая говорит за вас</h1>
+      <p>Профессиональная запись, сведение, мастеринг и полное продюсирование треков — три студии: Москва · Бали · Волгоград.</p>
+      <a class="cta" href="#application-form">Записаться</a>
+    </div>
+  </section>
 
-  <main>
-    <section id="services">
-      <h2 class="section-title">Наши услуги</h2>
-      <div class="services">
-        <div class="card">
-          <h3>Запись вокала</h3>
-          <p>Чистая, плотная запись с профессиональными микрофонами и акустикой.</p>
-        </div>
-        <div class="card">
-          <h3>Сведение и мастеринг</h3>
-          <p>Коммерческий звук, адаптированный под стриминг-платформы и радио.</p>
-        </div>
-        <div class="card">
-          <h3>Продюсирование</h3>
-          <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
-        </div>
-      </div>
+  <main>
+    <section id="services">
+      <h2 class="section-title">Наши услуги</h2>
+      <div class="services">
+        <div class="card">
+          <h3>Запись вокала</h3>
+          <p>Чистая, плотная запись с профессиональными микрофонами и акустикой.</p>
+        </div>
+        <div class="card">
+          <h3>Сведение и мастеринг</h3>
+          <p>Коммерческий звук, адаптированный под стриминг-платформы и радио.</p>
+        </div>
+        <div class="card">
+          <h3>Продюсирование</h3>
+          <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
+        </div>
+      </div>
 
-      <div style="margin-top:40px;">
-        <h3 style="color:var(--accent); font-size: 1.4rem;">Локации студий</h3>
-        <div class="locations">
-          <div class="loc"><strong>Москва</strong><br>Центральная студия — полнофункциональный контроль-рум и вокальная кабина.</div>
-          <div class="loc"><strong>Бали</strong><br>Резиденция для творческих сессий и атмосферных записей на природе.</div>
-          <div class="loc"><strong>Волгоград</strong><br>Локальная студия для быстрой записи и работы с исполнителями региона.</div>
-        </div>
-      </div>
-    </section>
+      <div style="margin-top:40px;">
+        <h3 style="color:var(--accent); font-size: 1.4rem;">Локации студий</h3>
+        <div class="locations">
+          <div class="loc"><strong>Москва</strong><br>Центральная студия — полнофункциональный контроль-рум и вокальная кабина.</div>
+          <div class="loc"><strong>Бали</strong><br>Резиденция для творческих сессий и атмосферных записей на природе.</div>
+          <div class="loc"><strong>Волгоград</strong><br>Локальная студия для быстрой записи и работы с исполнителями региона.</div>
+        </div>
+      </div>
+    </section>
 
-    <section id="artists" class="content-section">
-      <h2 class="section-title">Наши артисты</h2>
-      <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы гордимся тем, что работали со многими талантливыми исполнителями и музыкантами. Вот несколько из них:</p>
-      <div class="artist-grid">
-        <div class="artist-card">
-          <img src="img/artist1.jpg" alt="Фото артиста" class="artist-photo">
-          <div class="artist-name">Алексей «Tribe» Волков</div>
-          <p>Инди-поп исполнитель с уникальным вокалом и атмосферными текстами.</p>
-        </div>
-        <div class="artist-card">
-          <img src="img/artist2.jpg" alt="Фото артиста" class="artist-photo">
-          <div class="artist-name">Мария «Luna» Светлова</div>
-          <p>Талантливая вокалистка и автор песен в жанре R&B и соул.</p>
-        </div>
-        <div class="artist-card">
-          <img src="img/artist3.jpg" alt="Фото артиста" class="artist-photo">
-          <div class="artist-name">Группа «Echoes of Void»</div>
-          <p>Альтернативный рок-проект, известный своими энергичными живыми выступлениями.</p>
-        </div>
-      </div>
-    </section>
+    <section id="artists" class="content-section">
+      <h2 class="section-title">Наши артисты</h2>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы гордимся тем, что работали со многими талантливыми исполнителями и музыкантами. Вот несколько из них:</p>
+      <div class="artist-grid">
+        <div class="artist-card">
+          <img src="img/artist1.jpg" alt="Фото артиста" class="artist-photo">
+          <div class="artist-name">Алексей «Tribe» Волков</div>
+          <p>Инди-поп исполнитель с уникальным вокалом и атмосферными текстами.</p>
+        </div>
+        <div class="artist-card">
+          <img src="img/artist2.jpg" alt="Фото артиста" class="artist-photo">
+          <div class="artist-name">Мария «Luna» Светлова</div>
+          <p>Талантливая вокалистка и автор песен в жанре R&B и соул.</p>
+        </div>
+        <div class="artist-card">
+          <img src="img/artist3.jpg" alt="Фото артиста" class="artist-photo">
+          <div class="artist-name">Группа «Echoes of Void»</div>
+          <p>Альтернативный рок-проект, известный своими энергичными живыми выступлениями.</p>
+        </div>
+      </div>
+    </section>
 
-    <section id="equipment" class="content-section">
-        <h2 class="section-title">Наше оборудование</h2>
-        <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы используем только лучшее оборудование для достижения идеального звучания.</p>
-        <div class="equipment-list">
-          <div class="equipment-item">
-            <img src="img/mic.jpg" alt="Фото микрофона" class="equipment-photo">
-            <div>
-              <h4>Микрофоны</h4>
-              <p>Neumann U87, AKG C414, Shure SM7B — для вокала и инструментов.</p>
-            </div>
-          </div>
-          <div class="equipment-item">
-            <img src="img/preamp.jpg" alt="Фото предусилителя" class="equipment-photo">
-            <div>
-              <h4>Предусилители</h4>
-              <p>Universal Audio, Neve 1073 — для теплого и насыщенного звучания.</p>
-            </div>
-          </div>
-          <div class="equipment-item">
-            <img src="img/monitor.jpg" alt="Фото монитора" class="equipment-photo">
-            <div>
-              <h4>Мониторы</h4>
-              <p>Genelec 8030, Adam Audio T5V — для точного сведения и мастеринга.</p>
-            </div>
-          </div>
-          <div class="equipment-item">
-            <img src="img/software.jpg" alt="Фото ПО" class="equipment-photo">
-            <div>
-              <h4>Программное обеспечение</h4>
-              <p>Pro Tools, Ableton Live, Logic Pro X с полным набором плагинов.</p>
-            </div>
-          </div>
-        </div>
-    </section>
+    <section id="equipment" class="content-section">
+        <h2 class="section-title">Наше оборудование</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы используем только лучшее оборудование для достижения идеального звучания.</p>
+        <div class="equipment-list">
+          <div class="equipment-item">
+            <img src="img/mic.jpg" alt="Фото микрофона" class="equipment-photo">
+            <div>
+              <h4>Микрофоны</h4>
+              <p>Neumann U87, AKG C414, Shure SM7B — для вокала и инструментов.</p>
+            </div>
+          </div>
+          <div class="equipment-item">
+            <img src="img/preamp.jpg" alt="Фото предусилителя" class="equipment-photo">
+            <div>
+              <h4>Предусилители</h4>
+              <p>Universal Audio, Neve 1073 — для теплого и насыщенного звучания.</p>
+            </div>
+          </div>
+          <div class="equipment-item">
+            <img src="img/monitor.jpg" alt="Фото монитора" class="equipment-photo">
+            <div>
+              <h4>Мониторы</h4>
+              <p>Genelec 8030, Adam Audio T5V — для точного сведения и мастеринга.</p>
+            </div>
+          </div>
+          <div class="equipment-item">
+            <img src="img/software.jpg" alt="Фото ПО" class="equipment-photo">
+            <div>
+              <h4>Программное обеспечение</h4>
+              <p>Pro Tools, Ableton Live, Logic Pro X с полным набором плагинов.</p>
+            </div>
+          </div>
+        </div>
+    </section>
 
-    <section id="reviews" class="content-section">
-      <h2 class="section-title">Отзывы клиентов</h2>
-      <div class="review-grid">
-        <div class="review-card">
-          <p class="review-text">«Работа в Kadra Records — это не просто запись, это настоящий творческий процесс. Ребята помогли мне найти моё уникальное звучание. Рекомендую!»</p>
-          <div class="review-author">— Иван П.</div>
-        </div>
-        <div class="review-card">
-          <p class="review-text">«Лучшая студия в Москве! Качество звука на высшем уровне, а атмосфера очень дружелюбная. Обязательно вернусь еще раз.»</p>
-          <div class="review-author">— Анна С.</div>
-        </div>
-        <div class="review-card">
-          <p class="review-text">«Сведение и мастеринг моего трека были выполнены идеально. Звук получился плотным и объемным, именно так, как я хотел.»</p>
-          <div class="review-author">— Дмитрий Р.</div>
-        </div>
-      </div>
-    </section>
+    <section id="reviews" class="content-section">
+      <h2 class="section-title">Отзывы клиентов</h2>
+      <div class="review-grid">
+        <div class="review-card">
+          <p class="review-text">«Работа в Kadra Records — это не просто запись, это настоящий творческий процесс. Ребята помогли мне найти моё уникальное звучание. Рекомендую!»</p>
+          <div class="review-author">— Иван П.</div>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Лучшая студия в Москве! Качество звука на высшем уровне, а атмосфера очень дружелюбная. Обязательно вернусь еще раз.»</p>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Сведение и мастеринг моего трека были выполнены идеально. Звук получился плотным и объемным, именно так, как я хотел.»</p>
+          <div class="review-author">— Дмитрий Р.</div>
+        </div>
+      </div>
+    </section>
 
-    <section id="tracks">
-      <h2 class="section-title">Наши работы</h2>
-      <div id="soundcloud-players">
-        <div>
-          <h3>Готовые песни</h3>
-          <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-          </iframe>
-        </div>
-        <div>
-          <h3>Примеры работ</h3>
-          <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
-            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-          </iframe>
-        </div>
-      </div>
-    </section>
+    <section id="tracks">
+      <h2 class="section-title">Наши работы</h2>
+      <div id="soundcloud-players">
+        <div>
+          <h3>Готовые песни</h3>
+          <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+          </iframe>
+        </div>
+        <div>
+          <h3>Примеры работ</h3>
+          <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1149792610&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+          </iframe>
+        </div>
+      </div>
+    </section>
 
-    <section id="about" style="margin-top: 100px;">
-      <h2 class="section-title">О студии</h2>
-      <p style="max-width:720px; margin: 0 auto; text-align:center; font-size: 1.1rem; line-height: 1.6;">
-        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук и атмосферу, которые слышны в каждом треке.
-      </p>
-    </section>
+        <section id="application-form" style="margin-top: 100px;">
+      <h2 class="section-title">Оставить заявку</h2>
 
-    <section id="contact" style="margin-top: 100px;">
-      <h2 class="section-title">Контакты</h2>
-      <p style="max-width:720px; margin: 0 auto; text-align:center; font-size: 1.1rem; line-height: 1.6;">
-        Телефон: +7 999 123-45-67<br>
-        Email: info@kadrarecords.ru<br>
-        Адреса студий указаны в разделе «Локации студий» выше.
-      </p>
-    </section>
+      <div id="promo-timer-block" style="display:none;">
+        <div class="title">Скидка 20% на запись!</div>
+        <p class="text">Предложение действует только сегодня. Успейте воспользоваться:</p>
+        <div class="timer">30:00</div>
+      </div>
 
-    <section id="application-form" style="margin-top: 100px;">
-        <h2 class="section-title">Оставить заявку</h2>
+            <form id="contactForm" action="https://script.google.com/macros/s/AKfycbw23g_IL0A5iov7CxhjrKMhIJ1nHCBMmCSePtLxSvv5oqpHSLLDgKqapvuNKcEfxZL1Xg/exec" method="POST" style="max-width: 500px; margin: 0 auto; padding: 24px; background: var(--card); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
+        <p style="text-align: center; font-size: 1rem;">Оставьте свои контактные данные, и мы свяжемся с вами, чтобы обсудить детали.</p>
+        <div style="margin-bottom: 20px;">
+          <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600;">Ваше имя</label>
+          <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 600;">Номер телефона</label>
+          <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+        </div>
+        <button type="submit" style="width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 18px; cursor: pointer; transition: background-color 0.3s ease;">Отправить заявку</button>
+      </form>
+    </section>
 
-        <div id="promo-timer-block" style="display:none;">
-          <div class="title">Скидка 20% на запись!</div>
-          <p class="text">Предложение действует только сегодня. Успейте воспользоваться:</p>
-          <div class="timer">30:00</div>
-        </div>
+  </main>
 
-        <form id="contactForm" style="max-width: 500px; margin: 0 auto; padding: 24px; background: var(--card); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
-            <p style="text-align: center; font-size: 1rem;">Оставьте свои контактные данные, и мы свяжемся с вами, чтобы обсудить детали.</p>
-            <div style="margin-bottom: 20px;">
-                <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600;">Ваше имя</label>
-                <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
-            </div>
-            <div style="margin-bottom: 20px;">
-                <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 600;">Номер телефона</label>
-                <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
-            </div>
-            <button type="submit" style="width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 18px; cursor: pointer; transition: background-color 0.3s ease;">Отправить заявку</button>
-            <p id="formMessage" style="text-align: center; margin-top: 15px; font-weight: 600;"></p>
-        </form>
-    </section>
-  </main>
-
-  <footer>
-    <div class="copyright">&copy; 2025 Kadra Records Studio. Все права защищены.</div>
-    <div class="contacts">
-      <a href="mailto:info@kadrarecords.ru" style="color:inherit; text-decoration:none;">info@kadrarecords.ru</a> | Тел: +7 999 123-45-67
-    </div>
-    <div class="admin-login">
-      <button id="adminLoginBtn" aria-haspopup="dialog" aria-controls="loginModal" aria-expanded="false">Войти в админку</button>
-    </div>
-  </footer>
-
-  <div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
-    <div class="modal-content">
-      <button class="close-btn" aria-label="Закрыть">&times;</button>
-      <h2 id="loginTitle">Авторизация</h2>
-      <div class="error-msg" id="loginError" aria-live="polite"></div>
-      <form id="loginForm">
-        <label for="loginInput">Логин</label>
-        <input type="text" id="loginInput" name="login" autocomplete="username" required />
-        <label for="passwordInput">Пароль</label>
-        <input type="password" id="passwordInput" name="password" autocomplete="current-password" required />
-        <button type="submit" class="submit-btn">Войти</button>
-      </form>
-    </div>
-  </div>
-
-  <section id="adminPanel" aria-label="Административная панель">
-    <h2>Редактирование таймера релиза</h2>
-    <label for="releaseTitleInput">Название таймера</label>
-    <input type="text" id="releaseTitleInput" placeholder="Например, 'Релиз через'" />
-    <label for="releaseDateInput">Дата и время релиза</label>
-    <input type="datetime-local" id="releaseDateInput" />
-    <button id="saveReleaseBtn">Сохранить</button>
-    <button id="logoutBtn" style="margin-top: 12px; background:#888;">Выйти из админки</button>
-  </section>
+  <footer>
+    <div class="copyright">© 2024 Kadra Records Studio. Все права защищены.</div>
+    <div class="contacts">
+      Связаться с нами: <a href="mailto:info@kadrarecords.com" style="color:var(--white); text-decoration: none;">info@kadrarecords.com</a>
+    </div>
+    <div class="admin-login">
+      <button id="adminLoginBtn">Панель администратора</button>
+    </div>
+  </footer>
 
 
-  <script>
-    // Переменные для основных элементов
-    const releaseTimer = document.getElementById('release-timer');
-    const releaseTitleElem = document.getElementById('release-title');
-    const releaseCountdownElem = document.getElementById('release-countdown');
+    <div id="loginModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeModalBtn">&times;</button>
+      <h2>Вход для администратора</h2>
+      <form id="loginForm">
+        <div class="error-msg" id="loginErrorMsg"></div>
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" class="submit-btn">Войти</button>
+      </form>
+    </div>
+  </div>
 
-    const loginModal = document.getElementById('loginModal');
-    const adminPanel = document.getElementById('adminPanel');
-    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    <div id="adminPanel">
+    <h2>Панель администратора</h2>
+    <label for="releaseTitleInput">Заголовок релиза:</label>
+    <input type="text" id="releaseTitleInput" placeholder="Введите название релиза">
 
-    const loginForm = document.getElementById('loginForm');
-    const loginInput = document.getElementById('loginInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const loginError = document.getElementById('loginError');
+    <label for="releaseDateInput">Дата и время релиза:</label>
+    <input type="datetime-local" id="releaseDateInput">
+    <button id="setReleaseTimerBtn">Установить таймер</button>
 
-    const releaseTitleInput = document.getElementById('releaseTitleInput');
-    const releaseDateInput = document.getElementById('releaseDateInput');
-    const saveReleaseBtn = document.getElementById('saveReleaseBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+    <label for="promoTimerInput">Длительность промо-таймера (в минутах):</label>
+    <input type="text" id="promoTimerInput" placeholder="Введите длительность, например 30">
+    <button id="startPromoTimerBtn">Запустить промо-таймер</button>
+  </div>
+  
+  <script>
+    // JavaScript для функционала страницы
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 100, // Смещение для фиксированной шапки
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+  <script>
+    // Логика таймера релиза
+    const releaseCountdown = document.getElementById('release-countdown');
+    const releaseTimerElement = document.getElementById('release-timer');
+    const releaseTitleElement = document.getElementById('release-title');
+    let releaseDate = null;
+    let releaseTitle = 'Релиз через';
 
-    const contactForm = document.getElementById('contactForm');
-    const formMessage = document.getElementById('formMessage');
+    // Проверка наличия сохраненных данных в localStorage
+    if (localStorage.getItem('releaseDate')) {
+      releaseDate = new Date(localStorage.getItem('releaseDate'));
+      releaseTitle = localStorage.getItem('releaseTitle') || 'Релиз через';
+    }
 
-    const ADMIN_LOGIN = 'thekadrainfo';
-    const ADMIN_PASSWORD = 'Ioioiohyadfg';
+    // Обновление таймера каждую секунду
+    function updateReleaseTimer() {
+      if (!releaseDate) {
+        releaseCountdown.textContent = 'дату не выбрана';
+        releaseTimerElement.style.backgroundColor = '#555';
+        return;
+      }
+      const now = new Date();
+      const diff = releaseDate - now;
 
-    // ======== Функции для админки и таймера релиза ========
-    function showLogin() {
-      loginModal.classList.add('active');
-      adminLoginBtn.setAttribute('aria-expanded', 'true');
-      loginError.textContent = '';
-      loginForm.reset();
-      loginInput.focus();
-    }
+      if (diff <= 0) {
+        releaseCountdown.textContent = 'Релиз уже вышел!';
+        releaseTimerElement.style.backgroundColor = '#ff5252';
+        return;
+      }
 
-    function hideLogin() {
-      loginModal.classList.remove('active');
-      adminLoginBtn.setAttribute('aria-expanded', 'false');
-    }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    function showAdminPanel() {
-      adminPanel.classList.add('active');
-      releaseTimer.style.display = 'none';
-    }
+      releaseTitleElement.textContent = releaseTitle;
+      releaseCountdown.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    }
 
-    function hideAdminPanel() {
-      adminPanel.classList.remove('active');
-      releaseTimer.style.display = 'block';
-    }
+    setInterval(updateReleaseTimer, 1000);
+    updateReleaseTimer(); // Запускаем сразу, чтобы не было задержки
 
-    function isLoggedIn() {
-      return sessionStorage.getItem('adminLogged') === 'true';
-    }
+  </script>
+  <script>
+    // Логика для промо-таймера
+    const promoTimerBlock = document.getElementById('promo-timer-block');
+    const promoTimerElement = promoTimerBlock.querySelector('.timer');
+    let promoInterval = null;
+    let promoEndTime = null;
 
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const loginVal = loginInput.value.trim();
-      const passwordVal = passwordInput.value;
+    if (localStorage.getItem('promoEndTime')) {
+      promoEndTime = new Date(localStorage.getItem('promoEndTime'));
+      if (promoEndTime > new Date()) {
+        promoTimerBlock.style.display = 'block';
+        startPromoTimer();
+      }
+    }
 
-      if(loginVal === ADMIN_LOGIN && passwordVal === ADMIN_PASSWORD) {
-        sessionStorage.setItem('adminLogged', 'true');
-        hideLogin();
-        showAdminPanel();
-        loadSettingsToAdmin();
-      } else {
-        loginError.textContent = 'Неверный логин или пароль.';
-      }
-    });
+    function startPromoTimer() {
+      if (promoInterval) clearInterval(promoInterval);
 
-    adminLoginBtn.addEventListener('click', () => {
-      if(isLoggedIn()) {
-        showAdminPanel();
-      } else {
-        showLogin();
-      }
-    });
+      promoInterval = setInterval(() => {
+        const now = new Date();
+        const diff = promoEndTime - now;
 
-    document.querySelector('#loginModal .close-btn').addEventListener('click', () => {
-      hideLogin();
-    });
+        if (diff <= 0) {
+          clearInterval(promoInterval);
+          promoTimerElement.textContent = '00:00';
+          promoTimerElement.classList.add('inactive');
+          localStorage.removeItem('promoEndTime');
+          return;
+        }
 
-    logoutBtn.addEventListener('click', () => {
-      sessionStorage.removeItem('adminLogged');
-      hideAdminPanel();
-    });
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    function loadSettings() {
-      const title = localStorage.getItem('releaseTitle') || 'Релиз через';
-      const dateStr = localStorage.getItem('releaseDate');
-      releaseTitleElem.textContent = title;
+        promoTimerElement.textContent =
+          `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        promoTimerElement.classList.remove('inactive');
+      }, 1000);
+    }
+  </script>
+  <script>
+    // Логика для входа и админ-панели
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    const loginModal = document.getElementById('loginModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const loginForm = document.getElementById('loginForm');
+    const loginErrorMsg = document.getElementById('loginErrorMsg');
+    const adminPanel = document.getElementById('adminPanel');
 
-      if(dateStr) {
-        updateCountdown(new Date(dateStr));
-      } else {
-        releaseCountdownElem.textContent = 'дата не установлена';
-      }
-    }
+    const releaseTitleInput = document.getElementById('releaseTitleInput');
+    const releaseDateInput = document.getElementById('releaseDateInput');
+    const setReleaseTimerBtn = document.getElementById('setReleaseTimerBtn');
 
-    function updateCountdown(targetDate) {
-      function tick() {
-        const now = new Date();
-        const diff = targetDate - now;
-        if(diff <= 0) {
-          releaseCountdownElem.textContent = 'Релиз уже состоялся!';
-          clearInterval(intervalId);
-          return;
-        }
-        const days = Math.floor(diff / (1000*60*60*24));
-        const hours = Math.floor((diff / (1000*60*60)) % 24);
-        const minutes = Math.floor((diff / (1000*60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        releaseCountdownElem.textContent =
-          `${days}д ${hours}ч ${minutes}м ${seconds}с`;
-      }
-      tick();
-      const intervalId = setInterval(tick, 1000);
-    }
+    const promoTimerInput = document.getElementById('promoTimerInput');
+    const startPromoTimerBtn = document.getElementById('startPromoTimerBtn');
 
-    function loadSettingsToAdmin() {
-      releaseTitleInput.value = localStorage.getItem('releaseTitle') || 'Релиз через';
-      const dateStr = localStorage.getItem('releaseDate');
-      if(dateStr) {
-        releaseDateInput.value = new Date(dateStr).toISOString().slice(0,16);
-      } else {
-        releaseDateInput.value = '';
-      }
-    }
+    // Простая авторизация для примера
+    const username = 'admin';
+    const password = '123';
 
-    saveReleaseBtn.addEventListener('click', () => {
-      const newTitle = releaseTitleInput.value.trim() || 'Релиз через';
-      const newDate = releaseDateInput.value;
+    adminLoginBtn.addEventListener('click', () => {
+      loginModal.classList.add('active');
+    });
+    closeModalBtn.addEventListener('click', () => {
+      loginModal.classList.remove('active');
+      loginErrorMsg.textContent = '';
+    });
+    window.addEventListener('click', (e) => {
+      if (e.target == loginModal) {
+        loginModal.classList.remove('active');
+        loginErrorMsg.textContent = '';
+      }
+    });
 
-      if(!newDate) {
-        alert('Пожалуйста, выберите дату и время релиза.');
-        return;
-      }
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inputUsername = loginForm.username.value;
+      const inputPassword = loginForm.password.value;
 
-      localStorage.setItem('releaseTitle', newTitle);
-      localStorage.setItem('releaseDate', newDate);
+      if (inputUsername === username && inputPassword === password) {
+        loginModal.classList.remove('active');
+        adminPanel.classList.add('active');
+      } else {
+        loginErrorMsg.textContent = 'Неверное имя пользователя или пароль.';
+      }
+    });
 
-      releaseTitleElem.textContent = newTitle;
-      updateCountdown(new Date(newDate));
+    // Установка таймера релиза
+    setReleaseTimerBtn.addEventListener('click', () => {
+      if (releaseDateInput.value) {
+        releaseDate = new Date(releaseDateInput.value);
+        releaseTitle = releaseTitleInput.value || 'Релиз через';
+        localStorage.setItem('releaseDate', releaseDate);
+        localStorage.setItem('releaseTitle', releaseTitle);
+        updateReleaseTimer();
+        alert('Таймер релиза установлен!');
+      } else {
+        alert('Пожалуйста, выберите дату и время.');
+      }
+    });
 
-      alert('Настройки сохранены.');
-    });
+    // Запуск промо-таймера
+    startPromoTimerBtn.addEventListener('click', () => {
+      const minutes = parseInt(promoTimerInput.value);
+      if (isNaN(minutes) || minutes <= 0) {
+        alert('Пожалуйста, введите корректную длительность в минутах.');
+        return;
+      }
+      
+      promoEndTime = new Date(new Date().getTime() + minutes * 60000);
+      localStorage.setItem('promoEndTime', promoEndTime);
+      promoTimerBlock.style.display = 'block';
+      startPromoTimer();
+      alert('Промо-таймер запущен!');
+    });
 
-    // ======== Функции для формы заявки ========
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        console.log('Данные заявки:', { name, phone });
-
-        formMessage.textContent = 'Отправка...';
-        formMessage.style.color = '#fff';
-
-        try {
-            // Здесь должен быть реальный код для отправки данных на сервер
-            // Например: await fetch('ваш_адрес_сервера', { method: 'POST', body: JSON.stringify({ name, phone }) });
-
-            await new Promise(resolve => setTimeout(resolve, 1500));
-
-            formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена.';
-            formMessage.style.color = 'var(--green-light)';
-            contactForm.reset();
-        } catch (error) {
-            formMessage.textContent = 'Произошла ошибка при отправке заявки. Попробуйте ещё раз.';
-            formMessage.style.color = '#ff5555';
-        }
-    });
-
-    // ======== НОВЫЙ СКРИПТ: Логика для встроенного таймера ========
-    (() => {
-        const timerBlock = document.getElementById('promo-timer-block');
-        const timerEl = timerBlock.querySelector('.timer');
-        const countdownDuration = 1800; // 30 минут в секундах
-        let countdown;
-        let countdownInterval;
-
-        function formatTime(seconds) {
-            if (seconds <= 0) return '00:00';
-            const m = Math.floor(seconds / 60);
-            const s = seconds % 60;
-            return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-        }
-
-        function getTodayDateString() {
-            const today = new Date();
-            return today.toISOString().slice(0, 10);
-        }
-
-        function startOrResumeTimer() {
-            let endTime = parseInt(localStorage.getItem('promoBannerEndTime'), 10) || 0;
-            const lastShownDate = localStorage.getItem('promoBannerShownDate');
-            const todayDate = getTodayDateString();
-            
-            // Если сегодня уже показывали, и таймер не истек
-            if (lastShownDate === todayDate && endTime > Date.now()) {
-                countdown = Math.floor((endTime - Date.now()) / 1000);
-            } 
-            // Если новый день или таймер истек
-            else {
-                endTime = Date.now() + countdownDuration * 1000;
-                localStorage.setItem('promoBannerEndTime', endTime);
-                localStorage.setItem('promoBannerShownDate', todayDate);
-                countdown = countdownDuration;
-            }
-
-            // Показываем блок
-            timerBlock.style.display = 'block';
-
-            // Запускаем интервал
-            countdownInterval = setInterval(() => {
-                countdown--;
-                if (countdown < 0) {
-                    clearInterval(countdownInterval);
-                    timerEl.textContent = '00:00';
-                    timerEl.classList.add('inactive');
-                    return;
-                }
-                timerEl.textContent = formatTime(countdown);
-            }, 1000);
-        }
-
-        window.addEventListener('load', () => {
-            // Запускаем таймер, если админка не активна
-            if (!isLoggedIn()) {
-              startOrResumeTimer();
-            }
-        });
-
-    })();
-
-
-    // ======== Действия при загрузке страницы ========
-    window.addEventListener('load', () => {
-      if(isLoggedIn()) {
-        showAdminPanel();
-        loadSettingsToAdmin();
-      } else {
-        loadSettings();
-      }
-    });
-  </script>
+  </script>
 </body>
 </html>
-
