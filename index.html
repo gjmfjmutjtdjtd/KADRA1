@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -24,7 +24,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-
     /* ===== Фиксированная шапка ===== */
     header {
       position: fixed;
@@ -64,8 +63,6 @@
       transform: translateY(-2px);
       color: var(--accent);
     }
-
-    /* Кнопка «Telegram» в меню */
     nav .chat-btn {
       padding: 8px 18px;
       background: var(--accent);
@@ -80,7 +77,6 @@
       background-color: #ff3333;
       transform: translateY(-2px);
     }
-
     /* ===== Таймер релиза под шапкой ===== */
     #release-timer {
       position: fixed;
@@ -101,7 +97,6 @@
       z-index: 1100;
       user-select: none;
     }
-
     /* ===== Герой (шапка-баннер) ===== */
     .hero {
       min-height: calc(100vh - 72px);
@@ -155,7 +150,6 @@
       transform: translateY(-4px);
       box-shadow: 0 16px 32px rgba(0,0,0,0.55);
     }
-
     /* ===== Блоки ниже шапки ===== */
     main {
       padding: 60px 6% 120px;
@@ -188,7 +182,6 @@
       border-radius: 8px;
       min-width: 200px;
     }
-
     /* ===== SoundCloud плееры (новый блок) ===== */
     #soundcloud-players {
       margin-top: 48px;
@@ -222,7 +215,6 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
       width: 100% !important;
     }
-
     /* ===== Футер ===== */
     footer {
       padding: 40px 6%;
@@ -263,112 +255,6 @@
       background-color: #ff3333;
       transform: translateY(-3px);
     }
-
-    /* ===== Баннер скидки ===== */
-    #discount-banner {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: var(--green-dark);
-      color: white;
-      padding: 22px 26px 26px 26px;
-      border-radius: 18px;
-      box-shadow: 0 8px 24px var(--shadow);
-      font-family: 'Inter', sans-serif;
-      font-size: 1.05rem;
-      max-width: 320px;
-      z-index: 1200;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      text-align: center;
-      user-select: none;
-      cursor: default;
-      opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      transform: translateY(20px);
-      position: fixed;
-    }
-    #discount-banner.show {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-      cursor: auto;
-    }
-    #discount-banner p {
-      margin: 0;
-      font-weight: 600;
-      line-height: 1.4;
-      color: white;
-      user-select: text;
-    }
-    #discount-banner p a {
-      color: var(--green-light);
-      font-weight: 700;
-      text-decoration: underline;
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-    #discount-banner p a:hover,
-    #discount-banner p a:focus {
-      color: #bbf7d0;
-      outline: none;
-    }
-    #discount-banner .timer {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      font-family: 'Courier New', Courier, monospace;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-      user-select: text;
-      margin-top: 4px;
-    }
-    #discount-banner .btn {
-      background: white;
-      color: var(--green-dark);
-      font-weight: 700;
-      padding: 11px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 1.15rem;
-      box-shadow: 0 5px 15px var(--shadow);
-      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-      user-select: none;
-      display: inline-block;
-      min-width: 160px;
-      text-align: center;
-      cursor: pointer;
-      margin-top: 6px;
-    }
-    #discount-banner .btn:hover,
-    #discount-banner .btn:focus {
-      background: var(--green-light);
-      color: white;
-      box-shadow: 0 7px 22px rgba(74, 222, 128, 0.7);
-      outline: none;
-    }
-    #discount-banner .minimize-btn {
-      position: absolute;
-      top: 8px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 24px;
-      line-height: 1;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      font-weight: 700;
-      padding: 0;
-      transition: color 0.2s ease;
-    }
-    #discount-banner .minimize-btn:hover,
-    #discount-banner .minimize-btn:focus {
-      color: #bbf7d0;
-      outline: none;
-    }
-
     /* ===== Адаптив ===== */
     @media (max-width: 720px) {
       header {
@@ -433,7 +319,7 @@
 
   <!-- Таймер релиза под шапкой -->
   <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
-    Релиз через <span id="release-countdown">загрузка...</span>
+    <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
   </div>
 
   <!-- hero -->
@@ -484,43 +370,52 @@
       <div>
         <h3>Примеры работ</h3>
         <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true" style="width:100%;">
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
         </iframe>
       </div>
     </section>
 
-    <!-- Контакты -->
-    <section id="contact" style="margin-top: 60px; text-align: center;">
-      <h2 style="color:var(--accent); margin-bottom: 12px;">Свяжитесь с нами</h2>
-      <p>Телефон: +7 999 123-45-67</p>
-      <p>Email: info@kadra-records.ru</p>
-      <a href="mailto:info@kadra-records.ru" style="color: var(--accent); font-weight: 700; text-decoration: none;">Написать на почту</a>
+    <section id="about" style="margin-top: 80px;">
+      <h2 style="color:var(--accent); text-align:center;">О студии</h2>
+      <p style="max-width:720px; margin: 0 auto; text-align:center;">
+        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук, который продаёт и живёт в сердцах слушателей.
+      </p>
+    </section>
+
+    <section id="contact" style="margin-top: 80px;">
+      <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
+      <p style="text-align:center; max-width: 600px; margin: 0 auto;">
+        Напишите нам в Telegram для быстрой связи и заказа студийного времени:<br>
+        <a href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight:700; text-decoration:none;">@kadrarec</a>
+      </p>
     </section>
   </main>
 
   <footer>
     <div class="copyright">© 2025 Kadra Records Studio</div>
     <div class="contacts">Телефон: +7 999 123-45-67<br>email: info@kadra-records.ru</div>
-    <div class="admin-login">
-      <button onclick="location.href='admin.html'">Войти в админку</button>
-    </div>
+    <div class="admin-login"><button>Войти в админку</button></div>
   </footer>
 
   <script>
     (() => {
       const countdownEl = document.getElementById('release-countdown');
+      const titleEl = document.getElementById('release-title');
 
-      // Берём дату релиза из localStorage или ставим дефолт
+      // Получаем дату релиза из localStorage или ставим дефолт
       let storedDate = localStorage.getItem('releaseDate');
-      let releaseDate;
-      if (storedDate) {
-        releaseDate = new Date(storedDate);
-        if (isNaN(releaseDate)) {
-          releaseDate = new Date('2025-08-25T20:00:00Z');
-        }
-      } else {
+      let releaseDate = storedDate ? new Date(storedDate) : new Date('2025-08-25T20:00:00Z');
+
+      if (isNaN(releaseDate)) {
         releaseDate = new Date('2025-08-25T20:00:00Z');
       }
+
+      // Получаем название таймера из localStorage или дефолт
+      let storedTitle = localStorage.getItem('releaseTitle');
+      if (!storedTitle || storedTitle.trim() === '') {
+        storedTitle = 'Релиз через';
+      }
+      titleEl.textContent = storedTitle;
 
       function updateTimer() {
         const now = new Date();
@@ -548,6 +443,5 @@
       const timerInterval = setInterval(updateTimer, 1000);
     })();
   </script>
-
 </body>
 </html>
