@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -9,62 +9,136 @@
       --accent: #ff5252;
       --bg: #0d0d0d;
       --card: #1a1a1a;
+      --glass: rgba(0, 0, 0, 0.6);
       --white: #ffffff;
       --green-light: #4ade80;
       --green-dark: #22c55e;
       --shadow: rgba(34, 197, 94, 0.3);
     }
+    * { box-sizing: border-box }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0; font-family: "Inter", Arial, sans-serif; background: var(--bg); color: var(--white);
+      font-family: "Inter", "Arial", sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
+    /* ===== Фиксированная шапка ===== */
     header {
-      position: fixed; top: 0; left: 0; width: 100%; height: 72px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 6%; background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
-      backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.03);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6%;
       z-index: 1000;
+      background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      gap: 20px;
     }
-    .logo { font-weight: 700; font-size: 20px; letter-spacing: 1px; }
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
     nav {
-      display: flex; gap: 20px; align-items: center;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-grow: 1;
+      max-width: calc(100% - 150px); /* Оставляем место для кнопки Telegram */
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+    }
+    nav::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
     }
     nav a {
-      color: var(--white); text-decoration: none; font-weight: 600; opacity: 0.95; font-size: 16px;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.95;
       transition: opacity 0.18s, transform 0.12s;
+      font-size: 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     nav a:hover {
-      opacity: 1; transform: translateY(-2px); color: var(--accent);
+      opacity: 1;
+      transform: translateY(-2px);
+      color: var(--accent);
     }
+
+    /* Кнопка «Telegram» в меню */
     nav .chat-btn {
-      padding: 8px 18px; background: var(--accent); color: #fff; border-radius: 6px; font-weight: 700; font-size: 16px;
-      text-decoration: none; transition: background-color 0.3s ease, transform 0.2s ease;
+      padding: 8px 18px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+      flex-shrink: 0;
+      min-width: 130px;
+      text-align: center;
     }
     nav .chat-btn:hover {
-      background-color: #ff3333; transform: translateY(-2px);
+      background-color: #ff3333;
+      transform: translateY(-2px);
     }
 
-    /* Таймер */
+    /* ===== Таймер релиза под шапкой ===== */
     #release-timer {
-      position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
-      background: var(--accent); color: white; padding: 12px 24px; border-radius: 0 0 12px 12px;
-      font-weight: 700; font-size: 1.15rem; max-width: 480px; width: 90%; text-align: center;
-      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6); z-index: 1100; user-select: none;
+      position: fixed;
+      top: 72px; /* сразу под шапкой */
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 0 0 12px 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6);
+      z-index: 1100;
+      user-select: none;
     }
 
-    /* hero */
+    /* ===== Герой (шапка-баннер) ===== */
     .hero {
       min-height: calc(100vh - 72px);
-      margin-top: 102px;
-      display: flex; align-items: center; justify-content: center;
-      padding: 48px 6%; text-align: center;
+      margin-top: 102px; /* 72 шапка + 30 таймер */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 48px 6%;
+      text-align: center;
+      color: var(--white);
       background:
         linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
         url('img/studio-bg.jpg');
-      background-size: cover; background-position: center center; background-repeat: no-repeat;
-      color: var(--white);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
     }
     .hero-inner {
-      max-width: 1100px; width: 100%;
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      width: 100%;
     }
     .hero h1 {
       font-size: clamp(28px, 5vw, 56px);
@@ -96,17 +170,79 @@
       box-shadow: 0 16px 32px rgba(0,0,0,0.55);
     }
 
+    /* ===== Блоки ниже шапки ===== */
     main {
       padding: 60px 6% 120px;
-      max-width: 1200px;
-      margin: 0 auto;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .locations {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .loc {
+      background: rgba(255,255,255,0.03);
+      padding: 14px 18px;
+      border-radius: 8px;
+      min-width: 200px;
     }
 
-    /* Footer */
+    /* ===== SoundCloud плееры (новый блок) ===== */
+    #soundcloud-players {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #soundcloud-players > div {
+      flex: 1 1 400px;
+      max-width: 400px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,82,82,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #soundcloud-players h3 {
+      color: var(--accent);
+      font-family: "Inter", Arial, sans-serif;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    iframe {
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 100% !important;
+    }
+
+    /* ===== Футер ===== */
     footer {
       padding: 40px 6%;
       color: rgba(255,255,255,0.7);
       border-top: 1px solid rgba(255,255,255,0.03);
+      background: transparent;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -114,10 +250,16 @@
       gap: 20px;
     }
     footer .copyright {
-      flex: 1; min-width: 200px;
+      flex: 1;
+      min-width: 200px;
     }
     footer .contacts {
-      flex: 1; min-width: 200px; opacity: 0.9;
+      flex: 1;
+      min-width: 200px;
+      opacity: 0.9;
+    }
+    footer .admin-login {
+      flex-shrink: 0;
     }
     footer .admin-login button {
       background-color: var(--accent);
@@ -136,7 +278,7 @@
       transform: translateY(-3px);
     }
 
-    /* Баннер скидки */
+    /* ===== Баннер скидки ===== */
     #discount-banner {
       position: fixed;
       bottom: 30px;
@@ -160,6 +302,7 @@
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease;
       transform: translateY(20px);
+      position: fixed;
     }
     #discount-banner.show {
       display: flex;
@@ -240,10 +383,57 @@
       outline: none;
     }
 
+    /* ===== Адаптив ===== */
+    @media (max-width: 720px) {
+      header {
+        padding: 10px 5%;
+      }
+      .logo {
+        font-size: 16px !important;
+      }
+      nav {
+        gap: 12px;
+        font-size: 14px;
+      }
+      nav a {
+        font-size: 12px !important;
+      }
+      nav .chat-btn {
+        padding: 6px 12px !important;
+        font-size: 12px !important;
+      }
+      .hero {
+        padding: 32px 5%;
+      }
+      .hero p {
+        font-size: 15px;
+      }
+      #soundcloud-players {
+        flex-direction: column;
+        align-items: center;
+      }
+      #soundcloud-players > div {
+        max-width: 90vw;
+        margin-bottom: 30px;
+      }
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+      }
+      footer .copyright,
+      footer .contacts,
+      footer .admin-login {
+        flex: none;
+        min-width: auto;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- фиксированная шапка с меню -->
   <header>
     <div class="logo">Kadra Records Studio</div>
     <nav>
@@ -255,10 +445,12 @@
     </nav>
   </header>
 
+  <!-- Таймер релиза под шапкой -->
   <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
-    <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
+    Релиз через <span id="release-countdown">загрузка...</span>
   </div>
 
+  <!-- hero -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
       <h1>Создаём музыку, которая говорит за вас</h1>
@@ -268,103 +460,92 @@
   </section>
 
   <main>
-    <!-- Здесь контент -->
+    <section id="services">
+      <h2 style="color:var(--accent); text-align:center; margin-bottom:18px;">Наши услуги</h2>
+      <div class="services">
+        <div class="card">
+          <h3>Запись вокала</h3>
+          <p>Чистая, плотная запись с профессиональными микрофонами и акустикой.</p>
+        </div>
+        <div class="card">
+          <h3>Сведение и мастеринг</h3>
+          <p>Коммерческий звук, адаптированный под стриминг-платформы и радио.</p>
+        </div>
+        <div class="card">
+          <h3>Продюсирование</h3>
+          <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;">
+        <h3 style="color:var(--accent);">Локации студий</h3>
+        <div class="locations">
+          <div class="loc"><strong>Москва</strong><br>Центральная студия — полнофункциональный контроль-рум и вокальная кабина.</div>
+          <div class="loc"><strong>Бали</strong><br>Резиденция для творческих сессий и атмосферных записей на природе.</div>
+          <div class="loc"><strong>Волгоград</strong><br>Локальная студия для быстрой записи и работы с исполнителями региона.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Новый блок с двумя SoundCloud плеерами рядом -->
+    <section id="soundcloud-players">
+      <div>
+        <h3>Готовые песни</h3>
+        <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+        </iframe>
+      </div>
+      <div>
+        <h3>Примеры работ</h3>
+        <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2058595446&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+        </iframe>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <div class="copyright">&copy; 2025 Kadra Records Studio. Все права защищены.</div>
+    <div class="copyright">
+      &copy; 2025 Kadra Records Studio
+    </div>
     <div class="contacts">
-      <a href="mailto:info@kadrarecords.ru" style="color:inherit; text-decoration:none;">info@kadrarecords.ru</a> | Тел: +7 999 123-45-67
+      Email: info@kadrarecords.ru<br>
+      Телефон: +7 (495) 123-45-67
     </div>
     <div class="admin-login">
-      <button id="adminLoginBtn" aria-label="Войти в админку">Войти в админку</button>
+      <button id="adminOpenBtn" aria-label="Открыть админ панель">Админка</button>
     </div>
   </footer>
 
-  <!-- Баннер скидки -->
-  <div id="discount-banner" role="region" aria-label="Баннер скидки">
-    <button class="minimize-btn" aria-label="Скрыть баннер">&times;</button>
-    <p>Специальное предложение! Получите скидку 20% на все услуги.</p>
-    <div class="timer" id="discount-timer">00:10:00</div>
-    <a href="#contact" class="btn" tabindex="0">Заказать сейчас</a>
-  </div>
-
   <script>
     // Таймер релиза
-    const releaseTitleElem = document.getElementById('release-title');
-    const releaseCountdownElem = document.getElementById('release-countdown');
+    const releaseDate = new Date('2025-09-30T00:00:00Z');
+    const countdownEl = document.getElementById('release-countdown');
 
-    function updateReleaseCountdown(targetDate) {
-      function tick() {
-        const now = new Date();
-        const diff = targetDate - now;
-        if (diff <= 0) {
-          releaseCountdownElem.textContent = 'Релиз уже состоялся!';
-          clearInterval(intervalId);
-          return;
-        }
-        const days = Math.floor(diff / (1000*60*60*24));
-        const hours = Math.floor((diff / (1000*60*60)) % 24);
-        const minutes = Math.floor((diff / (1000*60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        releaseCountdownElem.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    function updateTimer() {
+      const now = new Date();
+      let diff = releaseDate - now;
+      if(diff < 0) {
+        countdownEl.textContent = "Релиз состоялся!";
+        return;
       }
-      tick();
-      const intervalId = setInterval(tick, 1000);
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+      const minutes = Math.floor(diff / (1000 * 60));
+      diff -= minutes * (1000 * 60);
+      const seconds = Math.floor(diff / 1000);
+
+      countdownEl.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
     }
+    setInterval(updateTimer, 1000);
+    updateTimer();
 
-    // Настройка даты релиза (проброс из localStorage, если есть)
-    function loadReleaseSettings() {
-      const title = localStorage.getItem('releaseTitle') || 'Релиз через';
-      const dateStr = localStorage.getItem('releaseDate');
-      releaseTitleElem.textContent = title;
-      if (dateStr) {
-        updateReleaseCountdown(new Date(dateStr));
-      } else {
-        releaseCountdownElem.textContent = 'дата не установлена';
-      }
-    }
-
-    // Запуск таймера релиза
-    loadReleaseSettings();
-
-    // Админка — открытие в новом окне
-    document.getElementById('adminLoginBtn').addEventListener('click', () => {
-      window.open('admin.html', '_blank', 'width=500,height=600,resizable=yes');
-    });
-
-    // Баннер скидки
-    const discountBanner = document.getElementById('discount-banner');
-    const discountTimerEl = document.getElementById('discount-timer');
-    const minimizeBtn = discountBanner.querySelector('.minimize-btn');
-
-    // Стартуем таймер скидки 10 минут
-    let discountSeconds = 10 * 60;
-    let discountInterval;
-
-    function updateDiscountTimer() {
-      const minutes = Math.floor(discountSeconds / 60);
-      const seconds = discountSeconds % 60;
-      discountTimerEl.textContent = 
-        `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-      if (discountSeconds <= 0) {
-        clearInterval(discountInterval);
-        discountBanner.classList.remove('show');
-      }
-      discountSeconds--;
-    }
-
-    // Показ баннера и запуск таймера
-    setTimeout(() => {
-      discountBanner.classList.add('show');
-      updateDiscountTimer();
-      discountInterval = setInterval(updateDiscountTimer, 1000);
-    }, 2000);
-
-    // Скрыть баннер по кнопке
-    minimizeBtn.addEventListener('click', () => {
-      discountBanner.classList.remove('show');
-      clearInterval(discountInterval);
+    // Кнопка открытия админки
+    document.getElementById('adminOpenBtn').addEventListener('click', () => {
+      window.open('admin.html', 'AdminPanel', 'width=500,height=550');
     });
   </script>
 
