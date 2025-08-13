@@ -81,10 +81,31 @@
       transform: translateY(-2px);
     }
 
+    /* ===== Таймер релиза под шапкой ===== */
+    #release-timer {
+      position: fixed;
+      top: 72px; /* сразу под шапкой */
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 0 0 12px 12px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6);
+      z-index: 1100;
+      user-select: none;
+    }
+
     /* ===== Герой (шапка-баннер) ===== */
     .hero {
       min-height: calc(100vh - 72px);
-      margin-top: 72px;
+      margin-top: 102px; /* 72 шапка + 30 таймер */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -135,6 +156,114 @@
       box-shadow: 0 16px 32px rgba(0,0,0,0.55);
     }
 
+    /* ===== Блоки ниже шапки ===== */
+    main {
+      padding: 60px 6% 120px;
+    }
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+    .locations {
+      margin-top: 30px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .loc {
+      background: rgba(255,255,255,0.03);
+      padding: 14px 18px;
+      border-radius: 8px;
+      min-width: 200px;
+    }
+
+    /* ===== SoundCloud плееры (новый блок) ===== */
+    #soundcloud-players {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #soundcloud-players > div {
+      flex: 1 1 400px;
+      max-width: 400px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255,82,82,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #soundcloud-players h3 {
+      color: var(--accent);
+      font-family: "Inter", Arial, sans-serif;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    iframe {
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 100% !important;
+    }
+
+    /* ===== Футер ===== */
+    footer {
+      padding: 40px 6%;
+      color: rgba(255,255,255,0.7);
+      border-top: 1px solid rgba(255,255,255,0.03);
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    footer .copyright {
+      flex: 1;
+      min-width: 200px;
+    }
+    footer .contacts {
+      flex: 1;
+      min-width: 200px;
+      opacity: 0.9;
+    }
+    footer .admin-login {
+      flex-shrink: 0;
+    }
+    footer .admin-login button {
+      background-color: var(--accent);
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255,82,82,0.5);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 16px;
+    }
+    footer .admin-login button:hover {
+      background-color: #ff3333;
+      transform: translateY(-3px);
+    }
+
     /* ===== Баннер скидки ===== */
     #discount-banner {
       position: fixed;
@@ -159,6 +288,7 @@
       opacity: 0;
       transition: opacity 0.5s ease, transform 0.5s ease;
       transform: translateY(20px);
+      position: fixed;
     }
     #discount-banner.show {
       display: flex;
@@ -264,6 +394,26 @@
       .hero p {
         font-size: 15px;
       }
+      #soundcloud-players {
+        flex-direction: column;
+        align-items: center;
+      }
+      #soundcloud-players > div {
+        max-width: 90vw;
+        margin-bottom: 30px;
+      }
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 15px;
+      }
+      footer .copyright,
+      footer .contacts,
+      footer .admin-login {
+        flex: none;
+        min-width: auto;
+      }
     }
   </style>
 </head>
@@ -281,6 +431,11 @@
     </nav>
   </header>
 
+  <!-- Таймер релиза под шапкой -->
+  <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
+    Релиз через <span id="release-countdown">загрузка...</span>
+  </div>
+
   <!-- hero -->
   <section class="hero" role="region" aria-label="Главный баннер">
     <div class="hero-inner">
@@ -291,137 +446,103 @@
   </section>
 
   <main>
-    <!-- Контент страницы (услуги, локации, плейеры и т.д.) тут... -->
+    <section id="services">
+      <h2 style="color:var(--accent); text-align:center; margin-bottom:18px;">Наши услуги</h2>
+      <div class="services">
+        <div class="card">
+          <h3>Запись вокала</h3>
+          <p>Чистая, плотная запись с профессиональными микрофонами и акустикой.</p>
+        </div>
+        <div class="card">
+          <h3>Сведение и мастеринг</h3>
+          <p>Коммерческий звук, адаптированный под стриминг-платформы и радио.</p>
+        </div>
+        <div class="card">
+          <h3>Продюсирование</h3>
+          <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
+        </div>
+      </div>
 
+      <div style="margin-top:28px;">
+        <h3 style="color:var(--accent);">Локации студий</h3>
+        <div class="locations">
+          <div class="loc"><strong>Москва</strong><br>Центральная студия — полнофункциональный контроль-рум и вокальная кабина.</div>
+          <div class="loc"><strong>Бали</strong><br>Резиденция для творческих сессий и атмосферных записей на природе.</div>
+          <div class="loc"><strong>Волгоград</strong><br>Локальная студия для быстрой записи и работы с исполнителями региона.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Новый блок с двумя SoundCloud плеерами рядом -->
+    <section id="soundcloud-players">
+      <div>
+        <h3>Готовые песни</h3>
+        <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+        </iframe>
+      </div>
+      <div>
+        <h3>Примеры работ</h3>
+        <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+        </iframe>
+      </div>
+    </section>
+
+    <section id="about" style="margin-top: 80px;">
+      <h2 style="color:var(--accent); text-align:center;">О студии</h2>
+      <p style="max-width:720px; margin: 0 auto; text-align:center;">
+        Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук, который продаёт и живёт в сердцах слушателей.
+      </p>
+    </section>
+
+    <section id="contact" style="margin-top: 80px;">
+      <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
+      <p style="text-align:center; max-width: 600px; margin: 0 auto;">
+        Напишите нам в Telegram для быстрой связи и заказа студийного времени:<br>
+        <a href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight:700; text-decoration:none;">@kadrarec</a>
+      </p>
+    </section>
   </main>
 
-  <!-- Баннер скидки -->
-  <div id="discount-banner" role="alert" aria-live="assertive" aria-atomic="true" aria-label="Баннер скидки">
-    <button class="minimize-btn" aria-label="Закрыть баннер скидки">&times;</button>
-    <p><strong>Скидка 15% при записи трека!</strong></p>
-    <p>Успей оформить заявку — акция заканчивается через <span class="timer" aria-live="polite" aria-atomic="true">30:00</span> минут</p>
-    <a href="#soundcloud-players" class="btn" role="button" aria-label="Оформить заявку со скидкой">Оформить заявку</a>
-  </div>
+  <footer>
+    <div class="copyright">© 2025 Kadra Records Studio</div>
+    <div class="contacts">Телефон: +7 999 123-45-67<br>email: info@kadra-records.ru</div>
+    <div class="admin-login"><button>Войти в админку</button></div>
+  </footer>
 
   <script>
     (() => {
-      const banner = document.getElementById('discount-banner');
-      const timerEl = banner.querySelector('.timer');
-      const btnClose = banner.querySelector('.minimize-btn');
-      const btnAction = banner.querySelector('.btn');
+      const countdownEl = document.getElementById('release-countdown');
 
-      const countdownDuration = 1800; // 30 минут в секундах
-      let countdown;
-      let countdownInterval;
+      // Дата релиза (UTC), настрой по нужному времени релиза
+      const releaseDate = new Date('2025-08-25T20:00:00Z');
 
-      // Форматируем время mm:ss
-      function formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-      }
+      function updateTimer() {
+        const now = new Date();
+        const diff = releaseDate - now;
 
-      // Получить сегодняшнюю дату в формате YYYY-MM-DD
-      function getTodayDateString() {
-        const today = new Date();
-        return today.toISOString().slice(0, 10);
-      }
-
-      // Проверяем, показывали ли баннер сегодня
-      function hasShownToday() {
-        return localStorage.getItem('discountBannerShownDate') === getTodayDateString();
-      }
-
-      // Помечаем в localStorage, что баннер показан сегодня
-      function markShownToday() {
-        localStorage.setItem('discountBannerShownDate', getTodayDateString());
-      }
-
-      // Сохраняем оставшееся время
-      function saveCountdownTime(seconds) {
-        localStorage.setItem('discountBannerCountdown', seconds);
-      }
-
-      // Получаем сохранённое оставшееся время
-      function getSavedCountdownTime() {
-        const val = localStorage.getItem('discountBannerCountdown');
-        return val !== null ? parseInt(val, 10) : null;
-      }
-
-      // Сбросить всё на сегодня (вызвать при закрытии или окончании)
-      function resetTodayData() {
-        localStorage.removeItem('discountBannerCountdown');
-        markShownToday();
-      }
-
-      // Показываем баннер и запускаем таймер
-      function showBanner(initialSeconds) {
-        banner.style.display = 'flex';
-        banner.classList.add('show');
-        countdown = initialSeconds;
-        timerEl.textContent = formatTime(countdown);
-
-        countdownInterval = setInterval(() => {
-          countdown--;
-          if (countdown < 0) {
-            clearInterval(countdownInterval);
-            hideBanner();
-            resetTodayData();
-            return;
-          }
-          timerEl.textContent = formatTime(countdown);
-          saveCountdownTime(countdown);
-        }, 1000);
-
-        markShownToday();
-      }
-
-      // Скрываем баннер и останавливаем таймер
-      function hideBanner() {
-        banner.style.display = 'none';
-        banner.classList.remove('show');
-        clearInterval(countdownInterval);
-      }
-
-      // Проверка, есть ли валидное время и показываем баннер сразу, или ждем 7 секунд, если еще не показывали сегодня
-      window.addEventListener('load', () => {
-        const today = getTodayDateString();
-        if (hasShownToday()) {
-          // Баннер уже показывали сегодня — проверим, есть ли незаконченный таймер
-          const savedTime = getSavedCountdownTime();
-          if (savedTime !== null && savedTime > 0) {
-            showBanner(savedTime);
-          }
-          // Если таймер закончился или нет — не показываем снова
-        } else {
-          // Не показывали сегодня — покажем через 7 сек с полным таймером
-          setTimeout(() => {
-            showBanner(countdownDuration);
-          }, 7000);
+        if (diff <= 0) {
+          countdownEl.textContent = 'Релиз уже вышел!';
+          clearInterval(timerInterval);
+          return;
         }
-      });
 
-      // Кнопка закрытия баннера — просто скрывает его и сбрасывает таймер
-      btnClose.addEventListener('click', () => {
-        hideBanner();
-        resetTodayData();
-      });
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
 
-      // Кнопка заявки — скрывает баннер, ставит флаг "скидка применена", скроллит к блоку
-      btnAction.addEventListener('click', (e) => {
-        e.preventDefault();
-        hideBanner();
-        resetTodayData();
-        localStorage.setItem('discountApplied', 'true');
-        const targetId = btnAction.getAttribute('href').slice(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-        alert('Заявка принята! Мы свяжемся с вами.');
-      });
+        countdownEl.textContent =
+          (days > 0 ? days + ' дн. ' : '') +
+          (hours < 10 ? '0' + hours : hours) + ':' +
+          (minutes < 10 ? '0' + minutes : minutes) + ':' +
+          (seconds < 10 ? '0' + seconds : seconds);
+      }
+
+      updateTimer();
+      const timerInterval = setInterval(updateTimer, 1000);
     })();
   </script>
-
 </body>
 </html>
