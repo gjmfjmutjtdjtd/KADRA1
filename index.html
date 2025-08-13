@@ -160,6 +160,13 @@
     main {
       padding: 60px 6% 120px;
     }
+    .section-title {
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: clamp(22px, 4vw, 36px);
+    }
     .services {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
@@ -221,6 +228,81 @@
       border-radius: 8px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.4);
       width: 100% !important;
+    }
+
+    /* ===== НОВЫЕ СЕКЦИИ ===== */
+    .content-section {
+        margin-top: 80px;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #artists .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
+    }
+    #artists .artist-card {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    }
+    #artists .artist-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    #equipment .equipment-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    #equipment .equipment-item {
+      background: var(--card);
+      padding: 18px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    #equipment .equipment-item h4 {
+        margin: 0;
+        color: var(--accent);
+    }
+    #equipment .equipment-item p {
+        margin: 8px 0 0;
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.8);
+    }
+
+    #reviews .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 24px;
+    }
+    #reviews .review-card {
+      background: var(--card);
+      padding: 28px;
+      border-radius: 12px;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      border-left: 4px solid var(--accent);
+    }
+    #reviews .review-text {
+      font-style: italic;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 16px;
+    }
+    #reviews .review-author {
+      font-weight: 700;
+      color: var(--accent);
+      text-align: right;
     }
 
     /* ===== Футер ===== */
@@ -439,6 +521,9 @@
     <div class="logo">Kadra Records Studio</div>
     <nav>
       <a href="#services">Услуги</a>
+      <a href="#artists">Артисты</a>
+      <a href="#equipment">Оборудование</a>
+      <a href="#reviews">Отзывы</a>
       <a href="#about">О нас</a>
       <a href="#tracks">Работы</a>
       <a href="#contact">Контакты</a>
@@ -460,7 +545,7 @@
 
   <main>
     <section id="services">
-      <h2 style="color:var(--accent); text-align:center; margin-bottom:18px;">Наши услуги</h2>
+      <h2 class="section-title">Наши услуги</h2>
       <div class="services">
         <div class="card">
           <h3>Запись вокала</h3>
@@ -486,30 +571,93 @@
       </div>
     </section>
 
-    <section id="soundcloud-players">
-      <div>
-        <h3>Готовые песни</h3>
-        <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-        </iframe>
+    <section id="artists" class="content-section">
+      <h2 class="section-title">Наши артисты</h2>
+      <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы гордимся тем, что работали со многими талантливыми исполнителями и музыкантами. Вот несколько из них:</p>
+      <div class="artist-grid">
+        <div class="artist-card">
+          <div class="artist-name">Алексей «Tribe» Волков</div>
+          <p>Инди-поп исполнитель с уникальным вокалом и атмосферными текстами.</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-name">Мария «Luna» Светлова</div>
+          <p>Талантливая вокалистка и автор песен в жанре R&B и соул.</p>
+        </div>
+        <div class="artist-card">
+          <div class="artist-name">Группа «Echoes of Void»</div>
+          <p>Альтернативный рок-проект, известный своими энергичными живыми выступлениями.</p>
+        </div>
       </div>
-      <div>
-        <h3>Примеры работ</h3>
-        <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
-          src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
-        </iframe>
+    </section>
+
+    <section id="equipment" class="content-section">
+        <h2 class="section-title">Наше оборудование</h2>
+        <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы используем только лучшее оборудование для достижения идеального звучания.</p>
+        <div class="equipment-list">
+          <div class="equipment-item">
+            <h4>Микрофоны</h4>
+            <p>Neumann U87, AKG C414, Shure SM7B — для вокала и инструментов.</p>
+          </div>
+          <div class="equipment-item">
+            <h4>Предусилители</h4>
+            <p>Universal Audio, Neve 1073 — для теплого и насыщенного звучания.</p>
+          </div>
+          <div class="equipment-item">
+            <h4>Мониторы</h4>
+            <p>Genelec 8030, Adam Audio T5V — для точного сведения и мастеринга.</p>
+          </div>
+          <div class="equipment-item">
+            <h4>Программное обеспечение</h4>
+            <p>Pro Tools, Ableton Live, Logic Pro X с полным набором плагинов.</p>
+          </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="content-section">
+      <h2 class="section-title">Отзывы клиентов</h2>
+      <div class="review-grid">
+        <div class="review-card">
+          <p class="review-text">«Работа в Kadra Records — это не просто запись, это настоящий творческий процесс. Ребята помогли мне найти моё уникальное звучание. Рекомендую!»</p>
+          <div class="review-author">— Иван П.</div>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Лучшая студия в Москве! Качество звука на высшем уровне, а атмосфера очень дружелюбная. Обязательно вернусь еще раз.»</p>
+          <div class="review-author">— Анна С.</div>
+        </div>
+        <div class="review-card">
+          <p class="review-text">«Сведение и мастеринг моего трека были выполнены идеально. Звук получился плотным и объемным, именно так, как я хотел.»</p>
+          <div class="review-author">— Дмитрий Р.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tracks">
+      <h2 class="section-title">Наши работы</h2>
+      <div id="soundcloud-players">
+        <div>
+          <h3>Готовые песни</h3>
+          <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+          </iframe>
+        </div>
+        <div>
+          <h3>Примеры работ</h3>
+          <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+          </iframe>
+        </div>
       </div>
     </section>
 
     <section id="about" style="margin-top: 80px;">
-      <h2 style="color:var(--accent); text-align:center;">О студии</h2>
+      <h2 class="section-title">О студии</h2>
       <p style="max-width:720px; margin: 0 auto; text-align:center;">
         Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук и атмосферу, которые слышны в каждом треке.
       </p>
     </section>
 
     <section id="contact" style="margin-top: 80px;">
-      <h2 style="color:var(--accent); text-align:center;">Контакты</h2>
+      <h2 class="section-title">Контакты</h2>
       <p style="max-width:720px; margin: 0 auto; text-align:center;">
         Телефон: +7 999 123-45-67<br>
         Email: info@kadrarecords.ru<br>
@@ -518,7 +666,7 @@
     </section>
 
     <section id="application-form" style="margin-top: 80px;">
-        <h2 style="color:var(--accent); text-align:center;">Оставить заявку</h2>
+        <h2 class="section-title">Оставить заявку</h2>
 
         <div id="promo-timer-block" style="display:none;">
           <div class="title">Скидка 20% на запись!</div>
