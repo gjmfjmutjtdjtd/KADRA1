@@ -396,83 +396,40 @@
       background-color: #ff3333;
     }
 
-    /* ===== Стили для НОВОГО баннера с таймером ===== */
-    #promo-timer-banner {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #1a1a1a;
-      border: 1px solid rgba(255, 82, 82, 0.4);
-      color: var(--white);
-      padding: 24px 28px;
+    /* ===== Стили для НОВОГО встроенного таймера ===== */
+    #promo-timer-block {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      padding: 20px;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 82, 82, 0.2);
-      max-width: 360px;
-      z-index: 1200;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
+      border: 1px solid rgba(255, 82, 82, 0.4);
+      background: rgba(255, 82, 82, 0.08);
       text-align: center;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      color: var(--white);
+      box-shadow: 0 0 10px rgba(255, 82, 82, 0.2);
     }
-    #promo-timer-banner.show {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    #promo-timer-banner .close-btn {
-      position: absolute;
-      top: 8px; right: 12px;
-      background: none;
-      border: none;
-      font-size: 28px;
-      line-height: 1;
-      color: rgba(255, 255, 255, 0.6);
-      cursor: pointer;
-      font-weight: 700;
-      transition: color 0.2s;
-    }
-    #promo-timer-banner .close-btn:hover {
-      color: var(--accent);
-    }
-    #promo-timer-banner h3 {
-      font-size: 1.4rem;
+    #promo-timer-block .title {
+      font-size: 1.25rem;
       font-weight: 700;
       color: var(--accent);
-      margin: 0;
-      line-height: 1.2;
+      margin-bottom: 8px;
     }
-    #promo-timer-banner p {
-      margin: 0;
+    #promo-timer-block .text {
       font-size: 1rem;
-      font-weight: 500;
       color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 12px;
     }
-    #promo-timer-banner .timer {
-      font-size: 2.2rem;
+    #promo-timer-block .timer {
+      font-size: 2rem;
       font-weight: 800;
       letter-spacing: 0.1em;
       font-family: 'Courier New', Courier, monospace;
       color: var(--green-light);
       text-shadow: 0 0 10px var(--green-dark);
     }
-    #promo-timer-banner .cta-btn {
-      background: var(--accent);
-      color: white;
-      font-weight: 700;
-      padding: 12px 28px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-size: 1.15rem;
-      box-shadow: 0 8px 20px rgba(255, 82, 82, 0.4);
-      transition: transform 0.2s ease, background 0.3s;
-    }
-    #promo-timer-banner .cta-btn:hover {
-      background: #ff3333;
-      transform: translateY(-2px);
+    #promo-timer-block .timer.inactive {
+      color: #888;
+      text-shadow: none;
     }
   </style>
 </head>
@@ -562,6 +519,13 @@
 
     <section id="application-form" style="margin-top: 80px;">
         <h2 style="color:var(--accent); text-align:center;">Оставить заявку</h2>
+
+        <div id="promo-timer-block" style="display:none;">
+          <div class="title">Скидка 20% на запись!</div>
+          <p class="text">Предложение действует только сегодня. Успейте воспользоваться:</p>
+          <div class="timer">30:00</div>
+        </div>
+
         <form id="contactForm" style="max-width: 500px; margin: 0 auto; padding: 20px; background: var(--card); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
             <p style="text-align: center;">Оставьте свои контактные данные, и мы свяжемся с вами, чтобы обсудить детали.</p>
             <div style="margin-bottom: 20px;">
@@ -612,14 +576,6 @@
     <button id="saveReleaseBtn">Сохранить</button>
     <button id="logoutBtn" style="margin-top: 12px; background:#888;">Выйти из админки</button>
   </section>
-
-  <div id="promo-timer-banner">
-    <button class="close-btn" aria-label="Закрыть баннер">&times;</button>
-    <h3>Скидка 20% на первый трек!</h3>
-    <p>Акция действует только для вас. Успейте оформить заявку до конца отсчета:</p>
-    <div class="timer">30:00</div>
-    <a href="#application-form" class="cta-btn">Получить скидку</a>
-  </div>
 
 
   <script>
@@ -794,99 +750,68 @@
         }
     });
 
-    // ======== НОВЫЙ СКРИПТ: Логика для баннера с обратным отсчетом ========
+    // ======== НОВЫЙ СКРИПТ: Логика для встроенного таймера ========
     (() => {
-      const banner = document.getElementById('promo-timer-banner');
-      const timerEl = banner.querySelector('.timer');
-      const btnClose = banner.querySelector('.close-btn');
-      const btnAction = banner.querySelector('.cta-btn');
+        const timerBlock = document.getElementById('promo-timer-block');
+        const timerEl = timerBlock.querySelector('.timer');
+        const countdownDuration = 1800; // 30 минут в секундах
+        let countdown;
+        let countdownInterval;
 
-      const countdownDuration = 1800; // 30 минут в секундах
-      let countdown;
-      let countdownInterval;
-
-      function formatTime(seconds) {
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-      }
-
-      function getTodayDateString() {
-        const today = new Date();
-        return today.toISOString().slice(0, 10);
-      }
-
-      function setEndTime() {
-        const endTime = Date.now() + countdownDuration * 1000;
-        localStorage.setItem('promoBannerEndTime', endTime);
-        localStorage.setItem('promoBannerShownDate', getTodayDateString());
-      }
-
-      function getEndTime() {
-        return parseInt(localStorage.getItem('promoBannerEndTime'), 10) || 0;
-      }
-
-      function hasShownToday() {
-        return localStorage.getItem('promoBannerShownDate') === getTodayDateString();
-      }
-
-      function showBanner() {
-        banner.classList.add('show');
-
-        let endTime = getEndTime();
-        if (!endTime || endTime < Date.now()) {
-          setEndTime();
-          endTime = getEndTime();
+        function formatTime(seconds) {
+            if (seconds <= 0) return '00:00';
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
         }
 
-        countdown = Math.floor((endTime - Date.now()) / 1000);
-        if (countdown < 0) countdown = 0;
-
-        timerEl.textContent = formatTime(countdown);
-
-        countdownInterval = setInterval(() => {
-          countdown--;
-          if (countdown < 0) {
-            clearInterval(countdownInterval);
-            hideBanner();
-            return;
-          }
-          timerEl.textContent = formatTime(countdown);
-        }, 1000);
-      }
-
-      function hideBanner() {
-        banner.classList.remove('show');
-        clearInterval(countdownInterval);
-      }
-
-      window.addEventListener('load', () => {
-        if (!hasShownToday()) {
-          setTimeout(showBanner, 10000); // Показ баннера через 10 секунд
-        } else {
-          const endTime = getEndTime();
-          if (endTime > Date.now()) {
-            setTimeout(showBanner, 1000); // Если таймер уже был запущен, показываем его почти сразу
-          }
+        function getTodayDateString() {
+            const today = new Date();
+            return today.toISOString().slice(0, 10);
         }
-      });
 
-      btnClose.addEventListener('click', () => {
-        hideBanner();
-      });
+        function startOrResumeTimer() {
+            let endTime = parseInt(localStorage.getItem('promoBannerEndTime'), 10) || 0;
+            const lastShownDate = localStorage.getItem('promoBannerShownDate');
+            const todayDate = getTodayDateString();
+            
+            // Если сегодня уже показывали, и таймер не истек
+            if (lastShownDate === todayDate && endTime > Date.now()) {
+                countdown = Math.floor((endTime - Date.now()) / 1000);
+            } 
+            // Если новый день или таймер истек
+            else {
+                endTime = Date.now() + countdownDuration * 1000;
+                localStorage.setItem('promoBannerEndTime', endTime);
+                localStorage.setItem('promoBannerShownDate', todayDate);
+                countdown = countdownDuration;
+            }
 
-      btnAction.addEventListener('click', (e) => {
-        e.preventDefault();
-        hideBanner();
-        localStorage.setItem('discountApplied', 'true');
-        const targetId = btnAction.getAttribute('href').slice(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
+            // Показываем блок
+            timerBlock.style.display = 'block';
+
+            // Запускаем интервал
+            countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    timerEl.textContent = '00:00';
+                    timerEl.classList.add('inactive');
+                    return;
+                }
+                timerEl.textContent = formatTime(countdown);
+            }, 1000);
         }
-        alert('Ваша заявка принята! Мы свяжемся с вами.');
-      });
+
+        window.addEventListener('load', () => {
+            // Запускаем таймер, если админка не активна
+            if (!isLoggedIn()) {
+              startOrResumeTimer();
+            }
+        });
+
     })();
+
 
     // ======== Действия при загрузке страницы ========
     window.addEventListener('load', () => {
