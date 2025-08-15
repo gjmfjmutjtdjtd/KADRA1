@@ -236,55 +236,5 @@
     </section>
 
     <script src="script.js"></script>
-        <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
-    <div class="modal-content">
-        <button class="close-btn" aria-label="Закрыть окно">&times;</button>
-        <h2 id="loginTitle">Вход в админку</h2>
-        <form id="loginForm">
-            <label for="loginInput">Логин:</label>
-            <input type="text" id="loginInput" name="login" required />
-            <label for="passwordInput">Пароль:</label>
-            <input type="password" id="passwordInput" name="password" required />
-            <button type="submit">Войти</button>
-        </form>
-        <p id="loginError" class="login-error" aria-live="polite"></p>
-    </div>
-</div>
-
-<section id="adminPanel" aria-label="Административная панель" class="container">
-    <h1>Редактирование релиза</h1>
-
-    <form id="release-form">
-        <label for="release-date">Дата и время релиза (UTC):</label>
-        <input
-                type="datetime-local"
-                id="release-date"
-                name="release-date"
-                required
-                aria-describedby="release-date-desc"
-        />
-        <div id="release-date-desc" style="font-size: 12px; color: #aaa; margin-bottom: 18px;">
-            Формат: ГГГГ-ММ-ДД ЧЧ:ММ (Время в UTC)
-        </div>
-
-        <label for="timer-title">Название таймера (показывается на главной):</label>
-        <input
-                type="text"
-                id="timer-title"
-                name="timer-title"
-                maxlength="40"
-                placeholder="Например: Релиз через"
-                aria-describedby="timer-title-desc"
-        />
-        <div id="timer-title-desc" style="font-size: 12px; color: #aaa; margin-bottom: 18px;">
-            Можно оставить пустым, тогда будет "Релиз через"
-        </div>
-
-        <button type="submit">Сохранить изменения</button>
-    </form>
-
-    <div class="message" id="msg-success" role="alert" aria-live="polite">Данные успешно сохранены!</div>
-
-    <button id="logoutBtn" class="back-link">Выйти из админки</button>
-</section>    </body>
+</body>
 </html>
