@@ -1,575 +1,536 @@
 :root {
-    --accent: #ff5252;
-    --bg: #0d0d0d;
-    --card: #1a1a1a;
-    --glass: rgba(0, 0, 0, 0.6);
-    --white: #ffffff;
-    --green-light: #4ade80;
-    --green-dark: #22c55e;
-    --shadow: rgba(34, 197, 94, 0.3);
-}
-* { box-sizing: border-box }
-html, body { height: 100%; margin: 0; }
-body {
-    font-family: "Inter", "Arial", sans-serif;
-    background: var(--bg);
-    color: var(--white);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    --dark: #121212;
+    --dark-alt: #222;
+    --red: #ff5252;
+    --red-hover: #ff2a2a;
+    --highlight: #ff5252;
+    --white: #fff;
+    --light-grey: #eee;
+    --grey: #aaa;
+    --dark-grey: #333;
+    --shadow: 0 4px 12px rgba(255, 82, 82, 0.4);
+    --transition-speed: 0.3s;
+    --green-light: #7eff7e;
 }
 
-/* ===== Фиксированная шапка ===== */
+/* Base Styles */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--dark);
+    color: var(--light-grey);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+h1, h2, h3 {
+    font-weight: 800;
+    color: var(--highlight);
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+p {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+section {
+    padding: 80px 20px;
+}
+
+/* Header and Navigation */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 6%;
     z-index: 1000;
-    background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.logo {
-    font-weight: 700;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-nav {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-}
-nav a {
-    color: var(--white);
-    text-decoration: none;
-    font-weight: 600;
-    opacity: 0.95;
-    transition: opacity 0.18s, transform 0.12s;
-    font-size: 16px;
-}
-nav a:hover {
-    opacity: 1;
-    transform: translateY(-2px);
-    color: var(--accent);
-}
-nav .chat-btn {
-    padding: 8px 18px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 6px;
-    font-weight: 700;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 16px;
-}
-nav .chat-btn:hover {
-    background-color: #ff3333;
-    transform: translateY(-2px);
+    padding: 10px 40px;
+    background: linear-gradient(to bottom, rgba(18, 18, 18, 0.9), rgba(18, 18, 18, 0));
+    transition: background-color var(--transition-speed);
 }
 
-/* ===== Таймер релиза под шапкой ===== */
-#release-timer {
-    position: fixed;
-    top: 72px;
+header nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav a,
+nav button {
+    color: var(--light-grey);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+nav a:hover,
+nav button:hover {
+    color: var(--red);
+}
+
+nav button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+/* Hero Section */
+.intro-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+.intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    z-index: 1;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 82, 82, 0.7));
+}
+
+.intro-text {
+    max-width: 600px;
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--light-grey);
+}
+
+.highlight {
+    font-weight: 700;
+    color: var(--red);
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--accent);
-    color: white;
-    padding: 12px 24px;
-    border-radius: 0 0 12px 12px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
-    max-width: 480px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 6px 16px rgba(255, 82, 82, 0.6);
-    z-index: 1100;
-    user-select: none;
-}
-
-/* ===== Герой (шапка-баннер) ===== */
-.hero {
-    min-height: calc(100vh - 72px);
-    margin-top: 102px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding: 48px 6%;
-    text-align: center;
-    color: var(--white);
-    background:
-        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-        url('img/studio-bg.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-.hero-inner {
-    position: relative;
     z-index: 1;
-    max-width: 1100px;
-    width: 100%;
-}
-.hero h1 {
-    font-size: clamp(28px, 5vw, 56px);
-    line-height: 1.02;
-    margin: 0 0 18px 0;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-}
-.hero p {
-    margin: 0 auto 26px;
-    max-width: 820px;
-    color: rgba(255,255,255,0.88);
-    font-size: clamp(14px, 1.6vw, 18px);
-    line-height: 1.5;
-}
-.hero .cta {
-    display: inline-block;
-    padding: 12px 28px;
-    background: var(--accent);
-    color: #fff;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
-    transition: transform 0.14s, box-shadow 0.14s;
-}
-.hero .cta:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.55);
 }
 
-/* ===== Блоки ниже шапки ===== */
-main {
-    padding: 60px 6% 120px;
+.scroll-down-indicator a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    overflow: hidden;
 }
-.section-title {
-    color: var(--accent);
+
+.scroll-down-indicator a span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-right: 2px solid var(--red);
+    border-bottom: 2px solid var(--red);
+    transform: rotate(45deg);
+    animation: scroll-down 1.5s infinite;
+    box-sizing: border-box;
+}
+
+.scroll-down-indicator a span:nth-child(2) {
+    animation-delay: -0.2s;
+    top: 8px;
+}
+
+.scroll-down-indicator a span:nth-child(3) {
+    animation-delay: -0.4s;
+    top: 16px;
+}
+
+@keyframes scroll-down {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-20px, -20px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(20px, 20px);
+    }
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Timer Section */
+.timer-section {
     text-align: center;
-    margin-bottom: 32px;
-    font-weight: 700;
-    font-size: clamp(24px, 4vw, 40px);
+    background-color: var(--dark-alt);
+    padding: 40px 20px;
 }
-.services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-    gap: 30px;
+
+.timer-section h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--light-grey);
+}
+
+.countdown {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--highlight);
+    letter-spacing: 2px;
     margin-top: 10px;
 }
-.card {
-    background: var(--card);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-}
-.card h3 {
-    margin: 0 0 12px;
-    color: var(--accent);
-    font-size: 1.4rem;
-}
-.card p {
-    font-size: 1rem;
-}
-.locations {
-    margin-top: 40px;
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-}
-.loc {
-    background: rgba(255,255,255,0.03);
-    padding: 16px 20px;
-    border-radius: 8px;
-    min-width: 250px;
-    font-size: 1rem;
-}
-.loc strong {
-    font-size: 1.1rem;
-}
 
-/* ===== SoundCloud плееры (новый блок) ===== */
-#soundcloud-players {
-    margin-top: 60px;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-}
-#soundcloud-players > div {
-    flex: 1 1 450px;
-    max-width: 450px;
-    background: var(--card);
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 0 15px rgba(255,82,82,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-#soundcloud-players h3 {
-    color: var(--accent);
-    font-family: "Inter", Arial, sans-serif;
-    margin-bottom: 24px;
+/* About Section */
+.about-section {
+    background-color: var(--dark);
     text-align: center;
-    font-size: 1.5rem;
-}
-iframe {
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    width: 100% !important;
 }
 
-/* ===== НОВЫЕ СЕКЦИИ ===== */
-.content-section {
-    margin-top: 100px;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-}
-#artists .artist-grid {
+.images-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 32px;
-    margin-top: 32px;
-}
-#artists .artist-card {
-    background: var(--card);
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-#artists .artist-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin-bottom: 16px;
-    object-fit: cover;
-    object-position: center;
-    border: 3px solid var(--accent);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-}
-#artists .artist-name {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
-}
-#artists .artist-card p {
-    font-size: 1rem;
-}
-
-#equipment .equipment-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-    margin-top: 32px;
-}
-#equipment .equipment-item {
-    background: var(--card);
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-#equipment .equipment-photo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    background-color: #2a2a2a;
-    border-radius: 8px;
-    border: 2px solid var(--accent);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-#equipment .equipment-item h4 {
-    margin: 0;
-    color: var(--accent);
-    font-size: 1.2rem;
-}
-#equipment .equipment-item p {
-    margin: 4px 0 0;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.8);
-}
-
-#reviews .review-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 40px;
-    margin-top: 32px;
-}
-#reviews .review-card {
-    background: var(--card);
-    padding: 36px;
-    border-radius: 16px;
-    position: relative;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-    border-left: 5px solid var(--accent);
-}
-#reviews .review-text {
-    font-style: italic;
-    line-height: 1.6;
-    font-size: 1.1rem;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 18px;
-}
-#reviews .review-author {
-    font-weight: 700;
-    color: var(--accent);
-    text-align: right;
-    font-size: 1.1rem;
-}
-
-/* ===== Футер ===== */
-footer {
-    padding: 40px 6%;
-    color: rgba(255,255,255,0.7);
-    border-top: 1px solid rgba(255,255,255,0.03);
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-}
-footer .copyright {
-    flex: 1;
-    min-width: 200px;
-}
-footer .contacts {
-    flex: 1;
-    min-width: 200px;
-    opacity: 0.9;
-}
-footer .admin-login {
-    flex-shrink: 0;
-}
-footer .admin-login button {
-    background-color: var(--accent);
-    border: none;
-    color: #fff;
-    font-weight: 700;
-    padding: 10px 24px;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(255,82,82,0.5);
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 16px;
-}
-footer .admin-login button:hover {
-    background-color: #ff3333;
-    transform: translateY(-3px);
+    max-width: 900px;
+    margin: 40px auto 0;
 }
 
-/* ===== Модальное окно логина ===== */
-#loginModal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-#loginModal.active {
-    display: flex;
-}
-#loginModal .modal-content {
-    background: var(--card);
-    padding: 30px 40px;
+.images-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
     border-radius: 12px;
-    width: 320px;
-    box-shadow: 0 8px 25px rgba(255,82,82,0.7);
-    color: var(--white);
-    position: relative;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
 }
-#loginModal h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: 700;
+
+.images-grid img:hover {
+    transform: scale(1.05);
+}
+
+/* Contact Section */
+.contact-section {
+    background-color: var(--dark-alt);
     text-align: center;
-    color: var(--accent);
 }
-#loginModal label {
-    display: block;
-    margin-bottom: 6px;
+
+.contact-section form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--dark);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.contact-section label {
+    margin-bottom: 8px;
+    text-align: left;
     font-weight: 600;
 }
-#loginModal input[type="text"],
-#loginModal input[type="password"] {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: none;
-    margin-bottom: 16px;
-    font-size: 16px;
-    background: rgba(255,255,255,0.9);
-    color: var(--bg);
-}
-#loginModal button.submit-btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 12px 0;
-    width: 100%;
-    border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-#loginModal button.submit-btn:hover {
-    background-color: #ff3333;
-}
-#loginModal .close-btn {
-    position: absolute;
-    top: 10px; right: 14px;
-    background: transparent;
-    border: none;
-    font-size: 28px;
-    color: var(--accent);
-    cursor: pointer;
-    font-weight: 700;
-    line-height: 1;
-    padding: 0;
-    user-select: none;
-}
-#loginModal .error-msg {
-    color: #ff5555;
-    margin-bottom: 10px;
-    text-align: center;
-    font-weight: 700;
+
+.contact-section input,
+.contact-section button {
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--dark-grey);
+    background-color: var(--dark);
+    color: var(--light-grey);
+    font-size: 1rem;
 }
 
-/* ===== Админка ===== */
+.contact-section input:focus {
+    outline: none;
+    border-color: var(--red);
+    box-shadow: 0 0 5px var(--red);
+}
+
+.contact-section button {
+    background-color: var(--red);
+    color: var(--white);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.2s ease;
+}
+
+.contact-section button:hover {
+    background-color: var(--red-hover);
+    transform: translateY(-2px);
+}
+
+.form-message {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--dark);
+    border-top: 1px solid var(--dark-grey);
+    font-size: 0.9rem;
+    color: var(--grey);
+}
+
+/* Modal and Login */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--dark-alt);
+    padding: 30px;
+    border-radius: 12px;
+    width: 320px;
+    max-width: 90%;
+    position: relative;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: var(--highlight);
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-content label {
+    text-align: left;
+    font-weight: 600;
+    color: var(--light-grey);
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--dark-grey);
+    border-radius: 8px;
+    background-color: var(--dark-grey);
+    color: var(--light-grey);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-content button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--red);
+    color: var(--white);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.modal-content button:hover {
+    background-color: var(--red-hover);
+}
+
+.login-error {
+    color: var(--red);
+    margin-top: 10px;
+}
+
+/* Promo Banner */
+#promo-banner-block {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    background-color: #222;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    border-left: 4px solid var(--red);
+}
+
+#promo-banner-block .promo-text {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
+    color: var(--light-grey);
+}
+
+#promo-banner-block .timer {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--red);
+    background-color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--red);
+}
+
+#promo-banner-block .timer.inactive {
+    color: #888;
+    border-color: #888;
+}
+
+/* ===== Стили для НОВОЙ админки ===== */
 #adminPanel {
     display: none;
-    padding: 20px 6%;
+    padding: 24px 32px;
     max-width: 600px;
     margin: 80px auto 120px;
-    background: var(--card);
+    background: #222;
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(255,82,82,0.7);
-    color: var(--white);
+    box-shadow: 0 8px 24px rgba(255,82,82,0.7);
+    color: #eee;
 }
 #adminPanel.active {
     display: block;
 }
-#adminPanel h2 {
-    color: var(--accent);
-    margin-bottom: 20px;
+#adminPanel h1 {
+    margin: 0 0 28px;
+    color: #ff5252;
+    font-weight: 800;
+    font-size: 24px;
     text-align: center;
-    font-weight: 700;
 }
 #adminPanel label {
     display: block;
     margin-bottom: 8px;
     font-weight: 600;
+    font-size: 15px;
 }
-#adminPanel input[type="text"],
-#adminPanel input[type="datetime-local"] {
+#adminPanel input[type="datetime-local"],
+#adminPanel input[type="text"] {
     width: 100%;
     padding: 10px 12px;
-    border-radius: 6px;
-    border: none;
     margin-bottom: 18px;
-    font-size: 16px;
-    background: rgba(255,255,255,0.9);
-    color: var(--bg);
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    font-family: "Inter", Arial, sans-serif;
+    background: #333;
+    color: #eee;
+    box-shadow: inset 0 0 6px rgba(255,82,82,0.8);
+    transition: box-shadow 0.25s ease;
+}
+#adminPanel input[type="datetime-local"]:focus,
+#adminPanel input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px #ff5252;
+    background: #2a2a2a;
 }
 #adminPanel button {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 12px 0;
-    width: 100%;
-    border-radius: 6px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-#adminPanel button:hover {
-    background-color: #ff3333;
-}
-
-/* ===== Стили для НОВОГО встроенного таймера ===== */
-#promo-timer-block {
-    max-width: 500px;
-    margin: 0 auto 30px;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 82, 82, 0.4);
-    background: rgba(255, 82, 82, 0.08);
-    text-align: center;
-    color: var(--white);
-    box-shadow: 0 0 10px rgba(255, 82, 82, 0.2);
-}
-#promo-timer-block .title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--accent);
-    margin-bottom: 8px;
-}
-#promo-timer-block .text {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 12px;
-}
-#promo-timer-block .timer {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    font-family: 'Courier New', Courier, monospace;
-    color: var(--green-light);
-    text-shadow: 0 0 10px var(--green-dark);
-}
-#promo-timer-block .timer.inactive {
-    color: #888;
-    text-shadow: none;
-}
-
-/* Стили для элементов внутри формы заявки */
-#contactForm label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-#contactForm input[type="text"],
-#contactForm input[type="tel"] {
     width: 100%;
     padding: 12px;
-    border-radius: 6px;
-    border: 1px solid #333;
-    background: #2a2a2a;
-    color: var(--white);
-    font-size: 16px;
-}
-#contactForm button {
-    width: 100%;
-    padding: 14px;
-    background: var(--accent);
+    background: #ff5252;
     color: white;
     border: none;
-    border-radius: 6px;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 17px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 6px 18px rgba(255,82,82,0.9);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+#adminPanel button:hover {
+    background: #ff2a2a;
+    transform: translateY(-3px);
+}
+#adminPanel .message {
+    margin-top: 18px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #7eff7e;
+    display: none;
+}
+#adminPanel .back-link {
+    margin-top: 28px;
+    display: block;
+    text-align: center;
+    color: #ff5252;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+#adminPanel .back-link:hover {
+    color: #ff7f7f;
 }
