@@ -1,0 +1,236 @@
+// Переменные для основных элементов
+const releaseTimer = document.getElementById('release-timer');
+const releaseTitleElem = document.getElementById('release-title');
+const releaseCountdownElem = document.getElementById('release-countdown');
+
+const loginModal = document.getElementById('loginModal');
+const adminPanel = document.getElementById('adminPanel');
+const adminLoginBtn = document.getElementById('adminLoginBtn');
+
+const loginForm = document.getElementById('loginForm');
+const loginInput = document.getElementById('loginInput');
+const passwordInput = document.getElementById('passwordInput');
+const loginError = document.getElementById('loginError');
+
+const releaseTitleInput = document.getElementById('releaseTitleInput');
+const releaseDateInput = document.getElementById('releaseDateInput');
+const saveReleaseBtn = document.getElementById('saveReleaseBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
+
+const ADMIN_LOGIN = 'thekadrainfo';
+const ADMIN_PASSWORD = 'Ioioiohyadfg';
+
+// ======== Функции для админки и таймера релиза ========
+function showLogin() {
+    loginModal.classList.add('active');
+    adminLoginBtn.setAttribute('aria-expanded', 'true');
+    loginError.textContent = '';
+    loginForm.reset();
+    loginInput.focus();
+}
+
+function hideLogin() {
+    loginModal.classList.remove('active');
+    adminLoginBtn.setAttribute('aria-expanded', 'false');
+}
+
+function showAdminPanel() {
+    adminPanel.classList.add('active');
+    releaseTimer.style.display = 'none';
+}
+
+function hideAdminPanel() {
+    adminPanel.classList.remove('active');
+    releaseTimer.style.display = 'block';
+}
+
+function isLoggedIn() {
+    return sessionStorage.getItem('adminLogged') === 'true';
+}
+
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const loginVal = loginInput.value.trim();
+    const passwordVal = passwordInput.value;
+
+    if(loginVal === ADMIN_LOGIN && passwordVal === ADMIN_PASSWORD) {
+        sessionStorage.setItem('adminLogged', 'true');
+        hideLogin();
+        showAdminPanel();
+        loadSettingsToAdmin();
+    } else {
+        loginError.textContent = 'Неверный логин или пароль.';
+    }
+});
+
+adminLoginBtn.addEventListener('click', () => {
+    if(isLoggedIn()) {
+        showAdminPanel();
+    } else {
+        showLogin();
+    }
+});
+
+document.querySelector('#loginModal .close-btn').addEventListener('click', () => {
+    hideLogin();
+});
+
+logoutBtn.addEventListener('click', () => {
+    sessionStorage.removeItem('adminLogged');
+    hideAdminPanel();
+});
+
+function loadSettings() {
+    const title = localStorage.getItem('releaseTitle') || 'Релиз через';
+    const dateStr = localStorage.getItem('releaseDate');
+    releaseTitleElem.textContent = title;
+
+    if(dateStr) {
+        updateCountdown(new Date(dateStr));
+    } else {
+        releaseCountdownElem.textContent = 'дата не установлена';
+    }
+}
+
+function updateCountdown(targetDate) {
+    function tick() {
+        const now = new Date();
+        const diff = targetDate - now;
+        if(diff <= 0) {
+            releaseCountdownElem.textContent = 'Релиз уже состоялся!';
+            clearInterval(intervalId);
+            return;
+        }
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff / (1000*60*60)) % 24);
+        const minutes = Math.floor((diff / (1000*60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        releaseCountdownElem.textContent =
+            `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    }
+    tick();
+    const intervalId = setInterval(tick, 1000);
+}
+
+function loadSettingsToAdmin() {
+    releaseTitleInput.value = localStorage.getItem('releaseTitle') || 'Релиз через';
+    const dateStr = localStorage.getItem('releaseDate');
+    if(dateStr) {
+        releaseDateInput.value = new Date(dateStr).toISOString().slice(0,16);
+    } else {
+        releaseDateInput.value = '';
+    }
+}
+
+saveReleaseBtn.addEventListener('click', () => {
+    const newTitle = releaseTitleInput.value.trim() || 'Релиз через';
+    const newDate = releaseDateInput.value;
+
+    if(!newDate) {
+        alert('Пожалуйста, выберите дату и время релиза.');
+        return;
+    }
+
+    localStorage.setItem('releaseTitle', newTitle);
+    localStorage.setItem('releaseDate', newDate);
+
+    releaseTitleElem.textContent = newTitle;
+    updateCountdown(new Date(newDate));
+
+    alert('Настройки сохранены.');
+});
+
+// ======== Функции для формы заявки ========
+contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    console.log('Данные заявки:', { name, phone });
+
+    formMessage.textContent = 'Отправка...';
+    formMessage.style.color = '#fff';
+
+    try {
+        // Здесь должен быть реальный код для отправки данных на сервер
+        // Например: await fetch('ваш_адрес_сервера', { method: 'POST', body: JSON.stringify({ name, phone }) });
+
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена.';
+        formMessage.style.color = 'var(--green-light)';
+        contactForm.reset();
+    } catch (error) {
+        formMessage.textContent = 'Произошла ошибка при отправке заявки. Попробуйте ещё раз.';
+        formMessage.style.color = '#ff5555';
+    }
+});
+
+// ======== НОВЫЙ СКРИПТ: Логика для встроенного таймера ========
+(() => {
+    const timerBlock = document.getElementById('promo-timer-block');
+    const timerEl = timerBlock.querySelector('.timer');
+    const countdownDuration = 1800; // 30 минут в секундах
+    let countdown;
+    let countdownInterval;
+
+    function formatTime(seconds) {
+        if (seconds <= 0) return '00:00';
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
+    }
+
+    function getTodayDateString() {
+        const today = new Date();
+        return today.toISOString().slice(0, 10);
+    }
+
+    function startOrResumeTimer() {
+        let endTime = parseInt(localStorage.getItem('promoBannerEndTime'), 10) || 0;
+        const lastShownDate = localStorage.getItem('promoBannerShownDate');
+        const todayDate = getTodayDateString();
+        
+        if (lastShownDate === todayDate && endTime > Date.now()) {
+            countdown = Math.floor((endTime - Date.now()) / 1000);
+        } 
+        else {
+            endTime = Date.now() + countdownDuration * 1000;
+            localStorage.setItem('promoBannerEndTime', endTime);
+            localStorage.setItem('promoBannerShownDate', todayDate);
+            countdown = countdownDuration;
+        }
+
+        timerBlock.style.display = 'block';
+
+        countdownInterval = setInterval(() => {
+            countdown--;
+            if (countdown < 0) {
+                clearInterval(countdownInterval);
+                timerEl.textContent = '00:00';
+                timerEl.classList.add('inactive');
+                return;
+            }
+            timerEl.textContent = formatTime(countdown);
+        }, 1000);
+    }
+
+    window.addEventListener('load', () => {
+        if (!isLoggedIn()) {
+            startOrResumeTimer();
+        }
+    });
+})();
+
+// ======== Действия при загрузке страницы ========
+window.addEventListener('load', () => {
+    if(isLoggedIn()) {
+        showAdminPanel();
+        loadSettingsToAdmin();
+    } else {
+        loadSettings();
+    }
+});
