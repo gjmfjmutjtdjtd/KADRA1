@@ -1,131 +1,97 @@
-// Переменные для основных элементов
-const releaseTimer = document.getElementById('release-timer');
-const releaseTitleElem = document.getElementById('release-title');
-const releaseCountdownElem = document.getElementById('release-countdown');
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadra Records - лейбл электронной музыки</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="#about" aria-label="О лейбле">О нас</a>
+        <a href="#contact" aria-label="Свяжитесь с нами">Контакты</a>
+        <a href="admin.html" id="adminLoginBtn" aria-label="Вход в админ-панель">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="lucide lucide-shield-half">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="M12 22V2"/>
+            </svg>
+        </a>
+    </nav>
+</header>
 
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
+<main>
+    <section id="hero" class="intro-section">
+        <video autoplay muted loop playsinline class="background-video" preload="auto">
+            <source src="images/bg-video.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+        <div class="intro-content">
+            <img src="images/logo.png" alt="Kadra Records Logo" class="logo">
+            <h1 class="visually-hidden">Kadra Records - лейбл электронной музыки</h1>
+            <p class="intro-text">
+                <span class="highlight">Kadra Records</span> — это независимый музыкальный лейбл, основанный в 2024 году.
+                Наша миссия — открывать новые таланты и развивать танцевальную культуру.
+            </p>
+        </div>
+        <div class="scroll-down-indicator">
+            <a href="#about" aria-label="Прокрутить вниз">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>
+        </div>
+    </section>
 
-// ======== Функции для таймера релиза ========
-function loadSettings() {
-    const title = localStorage.getItem('releaseTitle') || 'Релиз через';
-    const dateStr = localStorage.getItem('releaseDate');
-    releaseTitleElem.textContent = title;
+    <div id="promo-banner-block" style="display: none;">
+        <div class="promo-text">Не пропустите наш следующий релиз!</div>
+        <div class="timer"></div>
+    </div>
 
-    if(dateStr) {
-        updateCountdown(new Date(dateStr));
-    } else {
-        releaseCountdownElem.textContent = 'дата не установлена';
-    }
-}
+    <section id="release-timer" class="timer-section" aria-live="polite">
+        <h2 id="release-title">Релиз через</h2>
+        <div id="release-countdown" class="countdown">Загрузка...</div>
+    </section>
 
-function updateCountdown(targetDate) {
-    function tick() {
-        const now = new Date();
-        const diff = targetDate - now;
-        if(diff <= 0) {
-            releaseCountdownElem.textContent = 'Релиз уже состоялся!';
-            clearInterval(intervalId);
-            return;
-        }
-        const days = Math.floor(diff / (1000*60*60*24));
-        const hours = Math.floor((diff / (1000*60*60)) % 24);
-        const minutes = Math.floor((diff / (1000*60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        releaseCountdownElem.textContent =
-            `${days}д ${hours}ч ${minutes}м ${seconds}с`;
-    }
-    tick();
-    const intervalId = setInterval(tick, 1000);
-}
+    <section id="about" class="about-section">
+        <h2>О нас</h2>
+        <p>
+            Kadra Records — это платформа для андеграундных артистов, ищущих свой уникальный звук.
+            Мы специализируемся на современной электронной музыке: от эмбиента до техно.
+            Мы верим, что музыка — это не просто звук, а способ передать эмоции и создать сообщество.
+        </p>
+        <div class="images-grid">
+            <img src="images/image1.jpg" alt="Диджей за пультом на вечеринке" />
+            <img src="images/image2.jpg" alt="Танцующие люди на концерте" />
+            <img src="images/image3.jpg" alt="Музыкант в студии звукозаписи" />
+        </div>
+    </section>
 
-// ======== Функции для формы заявки ========
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    <section id="contact" class="contact-section">
+        <h2>Контакты</h2>
+        <p>Если вы хотите сотрудничать с нами или просто сказать «привет», заполните форму ниже.</p>
+        <form id="contactForm" action="#" method="POST">
+            <label for="name">Ваше имя:</label>
+            <input type="text" id="name" name="name" required />
+            <label for="phone">Ваш номер телефона:</label>
+            <input type="tel" id="phone" name="phone" required />
+            <button type="submit">Отправить</button>
+        </form>
+        <p id="formMessage" class="form-message" aria-live="polite"></p>
+    </section>
+</main>
 
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    console.log('Данные заявки:', { name, phone });
+<footer>
+    <p>&copy; 2024 Kadra Records. Все права защищены.</p>
+</footer>
 
-    formMessage.textContent = 'Отправка...';
-    formMessage.style.color = '#fff';
+<script src="script.js"></script>
 
-    try {
-        // Здесь должен быть реальный код для отправки данных на сервер
-        // Например: await fetch('ваш_адрес_сервера', { method: 'POST', body: JSON.stringify({ name, phone }) });
-
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        formMessage.textContent = 'Спасибо! Ваша заявка успешно отправлена.';
-        formMessage.style.color = 'var(--green-light)';
-        contactForm.reset();
-    } catch (error) {
-        formMessage.textContent = 'Произошла ошибка при отправке заявки. Попробуйте ещё раз.';
-        formMessage.style.color = '#ff5555';
-    }
-});
-
-// ======== Логика для встроенного таймера ========
-(() => {
-    const promoBannerBlock = document.getElementById('promo-banner-block');
-    const timerEl = promoBannerBlock.querySelector('.timer');
-    const countdownDuration = 1800; // 30 минут в секундах
-    let countdown;
-    let countdownInterval;
-
-    function formatTime(seconds) {
-        if (seconds <= 0) return '00:00';
-        const m = Math.floor(seconds / 60);
-        const s = seconds % 60;
-        return `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-    }
-
-    function getTodayDateString() {
-        const today = new Date();
-        return today.toISOString().slice(0, 10);
-    }
-
-    function isLoggedIn() {
-        return sessionStorage.getItem('adminLogged') === 'true';
-    }
-
-    function startOrResumeTimer() {
-        let endTime = parseInt(localStorage.getItem('promoBannerEndTime'), 10) || 0;
-        const lastShownDate = localStorage.getItem('promoBannerShownDate');
-        const todayDate = getTodayDateString();
-        
-        if (lastShownDate === todayDate && endTime > Date.now()) {
-            countdown = Math.floor((endTime - Date.now()) / 1000);
-        } 
-        else {
-            endTime = Date.now() + countdownDuration * 1000;
-            localStorage.setItem('promoBannerEndTime', endTime);
-            localStorage.setItem('promoBannerShownDate', todayDate);
-            countdown = countdownDuration;
-        }
-
-        promoBannerBlock.style.display = 'flex';
-
-        countdownInterval = setInterval(() => {
-            countdown--;
-            if (countdown < 0) {
-                clearInterval(countdownInterval);
-                timerEl.textContent = '00:00';
-                timerEl.classList.add('inactive');
-                return;
-            }
-            timerEl.textContent = formatTime(countdown);
-        }, 1000);
-    }
-
-    window.addEventListener('load', () => {
-        if (!isLoggedIn()) {
-            startOrResumeTimer();
-        }
-    });
-})();
-
-// ======== Действия при загрузке страницы ========
-window.addEventListener('load', () => {
-    loadSettings();
-});
+</body>
+</html>
