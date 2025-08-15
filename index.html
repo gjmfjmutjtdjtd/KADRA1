@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KADRA Records Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="release-timer" role="timer" aria-live="polite" aria-atomic="true" aria-label="Обратный отсчёт до релиза">
+        <span id="release-title">Релиз через</span> <span id="release-countdown">загрузка...</span>
+    </div>
+
+    <header>
+        <div class="logo">Kadra Records Studio</div>
+        <nav>
+            <a href="#services">Услуги</a>
+            <a href="#artists">Артисты</a>
+            <a href="#equipment">Оборудование</a>
+            <a href="#reviews">Отзывы</a>
+            <a href="#about">О нас</a>
+            <a href="#tracks">Работы</a>
+            <a href="#contact">Контакты</a>
+            <a href="#application-form">Оставить заявку</a>
+            <a class="chat-btn" href="https://t.me/kadrarec" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </nav>
+    </header>
+
+    <section class="hero" role="region" aria-label="Главный баннер">
+        <div class="hero-inner">
+            <h1>Создаём музыку, которая говорит за вас</h1>
+            <p>Профессиональная запись, сведение, мастеринг и полное продюсирование треков — три студии: Москва · Бали · Волгоград.</p>
+            <a class="cta" href="#application-form">Записаться</a>
+        </div>
+    </section>
+
+    <main>
+        <section id="services">
+            <h2 class="section-title">Наши услуги</h2>
+            <div class="services">
+                <div class="card">
+                    <h3>Запись вокала</h3>
+                    <p>Чистая, плотная запись с профессиональными микрофонами и акустикой.</p>
+                </div>
+                <div class="card">
+                    <h3>Сведение и мастеринг</h3>
+                    <p>Коммерческий звук, адаптированный под стриминг-платформы и радио.</p>
+                </div>
+                <div class="card">
+                    <h3>Продюсирование</h3>
+                    <p>От идеи и демо до релиза — аранжировка, звук и сопровождение.</p>
+                </div>
+            </div>
+
+            <div style="margin-top:40px;">
+                <h3 style="color:var(--accent); font-size: 1.4rem;">Локации студий</h3>
+                <div class="locations">
+                    <div class="loc"><strong>Москва</strong><br>Центральная студия — полнофункциональный контроль-рум и вокальная кабина.</div>
+                    <div class="loc"><strong>Бали</strong><br>Резиденция для творческих сессий и атмосферных записей на природе.</div>
+                    <div class="loc"><strong>Волгоград</strong><br>Локальная студия для быстрой записи и работы с исполнителями региона.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="artists" class="content-section">
+            <h2 class="section-title">Наши артисты</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы гордимся тем, что работали со многими талантливыми исполнителями и музыкантами. Вот несколько из них:</p>
+            <div class="artist-grid">
+                <div class="artist-card">
+                    <img src="img/artist1.jpg" alt="Фото артиста" class="artist-photo">
+                    <div class="artist-name">Алексей «Tribe» Волков</div>
+                    <p>Инди-поп исполнитель с уникальным вокалом и атмосферными текстами.</p>
+                </div>
+                <div class="artist-card">
+                    <img src="img/artist2.jpg" alt="Фото артиста" class="artist-photo">
+                    <div class="artist-name">Мария «Luna» Светлова</div>
+                    <p>Талантливая вокалистка и автор песен в жанре R&B и соул.</p>
+                </div>
+                <div class="artist-card">
+                    <img src="img/artist3.jpg" alt="Фото артиста" class="artist-photo">
+                    <div class="artist-name">Группа «Echoes of Void»</div>
+                    <p>Альтернативный рок-проект, известный своими энергичными живыми выступлениями.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipment" class="content-section">
+            <h2 class="section-title">Наше оборудование</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;">Мы используем только лучшее оборудование для достижения идеального звучания.</p>
+            <div class="equipment-list">
+                <div class="equipment-item">
+                    <img src="img/mic.jpg" alt="Фото микрофона" class="equipment-photo">
+                    <div>
+                        <h4>Микрофоны</h4>
+                        <p>Neumann U87, AKG C414, Shure SM7B — для вокала и инструментов.</p>
+                    </div>
+                </div>
+                <div class="equipment-item">
+                    <img src="img/preamp.jpg" alt="Фото предусилителя" class="equipment-photo">
+                    <div>
+                        <h4>Предусилители</h4>
+                        <p>Universal Audio, Neve 1073 — для теплого и насыщенного звучания.</p>
+                    </div>
+                </div>
+                <div class="equipment-item">
+                    <img src="img/monitor.jpg" alt="Фото монитора" class="equipment-photo">
+                    <div>
+                        <h4>Мониторы</h4>
+                        <p>Genelec 8030, Adam Audio T5V — для точного сведения и мастеринга.</p>
+                    </div>
+                </div>
+                <div class="equipment-item">
+                    <img src="img/software.jpg" alt="Фото ПО" class="equipment-photo">
+                    <div>
+                        <h4>Программное обеспечение</h4>
+                        <p>Pro Tools, Ableton Live, Logic Pro X с полным набором плагинов.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="content-section">
+            <h2 class="section-title">Отзывы клиентов</h2>
+            <div class="review-grid">
+                <div class="review-card">
+                    <p class="review-text">«Работа в Kadra Records — это не просто запись, это настоящий творческий процесс. Ребята помогли мне найти моё уникальное звучание. Рекомендую!»</p>
+                    <div class="review-author">— Иван П.</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">«Лучшая студия в Москве! Качество звука на высшем уровне, а атмосфера очень дружелюбная. Обязательно вернусь еще раз.»</p>
+                    <div class="review-author">— Анна С.</div>
+                </div>
+                <div class="review-card">
+                    <p class="review-text">«Сведение и мастеринг моего трека были выполнены идеально. Звук получился плотным и объемным, именно так, как я хотел.»</p>
+                    <div class="review-author">— Дмитрий Р.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tracks">
+            <h2 class="section-title">Наши работы</h2>
+            <div id="soundcloud-players">
+                <div>
+                    <h3>Готовые песни</h3>
+                    <iframe width="100%" height="450" scrolling="no" frameborder="no" allow="autoplay"
+                        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/2064145701&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+                    </iframe>
+                </div>
+                <div>
+                    <h3>Примеры работ</h3>
+                    <iframe height="300" scrolling="no" frameborder="no" allow="autoplay"
+                        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/yourprofile/sets/examples&color=%23ff5252&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" style="margin-top: 100px;">
+            <h2 class="section-title">О студии</h2>
+            <p style="max-width:720px; margin: 0 auto; text-align:center; font-size: 1.1rem; line-height: 1.6;">
+                Kadra Records — независимый музыкальный продюсерский центр, объединяющий профессионалов из разных городов. Мы создаём качественный звук и атмосферу, которые слышны в каждом треке.
+            </p>
+        </section>
+
+        <section id="contact" style="margin-top: 100px;">
+            <h2 class="section-title">Контакты</h2>
+            <p style="max-width:720px; margin: 0 auto; text-align:center; font-size: 1.1rem; line-height: 1.6;">
+                Телефон: +7 999 123-45-67<br>
+                Email: info@kadrarecords.ru<br>
+                Адреса студий указаны в разделе «Локации студий» выше.
+            </p>
+        </section>
+
+        <section id="application-form" style="margin-top: 100px;">
+            <h2 class="section-title">Оставить заявку</h2>
+
+            <div id="promo-timer-block" style="display:none;">
+                <div class="title">Скидка 20% на запись!</div>
+                <p class="text">Предложение действует только сегодня. Успейте воспользоваться:</p>
+                <div class="timer">30:00</div>
+            </div>
+
+            <form id="contactForm" style="max-width: 500px; margin: 0 auto; padding: 24px; background: var(--card); border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
+                <p style="text-align: center; font-size: 1rem;">Оставьте свои контактные данные, и мы свяжемся с вами, чтобы обсудить детали.</p>
+                <div style="margin-bottom: 20px;">
+                    <label for="name" style="display: block; margin-bottom: 8px; font-weight: 600;">Ваше имя</label>
+                    <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <label for="phone" style="display: block; margin-bottom: 8px; font-weight: 600;">Номер телефона</label>
+                    <input type="tel" id="phone" name="phone" required style="width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: var(--white); font-size: 16px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 18px; cursor: pointer; transition: background-color 0.3s ease;">Отправить заявку</button>
+                <p id="formMessage" style="text-align: center; margin-top: 15px; font-weight: 600;"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copyright">&copy; 2025 Kadra Records Studio. Все права защищены.</div>
+        <div class="contacts">
+            <a href="mailto:info@kadrarecords.ru" style="color:inherit; text-decoration:none;">info@kadrarecords.ru</a> | Тел: +7 999 123-45-67
+        </div>
+        <div class="admin-login">
+            <button id="adminLoginBtn" aria-haspopup="dialog" aria-controls="loginModal" aria-expanded="false">Войти в админку</button>
+        </div>
+    </footer>
+
+    <div id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
+        <div class="modal-content">
+            <button class="close-btn" aria-label="Закрыть">&times;</button>
+            <h2 id="loginTitle">Авторизация</h2>
+            <div class="error-msg" id="loginError" aria-live="polite"></div>
+            <form id="loginForm">
+                <label for="loginInput">Логин</label>
+                <input type="text" id="loginInput" name="login" autocomplete="username" required />
+                <label for="passwordInput">Пароль</label>
+                <input type="password" id="passwordInput" name="password" autocomplete="current-password" required />
+                <button type="submit" class="submit-btn">Войти</button>
+            </form>
+        </div>
+    </div>
+
+    <section id="adminPanel" aria-label="Административная панель">
+        <h2>Редактирование таймера релиза</h2>
+        <label for="releaseTitleInput">Название таймера</label>
+        <input type="text" id="releaseTitleInput" placeholder="Например, 'Релиз через'" />
+        <label for="releaseDateInput">Дата и время релиза</label>
+        <input type="datetime-local" id="releaseDateInput" />
+        <button id="saveReleaseBtn">Сохранить</button>
+        <button id="logoutBtn" style="margin-top: 12px; background:#888;">Выйти из админки</button>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
