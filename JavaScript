@@ -3,86 +3,10 @@ const releaseTimer = document.getElementById('release-timer');
 const releaseTitleElem = document.getElementById('release-title');
 const releaseCountdownElem = document.getElementById('release-countdown');
 
-const loginModal = document.getElementById('loginModal');
-const adminPanel = document.getElementById('adminPanel');
-const adminLoginBtn = document.getElementById('adminLoginBtn');
-
-const loginForm = document.getElementById('loginForm');
-const loginInput = document.getElementById('loginInput');
-const passwordInput = document.getElementById('passwordInput');
-const loginError = document.getElementById('loginError');
-
-const releaseTitleInput = document.getElementById('releaseTitleInput');
-const releaseDateInput = document.getElementById('releaseDateInput');
-const saveReleaseBtn = document.getElementById('saveReleaseBtn');
-const logoutBtn = document.getElementById('logoutBtn');
-
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 
-const ADMIN_LOGIN = 'thekadrainfo';
-const ADMIN_PASSWORD = 'Ioioiohyadfg';
-
-// ======== Функции для админки и таймера релиза ========
-function showLogin() {
-    loginModal.classList.add('active');
-    adminLoginBtn.setAttribute('aria-expanded', 'true');
-    loginError.textContent = '';
-    loginForm.reset();
-    loginInput.focus();
-}
-
-function hideLogin() {
-    loginModal.classList.remove('active');
-    adminLoginBtn.setAttribute('aria-expanded', 'false');
-}
-
-function showAdminPanel() {
-    adminPanel.classList.add('active');
-    releaseTimer.style.display = 'none';
-}
-
-function hideAdminPanel() {
-    adminPanel.classList.remove('active');
-    releaseTimer.style.display = 'block';
-}
-
-function isLoggedIn() {
-    return sessionStorage.getItem('adminLogged') === 'true';
-}
-
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const loginVal = loginInput.value.trim();
-    const passwordVal = passwordInput.value;
-
-    if(loginVal === ADMIN_LOGIN && passwordVal === ADMIN_PASSWORD) {
-        sessionStorage.setItem('adminLogged', 'true');
-        hideLogin();
-        showAdminPanel();
-        loadSettingsToAdmin();
-    } else {
-        loginError.textContent = 'Неверный логин или пароль.';
-    }
-});
-
-adminLoginBtn.addEventListener('click', () => {
-    if(isLoggedIn()) {
-        showAdminPanel();
-    } else {
-        showLogin();
-    }
-});
-
-document.querySelector('#loginModal .close-btn').addEventListener('click', () => {
-    hideLogin();
-});
-
-logoutBtn.addEventListener('click', () => {
-    sessionStorage.removeItem('adminLogged');
-    hideAdminPanel();
-});
-
+// ======== Функции для таймера релиза ========
 function loadSettings() {
     const title = localStorage.getItem('releaseTitle') || 'Релиз через';
     const dateStr = localStorage.getItem('releaseDate');
@@ -115,34 +39,6 @@ function updateCountdown(targetDate) {
     const intervalId = setInterval(tick, 1000);
 }
 
-function loadSettingsToAdmin() {
-    releaseTitleInput.value = localStorage.getItem('releaseTitle') || 'Релиз через';
-    const dateStr = localStorage.getItem('releaseDate');
-    if(dateStr) {
-        releaseDateInput.value = new Date(dateStr).toISOString().slice(0,16);
-    } else {
-        releaseDateInput.value = '';
-    }
-}
-
-saveReleaseBtn.addEventListener('click', () => {
-    const newTitle = releaseTitleInput.value.trim() || 'Релиз через';
-    const newDate = releaseDateInput.value;
-
-    if(!newDate) {
-        alert('Пожалуйста, выберите дату и время релиза.');
-        return;
-    }
-
-    localStorage.setItem('releaseTitle', newTitle);
-    localStorage.setItem('releaseDate', newDate);
-
-    releaseTitleElem.textContent = newTitle;
-    updateCountdown(new Date(newDate));
-
-    alert('Настройки сохранены.');
-});
-
 // ======== Функции для формы заявки ========
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -169,10 +65,10 @@ contactForm.addEventListener('submit', async (e) => {
     }
 });
 
-// ======== НОВЫЙ СКРИПТ: Логика для встроенного таймера ========
+// ======== Логика для встроенного таймера ========
 (() => {
-    const timerBlock = document.getElementById('promo-timer-block');
-    const timerEl = timerBlock.querySelector('.timer');
+    const promoBannerBlock = document.getElementById('promo-banner-block');
+    const timerEl = promoBannerBlock.querySelector('.timer');
     const countdownDuration = 1800; // 30 минут в секундах
     let countdown;
     let countdownInterval;
@@ -187,6 +83,10 @@ contactForm.addEventListener('submit', async (e) => {
     function getTodayDateString() {
         const today = new Date();
         return today.toISOString().slice(0, 10);
+    }
+
+    function isLoggedIn() {
+        return sessionStorage.getItem('adminLogged') === 'true';
     }
 
     function startOrResumeTimer() {
@@ -204,7 +104,7 @@ contactForm.addEventListener('submit', async (e) => {
             countdown = countdownDuration;
         }
 
-        timerBlock.style.display = 'block';
+        promoBannerBlock.style.display = 'flex';
 
         countdownInterval = setInterval(() => {
             countdown--;
@@ -227,10 +127,5 @@ contactForm.addEventListener('submit', async (e) => {
 
 // ======== Действия при загрузке страницы ========
 window.addEventListener('load', () => {
-    if(isLoggedIn()) {
-        showAdminPanel();
-        loadSettingsToAdmin();
-    } else {
-        loadSettings();
-    }
+    loadSettings();
 });
